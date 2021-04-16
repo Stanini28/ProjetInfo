@@ -15,6 +15,11 @@ public class AppuiSimple extends NoeudAppui {
         }
 
         
+        
+        
+        
+        
+        
         private double dTangentielle;
 
     }
