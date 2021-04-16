@@ -9,7 +9,7 @@ package fr.insa.allouche.infoprojet.interfacee;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.Scene;
-import javafx.stage.Stage;
+import javafx.stage.Stage;  
 /**
  *
  * @author Portable
