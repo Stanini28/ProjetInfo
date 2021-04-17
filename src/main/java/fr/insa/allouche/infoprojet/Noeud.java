@@ -13,6 +13,7 @@ public class Noeud {
     private int id;
     private double px;
     private double py;
+    private Poids P;
 
     public Set<Barre> extremites;
 
