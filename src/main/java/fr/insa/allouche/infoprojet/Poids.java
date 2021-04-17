@@ -29,16 +29,18 @@ public class Poids {
         return Fy;
     }
 
-    public void setId(double id) {
-        this.id = id;
-    }
-
     public void setFx(double Fx) {
         this.Fx = Fx;
     }
 
     public void setFy(double Fy) {
         this.Fy = Fy;
+    }
+    
+    public double Norme(){
+        double Norme;
+        Norme=Math.sqrt(this.Fx*this.Fx+this.Fy*this.Fy);
+        return Norme;
     }
 
     
