@@ -7,7 +7,40 @@ package fr.insa.allouche.infoprojet;
 
 public class Poids {
 
-    public Poids() {
+    private double id;
+    private double Fx;
+    private double Fy;
+
+    public Poids(double ApplX, double ApplY) {
+        this.Fx = ApplX;
+        this.Fy = ApplY;
+
     }
 
+    public double getId() {
+        return id;
+    }
+
+    public double getFx() {
+        return Fx;
+    }
+
+    public double getFy() {
+        return Fy;
+    }
+
+    public void setId(double id) {
+        this.id = id;
+    }
+
+    public void setFx(double Fx) {
+        this.Fx = Fx;
+    }
+
+    public void setFy(double Fy) {
+        this.Fy = Fy;
+    }
+
+    
+    
 }
