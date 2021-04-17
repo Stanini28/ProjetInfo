@@ -10,11 +10,21 @@ package fr.insa.allouche.infoprojet;
  * @author stanislasallouche
  */
 public class NoeudAppui extends Noeud {
-
+    
+    private double alpha; 
+    private SegmentTerrain SegmentTerrain;
+    
+    public SegmentTerrain getSegmentTerrain(){
+        return SegmentTerrain;
+    }
+    
+    void setSegmentTerrain (SegmentTerrain segGrp) {
+        this.SegmentTerrain = segGrp;
+    }
+    
     public NoeudAppui() {
     }
-
-    private double alpha;
+    
     public void positionP() {
 
     }

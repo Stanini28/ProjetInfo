@@ -13,10 +13,24 @@ import java.util.Set;
  */
 
 public class Barre {
-
-    public Barre() {
-    }
+    
     private int id;
+    private Noeud debut;
+    private Noeud fin;
+    
+    
+    public Barre(Noeud debut , Noeud fin) {
+        this.debut= debut;
+        this.fin=fin;
+    }
+    
+    public Noeud getDebut() {
+        return this.debut;
+    }
 
-    public Set<Noeud> extrémités;
+    public Noeud getFin() {
+        return this.fin;
+    }
+    
+    
 }

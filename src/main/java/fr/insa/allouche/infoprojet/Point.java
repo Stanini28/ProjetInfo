@@ -5,13 +5,16 @@
  */
 package fr.insa.allouche.infoprojet;
 
-public class Point extends SegmentTerrain {
-  
-    public Point() {
-    }
+public class Point {
     
     private double PX;
     private double PY;
+    
+    public Point (double PX,double PY) {
+       this.PX = PX;
+       this.PY = PY;
+    }
+    
 
     /**
      * @return the PX
@@ -27,5 +30,11 @@ public class Point extends SegmentTerrain {
         return PY;
     }
     
+    public void setPX(double Px) {
+        this.PX=Px;
+    }
     
+    public void setPY(double Px) {
+        this.PX=Px;
+    }
 }
