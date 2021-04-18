@@ -14,13 +14,34 @@ public class SegmentTerrain {
     
     private Point debut;
     private Point fin;
-    private List<NoeudAppui> sur;
-    private SegmentTerrain limite;
+    private List<NoeudAppui> appartient;
+    //Est defini dans la classe TriangleTerrain, lorqu'un Triangle terrain est créé
+    private TriangleTerrain faitPartieDe;
 
     public SegmentTerrain(Point posDbt, Point posFin) {
         this.debut= new Point (posDbt.getPX(), posDbt.getPY());
         this.fin= new Point (posFin.getPX(), posFin.getPY());
-        this.sur = new ArrayList<NoeudAppui>();
+        this.appartient = new ArrayList<NoeudAppui>();
+    }
+
+    public Point getDebut() {
+        return debut;
+    }
+
+    public Point getFin() {
+        return fin;
+    }
+
+    public List<NoeudAppui> getAppartient() {
+        return appartient;
+    }
+
+    public TriangleTerrain getFaitPartieDe() {
+        return faitPartieDe;
+    }
+
+    void setFaitPartieDe(TriangleTerrain faitPartieDe) {
+        this.faitPartieDe = faitPartieDe;
     }
     
     
@@ -30,7 +51,7 @@ public class SegmentTerrain {
             if (nA.getSegmentTerrain() != null) {
                 throw new Error("Le Noeud appui appartient déjà à un autre SegmentTerrain");
             }
-            this.sur.add(nA);
+            this.appartient.add(nA);
             nA.setSegmentTerrain(this);
         }
     }
@@ -39,7 +60,7 @@ public class SegmentTerrain {
         if (nA.getSegmentTerrain() != this) {
             throw new Error("Le Noeud appui n'appartient pas à SegmentTerrain");
         }
-        this.sur.remove(nA);
+        this.appartient.remove(nA);
         nA.setSegmentTerrain(null);
     }
     
