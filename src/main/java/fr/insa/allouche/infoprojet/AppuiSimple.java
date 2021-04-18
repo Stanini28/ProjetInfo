@@ -10,16 +10,11 @@ package fr.insa.allouche.infoprojet;
  * @author stanislasallouche
  */
 public class AppuiSimple extends NoeudAppui {
-
-        public AppuiSimple() {
-        }
-
-        
-        
-        
-        
-        
-        
-        private double dTangentielle;
-
+    
+    public AppuiSimple(Point coordS) {
+        super(coordS);
     }
+
+    private double dTangentielle;
+
+}
