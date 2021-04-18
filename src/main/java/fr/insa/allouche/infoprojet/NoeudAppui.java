@@ -13,16 +13,18 @@ public class NoeudAppui extends Noeud {
     
     private double alpha; 
     private SegmentTerrain SegmentTerrain;
+    private Point coord;
     
     public SegmentTerrain getSegmentTerrain(){
         return SegmentTerrain;
     }
     
-    void setSegmentTerrain (SegmentTerrain segGrp) {
-        this.SegmentTerrain = segGrp;
+    void setSegmentTerrain (SegmentTerrain segTerrain) {
+        this.SegmentTerrain = segTerrain;
     }
     
-    public NoeudAppui() {
+    public NoeudAppui(Point coord) {
+        super(coord);
     }
     
     public void positionP() {
