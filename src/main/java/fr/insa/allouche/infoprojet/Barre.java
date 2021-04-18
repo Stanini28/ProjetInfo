@@ -17,11 +17,26 @@ public class Barre {
     private int id;
     private Noeud debut;
     private Noeud fin;
-    
+    private Treillis compose;
     
     public Barre(Noeud debut , Noeud fin) {
         this.debut= debut;
         this.fin=fin;
+        //this.id = getOrCreateId (this);
+    }
+    
+    public Barre() {
+        this.debut= new Noeud();
+        this.fin= new Noeud();
+        //this.id = getOrCreateId (this);
+    }
+
+    public void setDebut(Noeud debut) {
+        this.debut = debut;
+    }
+
+    public void setFin(Noeud fin) {
+        this.fin = fin;
     }
     
     public Noeud getDebut() {
@@ -31,6 +46,23 @@ public class Barre {
     public Noeud getFin() {
         return this.fin;
     }
+
+    public void setCompose(Treillis compose) {
+        this.compose = compose;
+    }
+
+    public Treillis getCompose() {
+        return compose;
+    }
     
+    public Barre demandeBarre(){
+        Noeud noeudD = new Noeud();
+        Noeud noeudF = new Noeud();
+        System.out.println("noeud de début : ");
+        noeudD =noeudD.demandeNoeud();
+        System.out.println("point fin : ");
+        noeudF = noeudF.demandeNoeud();
+        return new Barre(noeudD, noeudF);
+    }
     
 }
