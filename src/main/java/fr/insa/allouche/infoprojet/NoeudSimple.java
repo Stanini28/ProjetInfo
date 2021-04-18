@@ -10,7 +10,10 @@ package fr.insa.allouche.infoprojet;
  * @author stanislasallouche
  */
 public class NoeudSimple extends Noeud {
-
+    
+    public NoeudSimple (Point position){
+        super(position);
+    }
     public void sommeX() {
 
     }
