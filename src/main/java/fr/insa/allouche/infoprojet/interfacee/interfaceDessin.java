@@ -23,7 +23,7 @@ import javafx.scene.layout.HBox;
  */
 public class interfaceDessin extends BorderPane {
     
-    private ToggleButton Select;
+    private Button Select;
     private Button zoneconstructible;
     private Button groupe;
     private Button noeudsimple;
@@ -35,11 +35,12 @@ public class interfaceDessin extends BorderPane {
     private ComboBox couleur; 
     private HBox entete; 
     
+    private Canvas zoneDessin;
     
     public interfaceDessin(){
-        ToggleGroup tgState = new ToggleGroup() ;
-        this.Select = new ToggleButton("Select") ;
-        this.Select.setToggleGroup(tgState);
+     
+        this.Select = new Button("Select") ;
+      
         this.zoneconstructible = new Button("Zone constructible");
         this.terrain = new Button("Terrain");
         this.supprimer = new Button("Supprimer");
@@ -49,8 +50,12 @@ public class interfaceDessin extends BorderPane {
         this.cataloguebarre = new ComboBox();
         this.couleur = new ComboBox();
         this.noeudappui = new ComboBox();
+        
         this.entete = new HBox(this.Select, this.noeudsimple, this.noeudappui, this.cataloguebarre,this.remove, this.groupe,this.terrain,this.supprimer,this.zoneconstructible,this.couleur);
         this.setTop(this.entete);
+        
+        this.zoneDessin = new Canvas(this,300,200);
+        this.setCenter(this.zoneDessin);
         
 
 
