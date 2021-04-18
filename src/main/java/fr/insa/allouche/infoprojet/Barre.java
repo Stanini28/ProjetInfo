@@ -60,7 +60,7 @@ public class Barre {
         Noeud noeudF = new Noeud();
         System.out.println("noeud de début : ");
         noeudD =noeudD.demandeNoeud();
-        System.out.println("point fin : ");
+        System.out.println("noeud de fin : ");
         noeudF = noeudF.demandeNoeud();
         return new Barre(noeudD, noeudF);
     }
