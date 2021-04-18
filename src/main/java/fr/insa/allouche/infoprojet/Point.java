@@ -14,6 +14,9 @@ public class Point {
        this.PX = PX;
        this.PY = PY;
     }
+    public Point() {
+        this(0, 0);
+    }
     
 
     /**
