@@ -11,34 +11,32 @@ import java.util.Set;
  *
  * @author stanislasallouche
  */
-
 public class Barre {
-    
+
     private int id;
     private Noeud debut;
     private Noeud fin;
     private Treillis compose;
-    
-    public Barre(Noeud debut , Noeud fin) {
-        this.debut= debut;
-        this.fin=fin;
-        //this.id = getOrCreateId (this);
-    }
-    
-    public Barre() {
-        this.debut= new Noeud();
-        this.fin= new Noeud();
-        //this.id = getOrCreateId (this);
+
+    public Barre(Noeud debut, Noeud fin) {
+        this.debut = debut;
+        this.fin = fin;
+//        this.id= Identificateuer.getOrCreateId(this);
     }
 
-    public void setDebut(Noeud debut) {
+    public Barre() {
+        this.debut = new Noeud();
+        this.fin = new Noeud();
+    }
+
+    void setDebut(Noeud debut) {
         this.debut = debut;
     }
 
-    public void setFin(Noeud fin) {
+    void setFin(Noeud fin) {
         this.fin = fin;
     }
-    
+
     public Noeud getDebut() {
         return this.debut;
     }
@@ -47,22 +45,35 @@ public class Barre {
         return this.fin;
     }
 
-    public void setCompose(Treillis compose) {
+    void setId(int id) {
+        this.id = id;
+    }
+    
+
+    void setCompose(Treillis compose) {
         this.compose = compose;
     }
 
     public Treillis getCompose() {
         return compose;
     }
-    
-    public Barre demandeBarre(){
-        Noeud noeudD = new Noeud();
-        Noeud noeudF = new Noeud();
+
+    public String toString() {
+        String res = "Barre "+this.id+"{ ";
+        res = res + "[" + this.getDebut().getPosition().getPX()
+                + " , " + this.getDebut().getPosition().getPY() + "] ,";
+        res = res + "[" + this.getFin().getPosition().getPX()
+                + " , " + this.getFin().getPosition().getPY() + "] }";
+        return res;
+    }
+
+    public static Barre demandeBarre() {
         System.out.println("noeud de début : ");
-        noeudD =noeudD.demandeNoeud();
+        Noeud noeudD = Noeud.demandeNoeud();
+
         System.out.println("noeud de fin : ");
-        noeudF = noeudF.demandeNoeud();
+        Noeud noeudF = Noeud.demandeNoeud();
         return new Barre(noeudD, noeudF);
     }
-    
+
 }
