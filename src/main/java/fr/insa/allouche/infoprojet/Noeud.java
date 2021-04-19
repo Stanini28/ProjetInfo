@@ -8,7 +8,6 @@ package fr.insa.allouche.infoprojet;
 import fr.insa.allouche.infoprojet.outils.Lire;
 //import java.util.Set;
 
-
 public class Noeud {
 
     private int id;
@@ -17,16 +16,14 @@ public class Noeud {
     private Treillis contient;
 
     //public Set<Barre> extremites;
-    
-    public Noeud (Point position){
-        this.position = new Point(position.getPX(),position.getPY());
-    }
-    
-    public Noeud() {
-        this.position= new Point();
+    public Noeud(Point position) {
+        this.position = new Point(position.getPX(), position.getPY());
     }
 
-    
+    public Noeud() {
+        this.position = new Point();
+    }
+
     public Point getPosition() {
         return position;
     }
@@ -34,12 +31,23 @@ public class Noeud {
     public Treillis getContient() {
         return contient;
     }
-    
+
     void setPosition(Point position) {
         this.position = position;
     }
+
+    public void setId(int id) {
+        this.id = id;
+    }
     
     
+    public String toString() {
+        String res = "Noeud "+this.id+" [";
+        res = res + this.getPosition().getPX()
+                + " , " + this.getPosition().getPY() + "]";
+        return res;
+
+    }
 
     public void sommeX() {
 
@@ -53,20 +61,25 @@ public class Noeud {
 
     }
 
-    
-
     void setContient(Treillis contient) {
         this.contient = contient;
     }
-    
-    public Noeud demandeNoeud(){
-        Point noeud = new Point();
+
+    public static Noeud demandeNoeud() {
+        System.out.println("voulez vous ajouter un noeud simple ou double ? écrire s ou d");
+        if (Lire.S().equals("s")) {
+
+        }
+        double abs = 0;
         System.out.println("abscisse : ");
-        noeud.setPX(Lire.d());
+        abs = Lire.d();
+
+        double ord = 0;
         System.out.println("ordonnée : ");
-        noeud.setPY(Lire.d());
+        ord = Lire.d();
+
+        Point noeud = new Point(abs, ord);
         return new Noeud(noeud);
     }
-    
-}
 
+}
