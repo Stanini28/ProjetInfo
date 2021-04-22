@@ -50,8 +50,11 @@ public class interfaceDessin extends BorderPane {
         this.remove = new RadioButton("Remove");
         this.cataloguebarre = new ComboBox();
         this.couleur = new ComboBox();
+        this.couleur.getItems().addAll( "Couleur",Color.RED, Color.BLACK, Color.BLUE, Color.PINK, Color.TURQUOISE);
+        this.couleur.getSelectionModel().selectFirst();
         this.noeudappui = new ComboBox();
-        
+        this.noeudappui.getItems().addAll("noeud appui","appui double","appui simple");
+        this.noeudappui.getSelectionModel().selectFirst();
         this.entete = new HBox(this.Select, this.noeudsimple, this.noeudappui, this.cataloguebarre,this.remove, this.groupe,this.terrain,this.supprimer,this.zoneconstructible,this.couleur);
         this.setTop(this.entete);
         
