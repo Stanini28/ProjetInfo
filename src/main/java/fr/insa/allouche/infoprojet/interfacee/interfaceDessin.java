@@ -34,6 +34,7 @@ public class interfaceDessin extends BorderPane {
     private ComboBox cataloguebarre;
     private ComboBox couleur; 
     private HBox entete; 
+  
     
     private Canvas zoneDessin;
     
@@ -56,15 +57,14 @@ public class interfaceDessin extends BorderPane {
         
         this.zoneDessin = new Canvas(this,300,200);
         this.setCenter(this.zoneDessin);
-        
+    
 
 
-        
-        
-        
-        
-    }
-    }
+  }
+}
+    
+    
+    
 
    
     
