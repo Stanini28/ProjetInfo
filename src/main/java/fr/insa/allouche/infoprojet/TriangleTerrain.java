@@ -13,6 +13,7 @@ public class TriangleTerrain {
     private SegmentTerrain SegTerrain1;
     private SegmentTerrain SegTerrain2;
     private SegmentTerrain SegTerrain3;
+    private Terrain constitue;
     
     //reprendre
     public TriangleTerrain(SegmentTerrain SegTerrain1, SegmentTerrain SegTerrain2,
@@ -45,7 +46,20 @@ public class TriangleTerrain {
     public SegmentTerrain getSegTerrain3() {
         return SegTerrain3;
     }
+
+    void setConstitue(Terrain constitue) {
+        this.constitue = constitue;
+    }
+
+    public Terrain getConstitue() {
+        return constitue;
+    }
     
+    public String toString(){
+        String res= "";
+        res= res + "Triangle terrain";
+        return res;
+    }
     
     public void angle() {
 

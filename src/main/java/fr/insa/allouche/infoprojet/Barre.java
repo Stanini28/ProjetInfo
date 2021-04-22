@@ -17,11 +17,14 @@ public class Barre {
     private Noeud debut;
     private Noeud fin;
     private Treillis compose;
+    private TypeBarre type;
 
     public Barre(Noeud debut, Noeud fin) {
         this.debut = debut;
         this.fin = fin;
 //        this.id= Identificateuer.getOrCreateId(this);
+        this.debut.addBarre(this);
+        this.fin.addBarre(this);
     }
 
     public Barre() {
@@ -48,8 +51,19 @@ public class Barre {
     void setId(int id) {
         this.id = id;
     }
-    
 
+    public int getId() {
+        return id;
+    }
+    
+    public TypeBarre getType() {
+        return type;
+    }
+
+    void setType(TypeBarre type) {
+        this.type = type;
+    }
+    
     void setCompose(Treillis compose) {
         this.compose = compose;
     }

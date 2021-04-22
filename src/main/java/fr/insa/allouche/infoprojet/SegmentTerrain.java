@@ -47,8 +47,8 @@ public class SegmentTerrain {
     
     
     public void add(NoeudAppui nA) {
-        if (nA.getSegmentTerrain() != this) {
-            if (nA.getSegmentTerrain() != null) {
+        if (nA.getappartient() != this) {
+            if (nA.getappartient() != null) {
                 throw new Error("Le Noeud appui appartient déjà à un autre SegmentTerrain");
             }
             this.appartient.add(nA);
@@ -57,7 +57,7 @@ public class SegmentTerrain {
     }
     
     public void remove(NoeudAppui nA) {
-        if (nA.getSegmentTerrain() != this) {
+        if (nA.getappartient() != this) {
             throw new Error("Le Noeud appui n'appartient pas à SegmentTerrain");
         }
         this.appartient.remove(nA);

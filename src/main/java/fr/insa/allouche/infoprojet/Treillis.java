@@ -19,7 +19,6 @@ public class Treillis {
 
     public Treillis() {
 
-        this.base = new Terrain();
         this.compose = new ArrayList();
         this.contient = new ArrayList();
         this.identite = new Identificateur();
@@ -36,6 +35,22 @@ public class Treillis {
         }
     }
 
+    public void removeBarre(Barre barre) {
+        if (barre.getCompose() != this) {
+            throw new Error("La barre n'appartient pas au treillis");
+        }
+        this.compose.remove(barre);
+        barre.setCompose(null);
+    }
+
+    public void removeAllBarre() {
+
+        for (int i = 0; i < this.compose.size(); i++) {
+            this.compose.remove(i);
+            this.compose.get(i).setCompose(null);
+        }
+    }
+
     public void addNoeud(Noeud noeud) {
         if (noeud.getContient() != this) {
             if (noeud.getContient() != null) {
@@ -47,14 +62,49 @@ public class Treillis {
         }
     }
 
+    public void removeNoeud(Noeud noeud) {
+        if (noeud.getContient() != this) {
+            throw new Error("Le Noeud n'appartient pas au treillis");
+        }
+        this.contient.remove(noeud);
+        noeud.setContient(null);
+    }
+    
+    public void removeAllNoeud() {
+
+        for (int i = 0; i < this.contient.size(); i++) {
+            this.contient.remove(i);
+            this.contient.get(i).setContient(null);
+        }
+    }
+
+    public void addTerrain(Terrain t) {
+        if (t.getBase() != this) {
+            if (t.getBase() != null) {
+                throw new Error("Le Terrain appartient déjà à un autre Treillis");
+            }
+            this.base = t;
+            t.setBase(this);
+        }
+    }
+
+    public void removeTerrain(Terrain t) {
+        if (t.getBase() != this) {
+            throw new Error("Le Terrain n'appartient pas au treillis");
+        }
+        this.base = null;
+        t.setBase(null);
+    }
+
     public String toString() {
         String res = "Treillis {\n";
         for (int i = 0; i < this.compose.size(); i++) {
-            res = res + this.compose.get(i).toString() +"\n";
+            res = res + this.compose.get(i).toString() + "\n";
         }
         for (int i = 0; i < this.contient.size(); i++) {
-            res = res +this.contient.get(i).toString() + "\n";
+            res = res + this.contient.get(i).toString() + "\n";
         }
+        res = res + this.base;
         return res + "}";
     }
 
@@ -84,6 +134,8 @@ public class Treillis {
         int rep = -1;
         while (rep != 0) {
             System.out.println("1) afficher tout");
+            System.out.println("12) afficher tous les noeuds");
+            System.out.println("13) afficher tous les barres");
             System.out.println("2) ajouter une barre");
             System.out.println("3) ajouter une noeud appui");
             System.out.println("4) ajouter une un segment terrain à partir "
@@ -93,6 +145,10 @@ public class Treillis {
                     + " à un segment terrain");
             System.out.println("7) supprimer tous les noeuds appui appartenant"
                     + " à un segment terrain");
+            System.out.println("8) suprimer un noeud");
+            System.out.println("9) suprimer tous les noeud du treilli");
+            System.out.println("10) suprimer une barre");
+            System.out.println("11) suprimer toutes les barres du treill");
             System.out.println("0) quitter");
             System.out.println("votre choix : ");
             rep = Lire.i();
@@ -101,6 +157,40 @@ public class Treillis {
             } else if (rep == 2) {
                 Barre barre = Barre.demandeBarre();
                 this.addBarre(barre);
+            } else if (rep == 8 || rep == 12){
+                System.out.println("Les noeud contenu dans le treillis sont : \n");
+                for (int i = 0; i < this.contient.size(); i++) {
+                    System.out.println(this.contient.get(i)+"\n");
+                }
+                if (rep == 8){
+                    System.out.println("Quel noeud voulez-vous supprimer ?");
+                    int id = Lire.i();
+                    for (int i = 0; i < this.contient.size(); i++) {
+                        if (this.contient.get(i).getId()== id){
+                        removeNoeud(this.contient.get(i));  
+                        }
+                    }
+                }
+            } else if (rep == 10 || rep == 13){
+                System.out.println("Les barres contenu dans le treillis sont : \n");
+                for (int i = 0; i < this.compose.size(); i++) {
+                    System.out.println(this.compose.get(i)+"\n");
+                }
+                if (rep == 10){
+                    System.out.println("Quel barre voulez-vous supprimer ?");
+                    int id = Lire.i();
+                    for (int i = 0; i < this.compose.size(); i++) {
+                        if (this.compose.get(i).getId()== id){
+                        removeBarre(this.compose.get(i));  
+                        }
+                    }
+                }
+                //marche pas
+            } else if (rep ==9){
+                removeAllNoeud();
+                //marche pas
+            } else if (rep ==11){
+                removeAllBarre();
             }
         }
     }

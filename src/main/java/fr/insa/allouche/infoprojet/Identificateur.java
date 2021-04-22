@@ -26,7 +26,7 @@ public class Identificateur {
     public Identificateur  (){
         this(0);
     }
-    
+
     public int getOrCreateId (Object objet){
         Integer id = this.ObjetVersId.get(objet) ;
         if ( id != null) {

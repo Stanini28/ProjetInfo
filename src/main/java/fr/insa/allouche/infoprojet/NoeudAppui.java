@@ -12,15 +12,15 @@ package fr.insa.allouche.infoprojet;
 public class NoeudAppui extends Noeud {
     
     private double alpha; 
-    private SegmentTerrain SegmentTerrain;
+    private SegmentTerrain appartient;
     private Point coord;
     
-    public SegmentTerrain getSegmentTerrain(){
-        return SegmentTerrain;
+    public SegmentTerrain getappartient(){
+        return appartient;
     }
     
-    void setSegmentTerrain (SegmentTerrain segTerrain) {
-        this.SegmentTerrain = segTerrain;
+    void setSegmentTerrain (SegmentTerrain appartient) {
+        this.appartient = appartient;
     }
     
     public NoeudAppui(Point coord) {

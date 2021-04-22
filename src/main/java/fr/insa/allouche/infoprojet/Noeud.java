@@ -6,6 +6,8 @@
 package fr.insa.allouche.infoprojet;
 
 import fr.insa.allouche.infoprojet.outils.Lire;
+import java.util.ArrayList;
+import java.util.List;
 //import java.util.Set;
 
 public class Noeud {
@@ -14,12 +16,14 @@ public class Noeud {
     private Point position;
     private Poids P;
     private Treillis contient;
+    private List<Barre> liee;
 
     //public Set<Barre> extremites;
     public Noeud(Point position) {
         this.position = new Point(position.getPX(), position.getPY());
+        this.liee = new ArrayList();
     }
-
+    
     public Noeud() {
         this.position = new Point();
     }
@@ -36,8 +40,16 @@ public class Noeud {
         this.position = position;
     }
 
-    public void setId(int id) {
+    public int getId() {
+        return id;
+    }
+
+    void setId(int id) {
         this.id = id;
+    }
+
+    public List<Barre> getLiee() {
+        return liee;
     }
     
     
@@ -60,7 +72,11 @@ public class Noeud {
     public void solUnique() {
 
     }
-
+    
+    public void addBarre(Barre barre){
+        this.liee.add(barre);
+    }
+    
     void setContient(Treillis contient) {
         this.contient = contient;
     }
