@@ -43,6 +43,10 @@ public class SegmentTerrain {
     void setFaitPartieDe(TriangleTerrain faitPartieDe) {
         this.faitPartieDe = faitPartieDe;
     }
+
+    void setAppartient(List<NoeudAppui> appartient) {
+        this.appartient = appartient;
+    }
     
     
     
@@ -72,6 +76,12 @@ public class SegmentTerrain {
     }
     
     // Manque size et clear par rapport à la classe groupe du prof
+    
+    public String toString(){
+        String res="";
+        res = "{"+ this.debut.toString()+" ,"+this.fin.toString()+ "}";
+        return res;
+    }
     
     public static void pCaract(Point P, Point Q, Point R) {
         double angle = Math.atan2(P.getPX() - Q.getPY(), P.getPX() - Q.getPX()) - Math.atan2(P.getPY() - R.getPY(), P.getPX() - R.getPX());

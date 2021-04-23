@@ -40,4 +40,9 @@ public class Point {
     public void setPY(double Px) {
         this.PX=Px;
     }
+    public String toString (){
+        String res = "";
+        res = "[" +this.PX+ " ," +this.PY+ "]";
+        return res;
+    }
 }

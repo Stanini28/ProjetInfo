@@ -35,6 +35,10 @@ public class TriangleTerrain {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public SegmentTerrain getSegTerrain1() {
         return SegTerrain1;
     }
@@ -47,6 +51,18 @@ public class TriangleTerrain {
         return SegTerrain3;
     }
 
+    void setSegTerrain1(SegmentTerrain SegTerrain1) {
+        this.SegTerrain1 = SegTerrain1;
+    }
+
+    void setSegTerrain2(SegmentTerrain SegTerrain2) {
+        this.SegTerrain2 = SegTerrain2;
+    }
+
+    void setSegTerrain3(SegmentTerrain SegTerrain3) {
+        this.SegTerrain3 = SegTerrain3;
+    }
+
     void setConstitue(Terrain constitue) {
         this.constitue = constitue;
     }
@@ -57,9 +73,13 @@ public class TriangleTerrain {
     
     public String toString(){
         String res= "";
-        res= res + "Triangle terrain";
+        res = "Triangle terrain "+this.id+" : \n"
+                + "Segment terrrain 1 :"+this.SegTerrain1.toString()+ 
+                "\nSegment terrrain 2 :"+this.SegTerrain2.toString()+ 
+                "\nSegment terrrain 3 :"+this.SegTerrain3.toString();
         return res;
     }
+    
     
     public void angle() {
 

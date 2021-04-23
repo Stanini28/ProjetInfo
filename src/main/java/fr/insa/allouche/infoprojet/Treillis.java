@@ -46,9 +46,9 @@ public class Treillis {
     public void removeAllBarre() {
 
         for (int i = 0; i < this.compose.size(); i++) {
-            this.compose.remove(i);
             this.compose.get(i).setCompose(null);
         }
+        this.compose.clear();
     }
 
     public void addNoeud(Noeud noeud) {
@@ -71,11 +71,11 @@ public class Treillis {
     }
     
     public void removeAllNoeud() {
-
+        
         for (int i = 0; i < this.contient.size(); i++) {
-            this.contient.remove(i);
             this.contient.get(i).setContient(null);
         }
+            this.contient.clear();
     }
 
     public void addTerrain(Terrain t) {
@@ -85,6 +85,9 @@ public class Treillis {
             }
             this.base = t;
             t.setBase(this);
+            for (int i = 0; i < t.getConstitue().size(); i++) {
+                t.getConstitue().get(i).setId(this.identite.getOrCreateId(base.getConstitue().get(i)));
+            }
         }
     }
 
@@ -104,7 +107,7 @@ public class Treillis {
         for (int i = 0; i < this.contient.size(); i++) {
             res = res + this.contient.get(i).toString() + "\n";
         }
-        res = res + this.base;
+        res = res + this.base.toString();
         return res + "}";
     }
 
@@ -121,48 +124,73 @@ public class Treillis {
         Barre b2 = new Barre(n3, n4);
         Barre b3 = new Barre(n4, n1);
         Treillis res = new Treillis();
+        Terrain t1 = new Terrain(pos1, pos2, pos3, pos4);
+        SegmentTerrain seg1 = new SegmentTerrain(pos1, pos2);
+        SegmentTerrain seg2 = new SegmentTerrain(pos2, pos3);
+        SegmentTerrain seg3 = new SegmentTerrain(pos3, pos4);
+        SegmentTerrain seg4 = new SegmentTerrain(pos4, pos2);
+        TriangleTerrain tT1 = new TriangleTerrain(seg1, seg2, seg3);
+        TriangleTerrain tT2 = new TriangleTerrain(seg4, seg2, seg3);
+        t1.addTriangleTerrain(tT1);
+        t1.addTriangleTerrain(tT2);
         res.addBarre(b1);
         res.addBarre(b2);
         res.addBarre(b3);
         res.addNoeud(n1);
         res.addNoeud(n2);
         res.addNoeud(n3);
+        res.addTerrain(t1);
         return res;
     }
 
     public void menuTexte() {
         int rep = -1;
         while (rep != 0) {
-            System.out.println("1) afficher tout");
-            System.out.println("12) afficher tous les noeuds");
-            System.out.println("13) afficher tous les barres");
-            System.out.println("2) ajouter une barre");
-            System.out.println("3) ajouter une noeud appui");
-            System.out.println("4) ajouter une un segment terrain à partir "
-                    + "ne noeud appui déjà existant");
-            System.out.println("5) ajouter un segment terrain");
-            System.out.println("6) supprimer un noeud appui appartenant"
+            System.out.println("1) afficher tout");//ok
+            System.out.println("2) afficher tous les noeuds");//ok
+            System.out.println("3) afficher tous les noeuds appui");
+            System.out.println("4) afficher tous les noeuds appui simple");
+            System.out.println("5) afficher tous les noeuds appui double");
+            System.out.println("6) afficher tous les noeuds simples");
+            System.out.println("7) afficher toutes les barres");//ok
+            System.out.println("8) afficher le terrain");//ok
+            System.out.println("9) afficher tous les triangles terrains"); //ok
+            System.out.println("10) afficher tous les segments terrains");
+            System.out.println("11) afficher tous les types de barres");
+            System.out.println("12) ajouter une barre");//ok
+            System.out.println("13) ajouter une noeud");//ok
+            System.out.println("14) ajouter un segment terrain");
+            System.out.println("15) ajouter un triangle terrain");
+            System.out.println("16) ajouter un type de barre");
+            System.out.println("17) ajouter un terrain");
+            System.out.println("18) supprimer un noeud");//ok
+            System.out.println("19) supprimer tous les noeuds appui appartenant"
                     + " à un segment terrain");
-            System.out.println("7) supprimer tous les noeuds appui appartenant"
-                    + " à un segment terrain");
-            System.out.println("8) suprimer un noeud");
-            System.out.println("9) suprimer tous les noeud du treilli");
-            System.out.println("10) suprimer une barre");
-            System.out.println("11) suprimer toutes les barres du treill");
+            System.out.println("20) supprimer tous les noeuds appartenant"
+                    + " à une barre");//ok
+            System.out.println("21) supprimer un noeud et toutes les"
+                    + " relié à ce dernier");
+            System.out.println("22) suprimer tous les noeud du treilli");//ok
+            System.out.println("23) suprimer une barre");//ok
+            System.out.println("24) suprimer toutes les barres du treillis");//ok
+            System.out.println("25) suprimer tous les triangles terrain");//ok
+            System.out.println("26) suprimer un triangle terrain");//ok
+            System.out.println("27) suprimer un type de barre");
+            System.out.println("28) suprimer tous les types de barres");
             System.out.println("0) quitter");
             System.out.println("votre choix : ");
             rep = Lire.i();
             if (rep == 1) {
                 System.out.println(this);
-            } else if (rep == 2) {
+            } else if (rep == 12) {
                 Barre barre = Barre.demandeBarre();
                 this.addBarre(barre);
-            } else if (rep == 8 || rep == 12){
+            } else if (rep == 2 || rep == 18){
                 System.out.println("Les noeud contenu dans le treillis sont : \n");
                 for (int i = 0; i < this.contient.size(); i++) {
                     System.out.println(this.contient.get(i)+"\n");
                 }
-                if (rep == 8){
+                if (rep == 18){
                     System.out.println("Quel noeud voulez-vous supprimer ?");
                     int id = Lire.i();
                     for (int i = 0; i < this.contient.size(); i++) {
@@ -171,12 +199,12 @@ public class Treillis {
                         }
                     }
                 }
-            } else if (rep == 10 || rep == 13){
+            } else if (rep == 7 || rep == 23){
                 System.out.println("Les barres contenu dans le treillis sont : \n");
                 for (int i = 0; i < this.compose.size(); i++) {
                     System.out.println(this.compose.get(i)+"\n");
                 }
-                if (rep == 10){
+                if (rep == 23){
                     System.out.println("Quel barre voulez-vous supprimer ?");
                     int id = Lire.i();
                     for (int i = 0; i < this.compose.size(); i++) {
@@ -186,11 +214,29 @@ public class Treillis {
                     }
                 }
                 //marche pas
-            } else if (rep ==9){
+            } else if (rep ==22){
                 removeAllNoeud();
                 //marche pas
-            } else if (rep ==11){
+            } else if (rep ==24){
                 removeAllBarre();
+            } else if (rep == 8){
+                System.out.println(this.base.toString());
+            } else if (rep == 9 || rep == 26){
+                
+                for (int i = 0; i < this.base.getConstitue().size(); i++) {
+                System.out.println(this.base.getConstitue().get(i));
+                }
+                if (rep == 26){
+                    System.out.println("Quel triangle terrain voulez-vous supprimer ?");
+                    int id = Lire.i();
+                    for (int i = 0; i < this.base.getConstitue().size(); i++) {
+                        if (this.base.getConstitue().get(i).getId()== id){
+                        this.base.removeTriangleTerrain(this.base.getConstitue().get(i));  
+                        }
+                    }
+                }
+            } else if (rep == 25){
+                this.base.removeAllTriangleTerrain();
             }
         }
     }
