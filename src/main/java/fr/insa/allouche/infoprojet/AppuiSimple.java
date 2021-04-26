@@ -11,10 +11,14 @@ package fr.insa.allouche.infoprojet;
  */
 public class AppuiSimple extends NoeudAppui {
     
-    public AppuiSimple(Point coordS) {
-        super(coordS);
+    public AppuiSimple(Noeud noeud) {
+        super(noeud);
     }
 
     private double dTangentielle;
-
+    
+    public NoeudAppui demandeNoeudAppui(){
+        NoeudAppui na = new NoeudAppui(demandeNoeud());
+        return na;
+    }
 }

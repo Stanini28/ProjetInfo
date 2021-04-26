@@ -30,6 +30,18 @@ public class TriangleTerrain {
         SegTerrain2.setFaitPartieDe(this);
         SegTerrain2.setFaitPartieDe(this);
     }
+    
+    public TriangleTerrain(Point pt1, Point pt2, Point pt3) {
+        
+        //pas sur que la classe identificateur attribut le bon identifiant
+        this.id= getId();
+        this.pointToSeg(pt1, pt2, pt3);
+        
+        //defini à quel Triangle terrain appartient les segment terrain
+        SegTerrain1.setFaitPartieDe(this);
+        SegTerrain2.setFaitPartieDe(this);
+        SegTerrain2.setFaitPartieDe(this);
+    }
 
     public int getId() {
         return id;
@@ -80,8 +92,23 @@ public class TriangleTerrain {
         return res;
     }
     
+    public void pointToSeg(Point pt1, Point pt2, Point pt3){
+        this.setSegTerrain1(new SegmentTerrain(pt1 , pt2));
+        this.setSegTerrain2(new SegmentTerrain(pt2 , pt3));
+        this.setSegTerrain3(new SegmentTerrain(pt3 , pt1));
+    }
     
     public void angle() {
 
+    }
+    
+    public static TriangleTerrain demandeTriangleTerrain(){
+        System.out.println("Segment terrain 1 :");
+        SegmentTerrain seg1 = SegmentTerrain.demandeSegmentTerain();
+        System.out.println("Segment terrain 2 :");
+        SegmentTerrain seg2 = SegmentTerrain.demandeSegmentTerain();
+        System.out.println("Segment terrain 3 :");
+        SegmentTerrain seg3 = SegmentTerrain.demandeSegmentTerain();
+        return new TriangleTerrain(seg1, seg2, seg3);
     }
 }

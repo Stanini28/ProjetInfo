@@ -5,6 +5,7 @@
  */
 package fr.insa.allouche.infoprojet;
 
+import fr.insa.allouche.infoprojet.outils.Lire;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +23,14 @@ public class Terrain {
         this.constitue = new ArrayList();
     }
 
+    public Terrain(double xmin, double xmax, double ymin, double ymax) {
+        this.xmin = xmin;
+        this.xmax = xmax;
+        this.ymax = ymax;
+        this.ymin = ymin;
+        this.constitue = new ArrayList();
+    }
+
     public Treillis getBase() {
         return base;
     }
@@ -33,7 +42,7 @@ public class Terrain {
     public List<TriangleTerrain> getConstitue() {
         return constitue;
     }
-
+    
     public void x_yMin_x_yMax(Point p1, Point p2, Point p3, Point p4) {
         double res = 0;
         double p1X = p1.getPX();
@@ -73,8 +82,6 @@ public class Terrain {
             tT.setConstitue(this);
         }
     }
-    
-    
 
     public void removeTriangleTerrain(TriangleTerrain tT) {
         if (tT.getConstitue() != this) {
@@ -99,12 +106,36 @@ public class Terrain {
 
     public String toString() {
         String res = "";
-        res = res + "Terrain :\nZone constructible : { xmin = " + this.xmin + " xmax = " + this.xmax
-                + " ymin = " + this.ymin + " ymax = " + this.ymax + "}\n";
+        res = res + "Terrain :{\n       Zone constructible : { xmin = " + this.xmin + " xmax = " + this.xmax
+                + " ymin = " + this.ymin + " ymax = " + this.ymax + "}\n\n";
         for (int i = 0; i < this.constitue.size(); i++) {
-            res = res + this.constitue.get(i).toString() + "\n";
+            res = res + "       " + this.constitue.get(i).toString() + "\n\n";
         }
-        return res;
+        return res + "}";
+    }
+
+    public static Terrain demandeTerrain() {
+        System.out.println("initialisation de la zonne constructible :");
+        System.out.println("donnez xmin :");
+        double xmin = Lire.d();
+        System.out.println("donnez ymin :");
+        double ymin = Lire.d();
+        System.out.println("donnez xmax :");
+        double xmax = Lire.d();
+        System.out.println("donnez ymax :");
+        double ymax = Lire.d();
+        
+        Terrain t = new Terrain(xmin, xmax, ymin, ymax);
+        
+        System.out.println("initialisation des ou du triangle terrain : ");
+        int rep = 1;
+        while (rep == 1) {
+            TriangleTerrain tT = TriangleTerrain.demandeTriangleTerrain();
+            t.addTriangleTerrain(tT);
+            System.out.println("voulez vous rentrer un nouveau triangle terrain ? si oui repondre 1 sinon 0");
+            rep = Lire.i();
+        }
+        return t;
     }
 
 }

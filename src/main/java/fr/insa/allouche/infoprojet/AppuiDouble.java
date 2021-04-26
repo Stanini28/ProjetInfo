@@ -10,13 +10,16 @@ package fr.insa.allouche.infoprojet;
  * @author stanislasallouche
  */
 public class AppuiDouble extends NoeudAppui {
-    
+
     private double Tangent;
     private double Normal;
-    
-    public AppuiDouble (Point coordD) {
-        super(coordD);
-    }
-    
 
+    public AppuiDouble(Noeud noeud) {
+        super(noeud);
+    }
+
+    public NoeudAppui demandeNoeudAppui() {
+        NoeudAppui na = new NoeudAppui(demandeNoeud());
+        return na;
+    }
 }

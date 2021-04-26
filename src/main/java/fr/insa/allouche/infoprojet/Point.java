@@ -5,6 +5,8 @@
  */
 package fr.insa.allouche.infoprojet;
 
+import fr.insa.allouche.infoprojet.outils.Lire;
+
 public class Point {
     
     private double PX;
@@ -44,5 +46,15 @@ public class Point {
         String res = "";
         res = "[" +this.PX+ " ," +this.PY+ "]";
         return res;
+    }
+    
+    public static Point demandePoint(){
+        System.out.println("abscisse : ");
+        double ab = Lire.d();
+        System.out.println("ordonnée : ");
+        double ord = Lire.d();
+        
+        Point pt = new Point(ab, ord);
+        return pt;
     }
 }

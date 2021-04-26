@@ -95,11 +95,17 @@ public class SegmentTerrain {
                 System.out.println("Positif");
             } else {
                 System.out.println("Négatif");
-
             }
-
         }
-
+    }
+    
+    public static SegmentTerrain demandeSegmentTerain(){
+        System.out.println("Coordonée du premier noeud appui : ");
+        Point p1 = Point.demandePoint();
+        System.out.println("Coordonée du deuxième noeud appui : ");
+        Point p2 = Point.demandePoint();
+        SegmentTerrain seg = new SegmentTerrain(p1, p2);
+        return seg;
     }
 
 }

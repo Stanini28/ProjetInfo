@@ -23,11 +23,16 @@ public class NoeudAppui extends Noeud {
         this.appartient = appartient;
     }
     
-    public NoeudAppui(Point coord) {
-        super(coord);
+    public NoeudAppui(Noeud noeud) {
+        super(noeud.getPosition());
     }
     
     public void positionP() {
 
+    }
+    
+    public NoeudAppui demandeNoeudAppui(){
+        NoeudAppui na = new NoeudAppui(demandeNoeud());
+        return na;
     }
 }
