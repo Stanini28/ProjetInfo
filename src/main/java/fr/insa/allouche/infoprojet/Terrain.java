@@ -43,6 +43,7 @@ public class Terrain {
         return constitue;
     }
     
+    
     public void x_yMin_x_yMax(Point p1, Point p2, Point p3, Point p4) {
         double res = 0;
         double p1X = p1.getPX();
@@ -80,6 +81,7 @@ public class Terrain {
             }
             this.constitue.add(tT);
             tT.setConstitue(this);
+//            tT.setId(this.base.getIdentite().getOrCreateId(tT));
         }
     }
 

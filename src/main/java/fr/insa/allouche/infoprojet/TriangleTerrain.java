@@ -19,8 +19,8 @@ public class TriangleTerrain {
     public TriangleTerrain(SegmentTerrain SegTerrain1, SegmentTerrain SegTerrain2,
             SegmentTerrain SegTerrain3 ) {
         
-        //pas sur que la classe identificateur attribut le bon identifiant
-        this.id= getId();
+//        pas sur que la classe identificateur attribut le bon identifiant
+//        this.id= getId();
         this.SegTerrain1 = SegTerrain1;
         this.SegTerrain2 = SegTerrain2;
         this.SegTerrain3 = SegTerrain3;
@@ -47,7 +47,7 @@ public class TriangleTerrain {
         return id;
     }
 
-    public void setId(int id) {
+    void setId(int id) {
         this.id = id;
     }
 

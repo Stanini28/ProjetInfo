@@ -30,6 +30,14 @@ public class Treillis {
         this.base = base;
     }
 
+    public Identificateur getIdentite() {
+        return identite;
+    }
+
+    public void idTT(TriangleTerrain tt){
+        tt.setId(this.identite.getOrCreateId(tt));
+    }
+    
     public void addBarre(Barre barre) {
         if (barre.getCompose() != this) {
             if (barre.getCompose() != null) {
@@ -332,11 +340,12 @@ public class Treillis {
                 }
             } else if (rep == 25) {
                 this.base.removeAllTriangleTerrain();
-            }else if (rep == 14){
+            } else if (rep == 14) {
                 SegmentTerrain.demandeSegmentTerain();
-            }else if (rep == 15){
-                this.base.getConstitue().add(TriangleTerrain.demandeTriangleTerrain());
-                this.base.addTriangleTerrain(TriangleTerrain.demandeTriangleTerrain());
+            } else if (rep == 15) {
+                TriangleTerrain tt = TriangleTerrain.demandeTriangleTerrain();
+                this.base.addTriangleTerrain(tt);
+                this.idTT(tt);
             }
         }
     }
