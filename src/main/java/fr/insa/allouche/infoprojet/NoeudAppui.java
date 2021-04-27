@@ -40,9 +40,6 @@ public class NoeudAppui extends Noeud {
         this.calculAlpha();
     }
     
-    public void positionP() {
-
-    }
     
     public NoeudAppui demandeNoeudAppui(){
         NoeudAppui na = new NoeudAppui(demandeNoeud().getPosition(), SegmentTerrain.demandeSegmentTerain());

@@ -60,7 +60,7 @@ public class TypeBarre {
         this.type.clear();
     }
     
-    public TypeBarre DemandeTypeBarre(){
+    public static TypeBarre DemandeTypeBarre(){
         System.out.println("Initialisation du type de barre que vous-voulez creer");
         
         System.out.println("Quel est sont coût au mètre  ?");
@@ -70,11 +70,10 @@ public class TypeBarre {
         System.out.println("Quel est la longeur min ,");
         double lMin = Lire.d();
         System.out.println("Quel est la force de traction max ?");
-        double rTractiion = Lire.d();
+        double rTraction = Lire.d();
         System.out.println("Quel est la force de Compressin max ?");
-        double rComp = Lire.d();
-        TypeBarre tb = new TypeBarre(coutAuMetre, lMin, lMax, rTraction, rComp);
-        return tb;
+        double rComp = Lire.d(); 
+        return new TypeBarre(coutM, lMin, lMax, rTraction, rComp);
     }
 
     public int getId() {

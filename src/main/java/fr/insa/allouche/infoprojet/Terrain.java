@@ -82,6 +82,7 @@ public class Terrain {
             this.constitue.add(tT);
             tT.setConstitue(this);
 //            tT.setId(this.base.getIdentite().getOrCreateId(tT));
+            
         }
     }
 

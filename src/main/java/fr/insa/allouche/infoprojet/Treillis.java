@@ -250,10 +250,9 @@ public class Treillis {
             System.out.println("13) ajouter une noeud");//ok
             System.out.println("29) ajouter une noeud Appui sur un segment terrain");//ok
             System.out.println("14) ajouter un segment terrain");//ok
-            System.out.println("15) ajouter un triangle terrain");
-            System.out.println("16) ajouter un type de barre");
-            System.out.println("17) ajouter un terrain");
-            System.out.println("17) ajouter un type de barre");
+            System.out.println("15) ajouter un triangle terrain");//ok
+            System.out.println("16) ajouter un type de barre");//ok
+            System.out.println("17) ajouter un terrain");//ok
             System.out.println("18) supprimer un noeud");//ok
             System.out.println("19) supprimer tous les noeuds appui appartenant"
                     + " à un segment terrain");
@@ -268,6 +267,7 @@ public class Treillis {
             System.out.println("26) suprimer un triangle terrain");//ok
             System.out.println("27) suprimer un type de barre");//ok
             System.out.println("28) suprimer tous les types de barres");
+            System.out.println("30) Force execer sur un noeud ");//ok
             System.out.println("0) quitter");
             System.out.println("votre choix : ");
             rep = Lire.i();
@@ -411,7 +411,21 @@ public class Treillis {
                     if (rep2 == 3) {
                         this.addAppuiDouble(new AppuiDouble(alpha, this.base.getConstitue().get(rep1).getSegTerrain3()));
                     }
+                } 
+            } else if (rep == 30){
+                for (int i = 0; i < this.contient.size(); i++) {
+                    System.out.println(this.contient.get(i).toString()+"\n");
                 }
+                System.out.println("Parmis les différents nooeuds du treilli sur lequel voulez vous exercer une force ?");
+                int res = Lire.i();
+                System.out.println("Donner la composante en x");
+                double Fx = Lire.d();
+                System.out.println("Donner la composante en y");
+                double Fy = Lire.d();
+            } else if (rep == 16){
+                this.addTypeBarre(TypeBarre.DemandeTypeBarre());
+            } else if (rep == 17){
+                this.addTerrain(Terrain.demandeTerrain());
             }
         }
     }
