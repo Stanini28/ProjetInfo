@@ -26,10 +26,8 @@ public class Noeud {
         this.liee = new ArrayList();
     }
 
-    public Noeud(double Fx, double Fy) {
+    public Noeud() {
         this.position = new Point();
-        this.forceX = Fx;
-        this.forceY = Fy;
     }
 
     public Point getPosition() {
