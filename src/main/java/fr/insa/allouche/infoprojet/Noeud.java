@@ -17,6 +17,8 @@ public class Noeud {
     private Poids P;
     private Treillis contient;
     private List<Barre> liee;
+    private double forceX;
+    private double forceY;
 
     //public Set<Barre> extremites;
     public Noeud(Point position) {
@@ -24,8 +26,10 @@ public class Noeud {
         this.liee = new ArrayList();
     }
 
-    public Noeud() {
+    public Noeud(double Fx, double Fy) {
         this.position = new Point();
+        this.forceX = Fx;
+        this.forceY = Fy;
     }
 
     public Point getPosition() {
