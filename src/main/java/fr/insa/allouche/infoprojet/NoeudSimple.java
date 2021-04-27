@@ -21,6 +21,13 @@ public class NoeudSimple extends Noeud {
 
     public void sommeY() {
     }
+    
+    public String toString() {
+        String res = "NoeudSimple " + this.getId() + " [";
+        res = res + this.getPosition().getPX()
+                + " , " + this.getPosition().getPY() + "]";
+        return res;
+    }
 
 }
 

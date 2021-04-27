@@ -14,12 +14,22 @@ public class AppuiDouble extends NoeudAppui {
     private double Tangent;
     private double Normal;
 
-    public AppuiDouble(Noeud noeud) {
-        super(noeud);
+    public AppuiDouble(Point noeud, SegmentTerrain st) {
+        super(noeud, st);
+    }
+    
+    public AppuiDouble(double alpha, SegmentTerrain segT) {
+        super(alpha, segT);
     }
 
     public NoeudAppui demandeNoeudAppui() {
-        NoeudAppui na = new NoeudAppui(demandeNoeud());
+        NoeudAppui na = new NoeudAppui(demandeNoeud().getPosition(), SegmentTerrain.demandeSegmentTerain());
         return na;
+    }
+    public String toString() {
+        String res = "NoeudAppuiDouble " + this.getId() + " [";
+        res = res + this.getPosition().getPX()
+                + " , " + this.getPosition().getPY() + "]\nAlpha = "+this.getAlpha();
+        return res;
     }
 }

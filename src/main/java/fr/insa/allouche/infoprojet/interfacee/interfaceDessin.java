@@ -55,7 +55,9 @@ public class interfaceDessin extends BorderPane {
         this.noeudappui = new ComboBox();
         this.noeudappui.getItems().addAll("noeud appui","appui double","appui simple");
         this.noeudappui.getSelectionModel().selectFirst();
-        this.entete = new HBox(this.Select, this.noeudsimple, this.noeudappui, this.cataloguebarre,this.remove, this.groupe,this.terrain,this.supprimer,this.zoneconstructible,this.couleur);
+        this.entete = new HBox(this.Select, this.noeudsimple, this.noeudappui,
+                this.cataloguebarre,this.remove, this.groupe,this.terrain,this.supprimer,
+                this.zoneconstructible,this.couleur);
         this.setTop(this.entete);
         
         this.zoneDessin = new Canvas(this,300,200);

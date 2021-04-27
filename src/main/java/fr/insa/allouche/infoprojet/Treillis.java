@@ -34,10 +34,10 @@ public class Treillis {
         return identite;
     }
 
-    public void idTT(TriangleTerrain tt){
+    public void idTT(TriangleTerrain tt) {
         tt.setId(this.identite.getOrCreateId(tt));
     }
-    
+
     public void addBarre(Barre barre) {
         if (barre.getCompose() != this) {
             if (barre.getCompose() != null) {
@@ -74,7 +74,29 @@ public class Treillis {
         this.compose.clear();
     }
 
-    public void addNoeud(Noeud noeud) {
+    public void addAppuiSimple(AppuiSimple noeud) {
+        if (noeud.getContient() != this) {
+            if (noeud.getContient() != null) {
+                throw new Error("Le Noeud appartient déjà au treillis");
+            }
+            this.contient.add(noeud);
+            noeud.setContient(this);
+            noeud.setId(this.identite.getOrCreateId(contient));
+        }
+    }
+
+    public void addAppuiDouble(AppuiDouble noeud) {
+        if (noeud.getContient() != this) {
+            if (noeud.getContient() != null) {
+                throw new Error("Le Noeud appartient déjà au treillis");
+            }
+            this.contient.add(noeud);
+            noeud.setContient(this);
+            noeud.setId(this.identite.getOrCreateId(contient));
+        }
+    }
+
+    public void addNoeudSimple(NoeudSimple noeud) {
         if (noeud.getContient() != this) {
             if (noeud.getContient() != null) {
                 throw new Error("Le Noeud appartient déjà au treillis");
@@ -172,13 +194,14 @@ public class Treillis {
         Point pos2 = new Point(2, 3);
         Point pos3 = new Point(4, 5);
         Point pos4 = new Point(-1, -4);
-        Noeud n1 = new Noeud(pos1);
-        Noeud n2 = new Noeud(pos2);
-        Noeud n3 = new Noeud(pos3);
-        Noeud n4 = new Noeud(pos4);
-        Barre b1 = new Barre(n1, n2);
-        Barre b2 = new Barre(n3, n4);
-        Barre b3 = new Barre(n4, n1, 5, 25, 56, 800, 1000);
+        Point pos5 = new Point(1, 4);
+        NoeudSimple nS1 = new NoeudSimple(pos1);
+        NoeudSimple nS2 = new NoeudSimple(pos4);
+        NoeudSimple nS4 = new NoeudSimple(pos4);
+        NoeudSimple nS5 = new NoeudSimple(pos5);
+        Barre b1 = new Barre(nS1, nS2);
+        Barre b2 = new Barre(nS4, nS5);
+        Barre b3 = new Barre(nS4, nS1, 5, 25, 56, 800, 1000);
         Treillis res = new Treillis();
         Terrain t1 = new Terrain(pos1, pos2, pos3, pos4);
         SegmentTerrain seg1 = new SegmentTerrain(pos1, pos2);
@@ -186,6 +209,8 @@ public class Treillis {
         SegmentTerrain seg3 = new SegmentTerrain(pos3, pos1);
         SegmentTerrain seg4 = new SegmentTerrain(pos2, pos4);
         SegmentTerrain seg5 = new SegmentTerrain(pos4, pos1);
+        AppuiDouble nAD2 = new AppuiDouble(pos2, seg1);
+        AppuiSimple nAS3 = new AppuiSimple(pos3, seg4);
         TriangleTerrain tT1 = new TriangleTerrain(seg1, seg2, seg3);
         TriangleTerrain tT2 = new TriangleTerrain(pos2, pos4, pos1);
         TypeBarre tB1 = new TypeBarre(2, 30, 55, 550, 500);
@@ -196,9 +221,12 @@ public class Treillis {
 //        res.addBarre(b2);
         res.addTerrain(t1);
         res.addBarre(b3);
-        res.addNoeud(n1);
-        res.addNoeud(n2);
-        res.addNoeud(n3);
+        res.addNoeudSimple(nS1);
+        res.addNoeudSimple(nS2);
+        res.addNoeudSimple(nS4);
+        res.addNoeudSimple(nS5);
+        res.addAppuiDouble(nAD2);
+        res.addAppuiSimple(nAS3);
         res.addTypeBarre(tB1);
         res.addTypeBarre(tB2);
         return res;
@@ -220,7 +248,8 @@ public class Treillis {
             System.out.println("11) afficher tous les types de barres");//ok
             System.out.println("12) ajouter une barre");//ok
             System.out.println("13) ajouter une noeud");//ok
-            System.out.println("14) ajouter un segment terrain");
+            System.out.println("29) ajouter une noeud Appui sur un segment terrain");//ok
+            System.out.println("14) ajouter un segment terrain");//ok
             System.out.println("15) ajouter un triangle terrain");
             System.out.println("16) ajouter un type de barre");
             System.out.println("17) ajouter un terrain");
@@ -273,6 +302,8 @@ public class Treillis {
                     Barre barre = Barre.demandeBarreNewTB();
                     this.addBarre(barre);
                 }
+            } else if (rep == 13) {
+                Noeud.demandeNoeud();
             } else if (rep == 2 || rep == 18) {
                 System.out.println("Les noeud contenu dans le treillis sont : \n");
                 for (int i = 0; i < this.contient.size(); i++) {
@@ -346,6 +377,41 @@ public class Treillis {
                 TriangleTerrain tt = TriangleTerrain.demandeTriangleTerrain();
                 this.base.addTriangleTerrain(tt);
                 this.idTT(tt);
+            } else if (rep == 29) {
+                System.out.println("Choissisez parmi la liste de triangle terrain :");
+
+                for (int i = 0; i < this.base.getConstitue().size(); i++) {
+                    System.out.println(this.base.getConstitue().get(i));
+                }
+                int rep1 = Lire.i();
+                System.out.println("Voulez-vous crer un noeud appui simple (10) ou double (20)? repondre 10 ou 20");
+                int rep3 = Lire.i();
+                System.out.println("Voulez vous placer le noeud appui sur le segment Terrain 1, 2, ou 3 ?");
+                System.out.println(this.base.getConstitue().get(rep1));
+                int rep2 = Lire.i();
+                System.out.println("donner alpha");
+                double alpha = Lire.d();
+                if (rep3 == 10) {
+                    if (rep2 == 1) {
+                        this.addAppuiSimple(new AppuiSimple(alpha, this.base.getConstitue().get(rep1).getSegTerrain1()));
+                    }
+                    if (rep2 == 2) {
+                        this.addAppuiSimple(new AppuiSimple(alpha, this.base.getConstitue().get(rep1).getSegTerrain2()));
+                    }
+                    if (rep2 == 3) {
+                        this.addAppuiSimple(new AppuiSimple(alpha, this.base.getConstitue().get(rep1).getSegTerrain3()));
+                    }
+                } else if (rep3 == 20) {
+                    if (rep2 == 1) {
+                        this.addAppuiDouble(new AppuiDouble(alpha, this.base.getConstitue().get(rep1).getSegTerrain1()));
+                    }
+                    if (rep2 == 2) {
+                        this.addAppuiDouble(new AppuiDouble(alpha, this.base.getConstitue().get(rep1).getSegTerrain2()));
+                    }
+                    if (rep2 == 3) {
+                        this.addAppuiDouble(new AppuiDouble(alpha, this.base.getConstitue().get(rep1).getSegTerrain3()));
+                    }
+                }
             }
         }
     }

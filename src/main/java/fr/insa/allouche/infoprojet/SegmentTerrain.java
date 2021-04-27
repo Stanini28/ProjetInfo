@@ -57,6 +57,7 @@ public class SegmentTerrain {
             }
             this.appartient.add(nA);
             nA.setSegmentTerrain(this);
+            nA.calculAlpha();
         }
     }
     

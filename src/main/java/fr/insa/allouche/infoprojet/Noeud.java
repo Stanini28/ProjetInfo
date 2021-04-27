@@ -23,7 +23,7 @@ public class Noeud {
         this.position = new Point(position.getPX(), position.getPY());
         this.liee = new ArrayList();
     }
-    
+
     public Noeud() {
         this.position = new Point();
     }
@@ -51,12 +51,9 @@ public class Noeud {
     public List<Barre> getLiee() {
         return liee;
     }
-    
-    
+
     public String toString() {
-        String res = "Noeud "+this.id+" [";
-        res = res + this.getPosition().getPX()
-                + " , " + this.getPosition().getPY() + "]";
+        String res = this.toString();
         return res;
 
     }
@@ -72,19 +69,31 @@ public class Noeud {
     public void solUnique() {
 
     }
-    
-    public void addBarre(Barre barre){
+
+    public void addBarre(Barre barre) {
         this.liee.add(barre);
     }
-    
+
     void setContient(Treillis contient) {
         this.contient = contient;
     }
 
     public static Noeud demandeNoeud() {
-        System.out.println("voulez vous ajouter un noeud simple ou double ? écrire s ou d");
-        if (Lire.S().equals("s")) {
+        int rep = 2;
+        while (rep == 2 || rep != 1 && rep != 3 && rep != 4) {
+            System.out.println("voulez vous ajouter un noeud simple (1) ou un noeud appui (2) ? écrire 1 ou 2");
+            rep = Lire.i();
 
+            if (rep == 1) {
+                rep = 1;
+
+            } else if (rep == 2) {
+                System.out.println("Voulez-vous créer un appui simple (3) ou double (4) ? repondre 3 ou 4");
+                rep = Lire.i();
+
+            } else {
+                System.out.println("répondez les chiffre indiqué");
+            }
         }
         double abs = 0;
         System.out.println("abscisse : ");
@@ -94,8 +103,38 @@ public class Noeud {
         System.out.println("ordonnée : ");
         ord = Lire.d();
 
-        Point noeud = new Point(abs, ord);
-        return new Noeud(noeud);
+        Point n = new Point(abs, ord);
+        if (rep == 1) {
+            return new NoeudSimple(n);
+        } else if (rep == 3) {
+            return new AppuiSimple(n, SegmentTerrain.demandeSegmentTerain());
+        } else if (rep == 4) {
+            return new AppuiDouble(n, SegmentTerrain.demandeSegmentTerain());
+        } else {
+            return new Noeud();
+        }
     }
 
+    public static Noeud demandeNoeud(SegmentTerrain segT) {
+
+        System.out.println("Voulez-vous créer un appui simple (3) ou double (4) ? repondre 3 ou 4");
+        int rep = Lire.i();
+
+        System.out.println(
+                "abscisse : ");
+        double abs = Lire.d();
+
+        System.out.println(
+                "ordonnée : ");
+        double ord = Lire.d();
+
+        Point n = new Point(abs, ord);
+        if (rep == 3) {
+            return new AppuiSimple(n, segT);
+        } else if (rep == 4) {
+            return new AppuiDouble(n, segT);
+        } else {
+            return new Noeud();
+        }
+    }
 }
