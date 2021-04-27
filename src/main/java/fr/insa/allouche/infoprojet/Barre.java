@@ -18,13 +18,15 @@ public class Barre {
     private Noeud fin;
     private Treillis compose;
     private TypeBarre type;
+    private double traction;
 
-    public Barre(Noeud debut, Noeud fin) {
+    public Barre(Noeud debut, Noeud fin, double Trac) {
         this.debut = debut;
         this.fin = fin;
 //        this.id= Identificateuer.getOrCreateId(this);
         this.debut.addBarre(this);
         this.fin.addBarre(this);
+        this.traction=Trac;
     }
     
     public Barre(Noeud debut, Noeud fin, double coutAuMetre, double lMin,
