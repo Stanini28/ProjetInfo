@@ -9,7 +9,7 @@ package fr.insa.allouche.infoprojet;
  *
  * @author stanislasallouche
  */
-public class NoeudAppui extends Noeud {
+public abstract class NoeudAppui extends Noeud {
     
     private double alpha; 
     private SegmentTerrain appartient;
@@ -40,11 +40,10 @@ public class NoeudAppui extends Noeud {
         this.calculAlpha();
     }
     
-    
-    public NoeudAppui demandeNoeudAppui(){
-        NoeudAppui na = new NoeudAppui(demandeNoeud().getPosition(), SegmentTerrain.demandeSegmentTerain());
-        return na;
+    public NoeudAppui(SegmentTerrain segT){
+        new AppuiSimple(0, segT);
     }
+    
     
     public void calculAlpha(){
         double px = this.getPosition().getPX();

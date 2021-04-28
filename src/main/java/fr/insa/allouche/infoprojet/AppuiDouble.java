@@ -22,8 +22,8 @@ public class AppuiDouble extends NoeudAppui {
         super(alpha, segT);
     }
 
-    public NoeudAppui demandeNoeudAppui() {
-        NoeudAppui na = new NoeudAppui(demandeNoeud().getPosition(), SegmentTerrain.demandeSegmentTerain());
+    public AppuiDouble demandeNoeudAppui() {
+        AppuiDouble na = new AppuiDouble(demandeNoeud().getPosition(), SegmentTerrain.demandeSegmentTerain());
         return na;
     }
     public String toString() {

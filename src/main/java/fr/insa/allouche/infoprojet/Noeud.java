@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 //import java.util.Set;
 
-public class Noeud {
+public abstract class Noeud {
 
     private int id;
     public Point position;
@@ -112,7 +112,7 @@ public class Noeud {
         } else if (rep == 4) {
             return new AppuiDouble(n, SegmentTerrain.demandeSegmentTerain());
         } else {
-            return new Noeud();
+            return null;
         }
     }
 
@@ -135,7 +135,7 @@ public class Noeud {
         } else if (rep == 4) {
             return new AppuiDouble(n, segT);
         } else {
-            return new Noeud();
+            return null;
         }
     }
 }

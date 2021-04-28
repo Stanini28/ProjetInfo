@@ -12,7 +12,7 @@ import java.util.Map;
  *
  * @author Portable
  */
-public class Identificateur<TO> {
+public class Identificateur {
     private int id;
     private Map<Integer,Object> idVersObjet;
     private Map<Object,Integer> ObjetVersId;
@@ -27,7 +27,7 @@ public class Identificateur<TO> {
         this(0);
     }
 
-    public int getOrCreateId (TO objet){
+    public int getOrCreateId (Object objet){
         Integer id = this.ObjetVersId.get(objet) ;
         if ( id != null) {
             return id;
