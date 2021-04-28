@@ -5,12 +5,16 @@
  */
 package fr.insa.allouche.infoprojet;
 
+import javafx.scene.canvas.GraphicsContext;
+
 /**
  *
  * @author stanislasallouche
  */
 public class AppuiDouble extends NoeudAppui {
 
+    public static double RAYON_NOEUD = 5;
+    
     private double Tangent;
     private double Normal;
 
@@ -32,4 +36,10 @@ public class AppuiDouble extends NoeudAppui {
                 + " , " + this.getPosition().getPY() + "]\nAlpha = "+this.getAlpha();
         return res;
     }
+    
+    public void dessine(GraphicsContext context) {
+        //context.setFill(this.getColor());
+        context.fillOval(this.position.getPX() - RAYON_NOEUD, this.position.getPY()- RAYON_NOEUD, 2*RAYON_NOEUD, 2*RAYON_NOEUD);
+    }
+    
 }

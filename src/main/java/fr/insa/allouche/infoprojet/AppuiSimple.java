@@ -5,11 +5,15 @@
  */
 package fr.insa.allouche.infoprojet;
 
+import javafx.scene.canvas.GraphicsContext;
+
 /**
  *
  * @author stanislasallouche
  */
 public class AppuiSimple extends NoeudAppui {
+    
+    public static double RAYON_NOEUD = 5;
     
     public AppuiSimple(Point noeud, SegmentTerrain st) {
         super(noeud, st);
@@ -34,6 +38,11 @@ public class AppuiSimple extends NoeudAppui {
         res = res + this.getPosition().getPX()
                 + " , " + this.getPosition().getPY() + "]\nAlpha = "+this.getAlpha();
         return res;
+    }
+    
+    public void dessine(GraphicsContext context) {
+        //context.setFill(this.getColor());
+        context.fillOval(this.position.getPX() - RAYON_NOEUD, this.position.getPY()- RAYON_NOEUD, 2*RAYON_NOEUD, 2*RAYON_NOEUD);
     }
 
 }

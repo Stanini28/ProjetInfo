@@ -8,6 +8,7 @@ package fr.insa.allouche.infoprojet;
 import fr.insa.allouche.infoprojet.outils.Lire;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.canvas.GraphicsContext;
 
 public class Terrain {
 
@@ -140,5 +141,14 @@ public class Terrain {
         }
         return t;
     }
-
+    public void dessine(GraphicsContext context) {
+        //context.setStroke(this.color);
+        for (int i = 0; i < this.constitue.size(); i++) {
+            this.constitue.get(i).dessine(context);
+        }
+        context.strokeLine(xmin, ymin, xmin, ymax);
+        context.strokeLine(xmin, ymax, xmax, ymax);
+        context.strokeLine(xmax, ymax, xmax, ymin);
+        context.strokeLine(xmax, ymin, xmin, ymin);
+    }
 }

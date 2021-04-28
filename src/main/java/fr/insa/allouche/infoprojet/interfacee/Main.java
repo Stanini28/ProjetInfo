@@ -6,9 +6,11 @@
 
 package fr.insa.allouche.infoprojet.interfacee;
 
+import fr.insa.allouche.infoprojet.Treillis;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;  
 /**
  *
@@ -17,19 +19,16 @@ import javafx.stage.Stage;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-
-        primaryStage.setTitle("Interface Dessin");
-      Scene scene = new Scene(new interfaceDessin());
-//        Groupe model = Groupe.groupeTest();
-//        scene = new Scene(new interfaceDessin());
-        primaryStage.setScene(scene);
-        primaryStage.show();
-
+    public void start(Stage stage) {
+        //Scene sc = new Scene(new interfaceDessin(stage,Treillis.treillisTest()),800,600);
+        Scene sc = new Scene (new interfaceDessin(Treillis.TTest()),800,600);
+        stage.setScene(sc);
+        stage.setTitle("Nouveau");
+          stage.show();
     }
 
     public static void main(String[] args) {
-        launch(args);
+        launch();
     }
 
 }    

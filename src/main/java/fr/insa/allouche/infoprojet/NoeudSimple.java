@@ -5,28 +5,31 @@
  */
 package fr.insa.allouche.infoprojet;
 
+import javafx.scene.canvas.GraphicsContext;
+
 /**
  *
  * @author stanislasallouche
  */
 public class NoeudSimple extends Noeud {
+
+    public static double RAYON_NOEUD = 5;
     
-    public NoeudSimple (Point position){
+    public NoeudSimple(Point position) {
         super(position);
     }
-    
-    public NoeudSimple (){
+
+    public NoeudSimple() {
         super(new Point());
     }
-    
+
     public void sommeX() {
 
     }
-    
 
     public void sommeY() {
     }
-    
+
     public String toString() {
         String res = "NoeudSimple " + this.getId() + " [";
         res = res + this.getPosition().getPX()
@@ -34,5 +37,12 @@ public class NoeudSimple extends Noeud {
         return res;
     }
 
+    @Override
+    public void dessine(GraphicsContext context) {
+        //context.setFill(this.getColor);
+        context.fillOval(this.position.getPX() - RAYON_NOEUD, 
+                this.position.getPY()- RAYON_NOEUD, 2*RAYON_NOEUD, 2*RAYON_NOEUD);
+        
+    }
+    
 }
-

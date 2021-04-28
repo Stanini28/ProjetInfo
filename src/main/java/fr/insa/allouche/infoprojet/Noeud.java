@@ -8,6 +8,7 @@ package fr.insa.allouche.infoprojet;
 import fr.insa.allouche.infoprojet.outils.Lire;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.canvas.GraphicsContext;
 //import java.util.Set;
 
 public abstract class Noeud {
@@ -138,4 +139,7 @@ public abstract class Noeud {
             return null;
         }
     }
+    
+    public abstract void dessine(GraphicsContext context);
+    
 }

@@ -9,6 +9,8 @@ import java.util.List;
 import fr.insa.allouche.infoprojet.outils.Lire;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javafx.scene.canvas.GraphicsContext;
+
 
 public class Treillis {
 
@@ -188,13 +190,41 @@ public class Treillis {
         res = res + this.base.toString();
         return res + "}";
     }
-
+    
+    public static Treillis TTest() {
+        Point p1 = new Point(500, 700);
+        Point p2 = new Point(100, 600);
+        Point p3 = new Point(300, 500);
+        Point p4 = new Point(90, 100);
+        Point p5 = new Point(50, 50);
+        double xmin = 0;
+        double ymin = 0;
+        double xmax = 500;
+        double ymax = 700;
+        SegmentTerrain seg1 = new SegmentTerrain(p1, p2);
+        SegmentTerrain seg2 = new SegmentTerrain(p2, p3);
+        SegmentTerrain seg3 = new SegmentTerrain(p3, p1);
+        TriangleTerrain tt1 = new TriangleTerrain(seg1, seg2, seg3);
+        Terrain t = new Terrain(xmin, xmax, ymin, ymax);
+        t.addTriangleTerrain(tt1);
+        NoeudSimple nS1 = new NoeudSimple (p1);
+        NoeudSimple nS2 = new NoeudSimple (p2);
+        Barre s1 = new Barre(nS1, nS2, 34, 56, 78, 890, 789);
+        Treillis res = new Treillis();
+        res.compose.add(s1);
+        res.contient.add(nS2);
+        res.contient.add(nS1);
+        res.addTerrain(t);
+        res.base.addTriangleTerrain(tt1);
+        return res;
+    }
+    
     public static Treillis treillisTest() {
         Point pos1 = new Point();
-        Point pos2 = new Point(2, 3);
-        Point pos3 = new Point(4, 5);
-        Point pos4 = new Point(-1, -4);
-        Point pos5 = new Point(1, 4);
+        Point pos2 = new Point(20, 30);
+        Point pos3 = new Point(40, 50);
+        Point pos4 = new Point(10, 40);
+        Point pos5 = new Point(60, 50);
         NoeudSimple nS1 = new NoeudSimple(pos1);
         NoeudSimple nS2 = new NoeudSimple(pos4);
         NoeudSimple nS4 = new NoeudSimple(pos4);
@@ -211,6 +241,7 @@ public class Treillis {
         SegmentTerrain seg5 = new SegmentTerrain(pos4, pos1);
         AppuiDouble nAD2 = new AppuiDouble(pos2, seg1);
         AppuiSimple nAS3 = new AppuiSimple(pos3, seg4);
+        Barre bAd = new Barre(nAD2, nAS3, 6, 7, 78, 567, 789);
         TriangleTerrain tT1 = new TriangleTerrain(seg1, seg2, seg3);
         TriangleTerrain tT2 = new TriangleTerrain(pos2, pos4, pos1);
         TypeBarre tB1 = new TypeBarre(2, 30, 55, 550, 500);
@@ -221,6 +252,7 @@ public class Treillis {
 //        res.addBarre(b2);
         res.addTerrain(t1);
         res.addBarre(b3);
+        res.addBarre(bAd);
         res.addNoeudSimple(nS1);
         res.addNoeudSimple(nS2);
         res.addNoeudSimple(nS4);
@@ -437,6 +469,32 @@ public class Treillis {
 
     public static void main(String[] args) {
         testMenu();
+    }
+    
+    public void dessine (GraphicsContext context){
+        for (int i = 0; i < this.compose.size(); i++) {
+            this.compose.get(i).dessine(context);
+        }
+        for (int i = 0; i < this.contient.size(); i++) {
+            this.contient.get(i).dessine(context);
+        }
+        this.base.dessine(context);
+    }
+
+    public Terrain getBase() {
+        return base;
+    }
+
+    public List<Noeud> getContient() {
+        return contient;
+    }
+
+    public List<Barre> getCompose() {
+        return compose;
+    }
+
+    public List<TypeBarre> getCatalogueBarre() {
+        return catalogueBarre;
     }
 
 }

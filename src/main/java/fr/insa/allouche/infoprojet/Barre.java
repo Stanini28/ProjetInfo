@@ -5,9 +5,11 @@
  */
 package fr.insa.allouche.infoprojet;
 
+import java.awt.BasicStroke;
 import java.util.Set;
-
-/**
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+/**s
  *
  * @author stanislasallouche
  */
@@ -20,19 +22,23 @@ public class Barre {
     private TypeBarre type;
     public double Fx;
     public double Fy;
+    public Color color; 
     
     
-    
-    public Barre(Noeud debut, Noeud fin) {
+    public Barre(Noeud debut, Noeud fin, Color color) {
         this.debut = debut;
         this.fin = fin;
 //        this.id= Identificateuer.getOrCreateId(this);
         this.debut.addBarre(this);
         this.fin.addBarre(this);
+        this.color = color;
+    }
+    public Barre(Noeud debut, Noeud fin) {
+        this(debut, fin, Color.BLUE);
     }
     
     public Barre(Noeud debut, Noeud fin, double coutAuMetre, double lMin,
-            double lMax, double rTraction, double rComp) {
+            double lMax, double rTraction, double rComp, Color color) {
         this.debut = debut;
         this.fin = fin;
 //        this.id= Identificateuer.getOrCreateId(this);
@@ -40,6 +46,11 @@ public class Barre {
         this.fin.addBarre(this);
         this.type = new TypeBarre(coutAuMetre, lMin, lMax, rTraction, rComp);
         this.type.addTBarre(this);
+        this.color = color;
+    }
+    public Barre(Noeud debut, Noeud fin, double coutAuMetre, double lMin,
+            double lMax, double rTraction, double rComp) {
+        this(debut, fin, coutAuMetre, lMin, lMax, rTraction, rComp, Color.BLUE);
     }
 
     public Barre() {
@@ -47,29 +58,7 @@ public class Barre {
         this.fin = new NoeudSimple();
     }
     
-    public Barre(double alpha, SegmentTerrain segT, int i) {
-        
-        if (i == 1){
-        this.debut = new AppuiSimple(alpha, segT);
-        this.fin = new AppuiSimple(alpha, segT);
-        }
-        if (i == 2){
-        this.debut = new AppuiDouble(alpha, segT);
-        this.fin = new AppuiDouble(alpha, segT);
-        } 
-    }
     
-    public Barre(Point noeud, SegmentTerrain segT, int i) {
-        
-        if (i == 1){
-        this.debut = new AppuiSimple(noeud, segT);
-        this.fin = new AppuiSimple(noeud, segT);
-        }
-        if (i == 2){
-        this.debut = new AppuiDouble(noeud, segT);
-        this.fin = new AppuiDouble(noeud, segT);
-        } 
-    }
 
     void setDebut(Noeud debut) {
         this.debut = debut;
@@ -111,6 +100,10 @@ public class Barre {
         return compose;
     }
 
+    public Color getColor() {
+        return color;
+    }
+
     public String toString() {
         String res = "Barre "+this.id+"{ ";
         res = res + "[" + this.getDebut().getPosition().getPX()
@@ -140,5 +133,11 @@ public class Barre {
         
         Barre b = new Barre(noeudD, noeudF);
         return b;
+    }
+    public void dessine(GraphicsContext context) {
+        context.setStroke(this.color);
+        context.strokeLine(this.debut.position.getPX(), this.debut.position.getPY(),
+                this.fin.position.getPX(), this.fin.position.getPY());
+        context.setLineWidth(4);
     }
 }

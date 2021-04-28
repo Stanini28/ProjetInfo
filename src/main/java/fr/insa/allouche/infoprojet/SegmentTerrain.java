@@ -7,6 +7,7 @@ package fr.insa.allouche.infoprojet;
 
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.canvas.GraphicsContext;
 
 
 
@@ -93,6 +94,13 @@ public class SegmentTerrain {
         Point p2 = Point.demandePoint();
         SegmentTerrain seg = new SegmentTerrain(p1, p2);
         return seg;
+    }
+    
+    public void dessine(GraphicsContext context) {
+        //context.setStroke(this.color);
+        context.setLineWidth(1);
+        context.strokeLine(this.debut.getPX(), this.debut.getPY(),
+                this.fin.getPX(), this.fin.getPY());
     }
 
 }
