@@ -14,6 +14,11 @@ public class NoeudSimple extends Noeud {
     public NoeudSimple (Point position){
         super(position);
     }
+    
+    public NoeudSimple (){
+        super(new Point());
+    }
+    
     public void sommeX() {
 
     }

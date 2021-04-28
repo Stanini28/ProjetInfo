@@ -43,8 +43,32 @@ public class Barre {
     }
 
     public Barre() {
-        this.debut = new Noeud();
-        this.fin = new Noeud();
+        this.debut = new NoeudSimple();
+        this.fin = new NoeudSimple();
+    }
+    
+    public Barre(double alpha, SegmentTerrain segT, int i) {
+        
+        if (i == 1){
+        this.debut = new AppuiSimple(alpha, segT);
+        this.fin = new AppuiSimple(alpha, segT);
+        }
+        if (i == 2){
+        this.debut = new AppuiDouble(alpha, segT);
+        this.fin = new AppuiDouble(alpha, segT);
+        } 
+    }
+    
+    public Barre(Point noeud, SegmentTerrain segT, int i) {
+        
+        if (i == 1){
+        this.debut = new AppuiSimple(noeud, segT);
+        this.fin = new AppuiSimple(noeud, segT);
+        }
+        if (i == 2){
+        this.debut = new AppuiDouble(noeud, segT);
+        this.fin = new AppuiDouble(noeud, segT);
+        } 
     }
 
     void setDebut(Noeud debut) {

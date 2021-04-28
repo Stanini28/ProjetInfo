@@ -18,11 +18,15 @@ public class AppuiSimple extends NoeudAppui {
     public AppuiSimple(double alpha, SegmentTerrain segT) {
         super(alpha, segT);
     }
+    
+    public AppuiSimple(SegmentTerrain segT){
+        super(0, segT);
+    }
 
     private double dTangentielle;
     
-    public NoeudAppui demandeNoeudAppui(){
-        NoeudAppui na = new NoeudAppui(demandeNoeud().getPosition(), SegmentTerrain.demandeSegmentTerain());
+    public AppuiSimple demandeAppuiSimpl(){
+        AppuiSimple na = new AppuiSimple(demandeNoeud().getPosition(), SegmentTerrain.demandeSegmentTerain());
         return na;
     }
     public String toString() {
@@ -31,4 +35,5 @@ public class AppuiSimple extends NoeudAppui {
                 + " , " + this.getPosition().getPY() + "]\nAlpha = "+this.getAlpha();
         return res;
     }
+
 }
