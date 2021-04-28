@@ -15,7 +15,7 @@ public class Matrice {
 
     private int nbrLig;
     private int nbrCol;
-    private double[][] coeffs;
+    protected double[][] coeffs;
 
     public Matrice(int nl, int nc) {
         this.nbrLig = nl;

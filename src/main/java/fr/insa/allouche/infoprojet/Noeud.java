@@ -13,12 +13,11 @@ import java.util.List;
 public class Noeud {
 
     private int id;
-    private Point position;
+    public Point position;
     private Poids P;
     private Treillis contient;
-    private List<Barre> liee;
-    private double forceX;
-    private double forceY;
+    public List<Barre> liee;
+    public double forceY;
 
     //public Set<Barre> extremites;
     public Noeud(Point position) {
