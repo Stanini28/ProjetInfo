@@ -18,8 +18,8 @@ public class Barre {
     private Noeud fin;
     private Treillis compose;
     private TypeBarre type;
-    public double Fx;
-    public double Fy;
+    public double ForceX;
+    public double ForceY;
     
     
     
