@@ -18,8 +18,11 @@ public class Barre {
     private Noeud fin;
     private Treillis compose;
     private TypeBarre type;
-    private double traction;
-
+    public double Fx;
+    public double Fy;
+    
+    
+    
     public Barre(Noeud debut, Noeud fin) {
         this.debut = debut;
         this.fin = fin;

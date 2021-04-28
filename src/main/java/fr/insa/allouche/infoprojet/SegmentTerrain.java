@@ -84,21 +84,7 @@ public class SegmentTerrain {
         return res;
     }
     
-    public static void pCaract(Point P, Point Q, Point R) {
-        double angle = Math.atan2(P.getPX() - Q.getPY(), P.getPX() - Q.getPX()) - Math.atan2(P.getPY() - R.getPY(), P.getPX() - R.getPX());
-
-        angle = angle * Math.PI / 180;
-
-        if (angle == 0) {
-            System.out.println("Colinéaire");
-        } else {
-            if (0 < angle && angle < Math.PI) {
-                System.out.println("Positif");
-            } else {
-                System.out.println("Négatif");
-            }
-        }
-    }
+    
     
     public static SegmentTerrain demandeSegmentTerain(){
         System.out.println("Coordonée du premier noeud appui : ");
