@@ -57,4 +57,12 @@ public class Point {
         Point pt = new Point(ab, ord);
         return pt;
     }
+    
+    public double distancePoint(Point p) {
+        double dx = this.PX - p.PX;
+        double dy = this.PY - p.PY;
+        return Math.sqrt(dx*dx+dy*dy);
+
+    }
+    
 }

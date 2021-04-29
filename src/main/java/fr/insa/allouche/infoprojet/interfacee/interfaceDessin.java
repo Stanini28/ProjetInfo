@@ -7,9 +7,15 @@ package fr.insa.allouche.infoprojet.interfacee;
 
 import fr.insa.allouche.infoprojet.Treillis;
 import java.io.File;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import java.io.FileInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleButton;
@@ -18,6 +24,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.SplitMenuButton;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
@@ -26,45 +34,50 @@ import javafx.stage.Stage;
  * @author Portable
  */
 public class interfaceDessin extends BorderPane {
-    
+
     private Controleur controleur;
     private Treillis model;
-    
+
     private Stage inStage;
     private File curFile;
-    
+
     private Button calcul;
-    
+
     private ToggleButton Select;
+    private ToggleButton barre;
     private ToggleButton zoneconstructible;
-    private ToggleButton groupe;
-    private ToggleButton terrain;
     private ToggleButton supprimer;
     private ToggleButton triangle_Terrain;
-    
+
+    private SplitMenuButton catalogueBarre;
+    private MenuItem choiceB1;
+    private MenuItem choiceB2;
+    private MenuItem choiceB3;
+    private SplitMenuButton choiceBoxN;
+    private MenuItem choiceN1;
+    private MenuItem choiceN2;
+    private MenuItem choiceN3;
+
     private RadioButton remove;
-    
-    private ComboBox noeud;
-    private ComboBox cataloguebarre;
+
     private ColorPicker cpCouleur;
 
-    private HBox entete; 
-  
-    
+    private HBox entete;
+
     private DessinCanvas zoneDessin;
-    
-    public interfaceDessin(Treillis model){
-        
+
+    public interfaceDessin(Treillis model) {
+
         this.inStage = inStage;
-       // this.curFile = fromFile;
+        // this.curFile = fromFile;
         this.model = model;
         this.controleur = new Controleur(this);
 
-        this.Select = new ToggleButton("Select") ;
+        this.Select = new ToggleButton("Select");
         this.Select.setOnAction((t) -> {
             this.controleur.boutonSelect(t);
         });
-        
+
         this.zoneconstructible = new ToggleButton("Zone constructible");
         this.zoneconstructible.setOnAction((t) -> {
             this.controleur.boutonZoneConstructible(t);
@@ -73,39 +86,74 @@ public class interfaceDessin extends BorderPane {
         this.triangle_Terrain.setOnAction((t) -> {
             this.controleur.boutontriangle_Terrain(t);
         });
-        this.terrain = new ToggleButton("Terrain");
+        
         this.supprimer = new ToggleButton("Supprimer");
-        this.groupe = new ToggleButton("Groupe");
-        
+
         this.calcul = new Button("Calcul");
-        
+
         this.remove = new RadioButton("Remove");
-        
-        this.cataloguebarre = new ComboBox();
-        this.cataloguebarre.getItems().addAll( "Catalogue de Barre", "new type de barre");
-        this.cataloguebarre.getSelectionModel().selectFirst();
-        
-        this.noeud = new ComboBox();
-        this.noeud.getItems().addAll("Noeud","appui double","appui simple", "noeud simple");
-        this.noeud.getSelectionModel().selectFirst();
-        this.noeud.setOnAction((t) -> {
-            
+
+
+        this.choiceBoxN = new SplitMenuButton();
+//        String var = "C:\\Users\\Portable\\OneDrive\\Desktop\\point.png";
+//        InputStream input = new FileInputStream(var);
+//        FileInputStream input1 = new FileInputStream(var);
+//        Image image = new Image(input);
+//        ImageView imageView = new ImageView(image);
+//
+//        this.choiceBoxN.setGraphic(imageView);
+        this.choiceBoxN.setText("Noeud");
+        this.choiceN1 = new MenuItem("Noeud Simple");
+        this.choiceN2 = new MenuItem("Appui Simple");
+        this.choiceN3 = new MenuItem("Appui Double");
+        this.choiceBoxN.getItems().addAll(this.choiceN1, this.choiceN2, this.choiceN3);
+        this.choiceN1.setOnAction((t) -> {
+            this.choiceBoxN.setText("Noeud Simple");
+            this.controleur.splitMenuButtonNS(t);
+        });
+        this.choiceN2.setOnAction((t) -> {
+            this.choiceBoxN.setText("Appui Simple");
+            this.controleur.splitMenuButtonAS(t);
+        });
+        this.choiceN3.setOnAction((t) -> {
+            this.choiceBoxN.setText("Appui Double");
+            this.controleur.splitMenuButtonAD(t);
+        });
+
+        this.catalogueBarre = new  SplitMenuButton();
+        this.catalogueBarre.setText("Barre");;;
+        this.choiceB1 = new MenuItem("Barre type 1");
+        this.choiceB2 = new MenuItem("Barre type 2");
+        this.choiceB3 = new MenuItem("Barre type 3");
+        this.catalogueBarre.getItems().addAll(this.choiceB1, this.choiceB2, this.choiceB3);
+        this.choiceB1.setOnAction((t) -> {
+            this.catalogueBarre.setText("Barre type 1");
+            this.controleur.buttonBarre1();
+        });
+        this.choiceB2.setOnAction((t) -> {
+            this.catalogueBarre.setText("Barre type 2");
+            this.controleur.buttonBarre2(t);
+        });
+        this.choiceB3.setOnAction((t) -> {
+            this.catalogueBarre.setText("Barre type 3");
+            this.controleur.buttonBarre3(t);
         });
         
         this.cpCouleur = new ColorPicker(Color.BLACK);
-        
-        this.entete = new HBox(this.triangle_Terrain, this.noeud, this.cataloguebarre,
-                this.groupe,this.terrain,this.supprimer,this.zoneconstructible,this.cpCouleur ,this.remove);
-        
+
+        this.entete = new HBox(this.triangle_Terrain, this.choiceBoxN, this.catalogueBarre,
+                this.supprimer, this.zoneconstructible,this.cpCouleur, this.remove);
+
         this.setTop(this.entete);
-        
+
         this.zoneDessin = new DessinCanvas(this);
         this.setCenter(this.zoneDessin);
-    
+
         this.controleur.changeEtat(20);
 
-  }
-    public void redrawAll(){
+    }
+
+    public void redrawAll() {
         this.zoneDessin.redrawAll();
     }
 
@@ -137,28 +185,12 @@ public class interfaceDessin extends BorderPane {
         return zoneconstructible;
     }
 
-    public ToggleButton getGroupe() {
-        return groupe;
-    }
-
-    public ToggleButton getTerrain() {
-        return terrain;
-    }
-
     public ToggleButton getSupprimer() {
         return supprimer;
     }
 
     public RadioButton getRemove() {
         return remove;
-    }
-
-    public ComboBox getNoeud() {
-        return noeud;
-    }
-
-    public ComboBox getCataloguebarre() {
-        return cataloguebarre;
     }
 
     public ColorPicker getCpCouleur() {
@@ -176,11 +208,54 @@ public class interfaceDessin extends BorderPane {
     public ToggleButton getTriangle_Terrain() {
         return triangle_Terrain;
     }
-    
-}
-    
-    
-    
 
-   
     
+    public SplitMenuButton getChoiceBoxN() {
+        return choiceBoxN;
+    }
+
+    public MenuItem getChoice1() {
+        return choiceN1;
+    }
+
+    public MenuItem getChoice2() {
+        return choiceN2;
+    }
+
+    public MenuItem getChoice3() {
+        return choiceN3;
+    }
+
+    public ToggleButton getBarre() {
+        return barre;
+    }
+
+    public SplitMenuButton getCatalogueBarre() {
+        return catalogueBarre;
+    }
+
+    public MenuItem getChoiceB1() {
+        return choiceB1;
+    }
+
+    public MenuItem getChoiceB2() {
+        return choiceB2;
+    }
+
+    public MenuItem getChoiceB3() {
+        return choiceB3;
+    }
+
+    public MenuItem getChoiceN1() {
+        return choiceN1;
+    }
+
+    public MenuItem getChoiceN2() {
+        return choiceN2;
+    }
+
+    public MenuItem getChoiceN3() {
+        return choiceN3;
+    }
+
+}

@@ -35,6 +35,7 @@ public abstract class NoeudAppui extends Noeud {
     }
     public NoeudAppui(double alpha, SegmentTerrain segT) {
         super(calculP(alpha, segT));
+        System.out.println("calculP(alpha, segT"+calculP(alpha, segT));
         this.appartient = segT;
         this.appartient.add(this);
         this.calculAlpha();
@@ -58,8 +59,8 @@ public abstract class NoeudAppui extends Noeud {
     }
     public static Point calculP(double alpha, SegmentTerrain segT){
         
-        Point p = new Point(alpha*segT.getDebut().getPX() + (1-alpha) * segT.getFin().getPX(),
-                alpha*segT.getDebut().getPY() + (1-alpha) * segT.getFin().getPY());
+        Point p = new Point(alpha*segT.getFin().getPX() + (1-alpha) * segT.getDebut().getPX(),
+                alpha*segT.getFin().getPY() + (1-alpha) * segT.getDebut().getPY());
     return p;
     }
     

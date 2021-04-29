@@ -140,4 +140,24 @@ public class Barre {
                 this.fin.position.getPX(), this.fin.position.getPY());
         context.setLineWidth(4);
     }
+    
+    public double distancePoint(Point p) {
+        double x1 = this.debut.position.getPX();
+        double y1 = this.debut.position.getPY();
+        double x2 = this.fin.position.getPX();
+        double y2 = this.fin.position.getPY();
+        double x3 = p.getPX();
+        double y3 = p.getPY();
+        double up = ((x3 - x1) * (x2 - x1) + (y3 - y1) * (y2 - y1))
+                / (Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+        if (up < 0) {
+            return this.debut.distancePoint(p);
+        } else if (up > 1) {
+            return this.fin.distancePoint(p);
+        } else {
+            Point p4 = new Point(x1 + up * (x2 - x1),
+                    y1 + up * (y2 - y1));
+            return p4.distancePoint(p);
+        }
+    }
 }

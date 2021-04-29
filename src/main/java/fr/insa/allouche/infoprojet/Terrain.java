@@ -151,4 +151,5 @@ public class Terrain {
         context.strokeLine(xmax, ymax, xmax, ymin);
         context.strokeLine(xmax, ymin, xmin, ymin);
     }
+    
 }

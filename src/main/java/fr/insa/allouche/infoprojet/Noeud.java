@@ -141,5 +141,9 @@ public abstract class Noeud {
     }
     
     public abstract void dessine(GraphicsContext context);
-    
+    public double distancePoint(Point p) {
+        double dx = this.position.getPX() - p.getPX();
+        double dy = this.position.getPY() - p.getPY();
+        return Math.sqrt(dx * dx + dy * dy);
+    }
 }

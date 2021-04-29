@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.scene.canvas.GraphicsContext;
 
-
 public class Treillis {
 
     private Terrain base;
@@ -190,7 +189,7 @@ public class Treillis {
         res = res + this.base.toString();
         return res + "}";
     }
-    
+
     public static Treillis TTest() {
         Point p1 = new Point(500, 700);
         Point p2 = new Point(100, 600);
@@ -207,18 +206,20 @@ public class Treillis {
         TriangleTerrain tt1 = new TriangleTerrain(seg1, seg2, seg3);
         Terrain t = new Terrain(xmin, xmax, ymin, ymax);
         t.addTriangleTerrain(tt1);
-        NoeudSimple nS1 = new NoeudSimple (p1);
-        NoeudSimple nS2 = new NoeudSimple (p2);
+        NoeudSimple nS1 = new NoeudSimple(p1);
+        NoeudSimple nS2 = new NoeudSimple(p2);
+        NoeudSimple nAS = new NoeudSimple(p3);
         Barre s1 = new Barre(nS1, nS2, 34, 56, 78, 890, 789);
         Treillis res = new Treillis();
         res.compose.add(s1);
         res.contient.add(nS2);
         res.contient.add(nS1);
+        res.contient.add(nAS);
         res.addTerrain(t);
         res.base.addTriangleTerrain(tt1);
         return res;
     }
-    
+
     public static Treillis treillisTest() {
         Point pos1 = new Point();
         Point pos2 = new Point(20, 30);
@@ -443,10 +444,10 @@ public class Treillis {
                     if (rep2 == 3) {
                         this.addAppuiDouble(new AppuiDouble(alpha, this.base.getConstitue().get(rep1).getSegTerrain3()));
                     }
-                } 
-            } else if (rep == 30){
+                }
+            } else if (rep == 30) {
                 for (int i = 0; i < this.contient.size(); i++) {
-                    System.out.println(this.contient.get(i).toString()+"\n");
+                    System.out.println(this.contient.get(i).toString() + "\n");
                 }
                 System.out.println("Parmis les différents nooeuds du treilli sur lequel voulez vous exercer une force ?");
                 int res = Lire.i();
@@ -454,9 +455,9 @@ public class Treillis {
                 double Fx = Lire.d();
                 System.out.println("Donner la composante en y");
                 double Fy = Lire.d();
-            } else if (rep == 16){
+            } else if (rep == 16) {
                 this.addTypeBarre(TypeBarre.DemandeTypeBarre());
-            } else if (rep == 17){
+            } else if (rep == 17) {
                 this.addTerrain(Terrain.demandeTerrain());
             }
         }
@@ -470,8 +471,8 @@ public class Treillis {
     public static void main(String[] args) {
         testMenu();
     }
-    
-    public void dessine (GraphicsContext context){
+
+    public void dessine(GraphicsContext context) {
         for (int i = 0; i < this.compose.size(); i++) {
             this.compose.get(i).dessine(context);
         }
@@ -496,5 +497,147 @@ public class Treillis {
     public List<TypeBarre> getCatalogueBarre() {
         return catalogueBarre;
     }
+
+    public double distancePoint(Point p) {
+        if (this.contient.isEmpty()) {
+            return new Point(0, 0).distancePoint(p);
+        } else {
+            double dist = this.contient.get(0).distancePoint(p);
+            for (int i = 1; i < this.contient.size(); i++) {
+                double cur = this.contient.get(i).distancePoint(p);
+                if (cur < dist) {
+                    dist = cur;
+                }
+            }
+            for (int i = 0; i < this.compose.size(); i++) {
+                double cur = this.compose.get(i).distancePoint(p);
+                if (cur < dist) {
+                    dist = cur;
+                }
+            }
+            for (int i = 0; i < this.base.getConstitue().size(); i++) {
+                double cur = this.base.getConstitue().get(i).getSegTerrain1().distancePoint(p);
+                if (cur < dist) {
+                    dist = cur;
+                }
+                cur = this.base.getConstitue().get(i).getSegTerrain2().distancePoint(p);
+                if (cur < dist) {
+                    dist = cur;
+                }
+                cur = this.base.getConstitue().get(i).getSegTerrain3().distancePoint(p);
+                if (cur < dist) {
+                    dist = cur;
+                }
+            }
+            return dist;
+        }
+    }
+
+    public Noeud plusProcheN(Point p, double distMax) {
+        if (this.contient.isEmpty()) {
+            return null;
+        } else {
+            Noeud nmin = this.contient.get(0);
+            double Nmin = nmin.distancePoint(p);
+            for (int i = 1; i < this.contient.size(); i++) {
+                Noeud ncur = this.contient.get(i);
+                double cur = ncur.distancePoint(p);
+                if (cur < Nmin) {
+                    Nmin = cur;
+                    nmin = ncur;
+                }
+            }
+            if (Nmin <= distMax) {
+                return nmin;
+            } else {
+                return null;
+            }
+        }
+    }
+    public Barre plusProcheB(Point p, double distMax) {
+        if (this.contient.isEmpty()) {
+            return null;
+        } else {
+            Barre bmin = this.compose.get(0);
+            double Bmin = bmin.distancePoint(p);
+            for (int i = 1; i < this.contient.size(); i++) {
+                Barre bcur = this.compose.get(i);
+                double cur = bcur.distancePoint(p);
+                if (cur < Bmin) {
+                    Bmin = cur;
+                    bmin = bcur;
+                }
+            }
+            if (Bmin <= distMax) {
+                return bmin;
+            } else {
+                return null;
+            }
+        }
+    }
+    public SegmentTerrain plusProcheST(Point p, double distMax) {
+        if (this.contient.isEmpty()) {
+            return null;
+        } else {
+            SegmentTerrain stmin = this.base.getConstitue().get(0).getSegTerrain1();
+            System.out.println("prout seg1");
+            double sTmin = stmin.distancePoint(p);
+            for (int i = 0; i < this.base.getConstitue().size(); i++) {
+                SegmentTerrain sTcur1 = this.base.getConstitue().get(i).getSegTerrain1();
+                System.out.println("sTcur1 = "+this.base.getConstitue().get(i).getSegTerrain1());
+                double cur = sTcur1.distancePoint(p);
+                if (cur < sTmin) {
+                    sTmin = cur;
+                    stmin = sTcur1;
+                    System.out.println("prout seg1");
+                }
+
+                SegmentTerrain sTcur2 = this.base.getConstitue().get(i).getSegTerrain2();
+                System.out.println("sTcur2 = "+this.base.getConstitue().get(i).getSegTerrain2());
+                double cur2 = sTcur2.distancePoint(p);
+                if (cur2 < sTmin) {
+                    sTmin = cur2;
+                    stmin = sTcur2;
+                    System.out.println("prout seg2");
+                }
+
+                SegmentTerrain sTcur3 = this.base.getConstitue().get(i).getSegTerrain3();
+                System.out.println("sTcur3 = "+this.base.getConstitue().get(i).getSegTerrain3());
+                double cur3 = sTcur3.distancePoint(p);
+                if (cur3 < sTmin) {
+                    sTmin = cur;
+                    stmin = sTcur3;
+                    System.out.println("prout seg3");
+                }
+            }
+           if (sTmin <= distMax) {
+               System.out.println("stmin = "+ stmin.toString());
+                return stmin;
+            } else {
+                return null;
+            }
+        }
+        
+    }
+    
+//    if (Bmin < Nmin && Bmin < sTmin) {
+//                if (Bmin <= distMax) {
+//                    return bmin;
+//                } else {
+//                    return null;
+//                }
+//            } else if (Nmin < Bmin && Nmin < sTmin) {
+//                if (Nmin <= distMax) {
+//                    return nmin;
+//                } else {
+//                    return null;
+//                }
+//            } else {
+//                if (sTmin <= distMax) {
+//                    return stmin;
+//                } else {
+//                    return null;
+//                }
+//            }
 
 }

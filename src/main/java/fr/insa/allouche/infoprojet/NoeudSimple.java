@@ -14,7 +14,7 @@ import javafx.scene.canvas.GraphicsContext;
 public class NoeudSimple extends Noeud {
 
     public static double RAYON_NOEUD = 5;
-    
+
     public NoeudSimple(Point position) {
         super(position);
     }
@@ -40,9 +40,8 @@ public class NoeudSimple extends Noeud {
     @Override
     public void dessine(GraphicsContext context) {
         //context.setFill(this.getColor);
-        context.fillOval(this.position.getPX() - RAYON_NOEUD, 
-                this.position.getPY()- RAYON_NOEUD, 2*RAYON_NOEUD, 2*RAYON_NOEUD);
-        
+        context.fillOval(this.position.getPX() - RAYON_NOEUD,
+                this.position.getPY() - RAYON_NOEUD, 2 * RAYON_NOEUD, 2 * RAYON_NOEUD);
+
     }
-    
 }
