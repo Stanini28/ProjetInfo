@@ -6,6 +6,8 @@
 package fr.insa.allouche.infoprojet;
 
 import fr.insa.allouche.infoprojet.outils.Lire;
+import java.io.IOException;
+import java.io.Writer;
 
 public class Point {
     
@@ -57,4 +59,18 @@ public class Point {
         Point pt = new Point(ab, ord);
         return pt;
     }
+    
+    public void save(Writer w, Identificateur num) throws IOException{
+        if(!num.objExist(this)){
+        int id = num.getOrCreateId(this);
+        w.append("Point;" + id + this.PX + ";" + this.PY + "\n");
+        }
+        
+    }
+    
+    
+    
+    
+    
+    
 }
