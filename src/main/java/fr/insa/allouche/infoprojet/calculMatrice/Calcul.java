@@ -20,8 +20,11 @@ import fr.insa.allouche.infoprojet.Treillis;
  */
 public class Calcul {
 
-    double Rx;
-    double Ry;
+    private double Rx;
+    private double Ry;
+    private double Fx;
+    private double Fy;
+    private double Py;
 
     public static double pAngle(Noeud P, Noeud Q) {
         double angle = (Math.atan2(Q.position.getPY() - P.position.getPY(), Q.position.getPX() - P.position.getPX()) - Math.atan2(0, 1));
@@ -29,22 +32,19 @@ public class Calcul {
         return angle;
 
     } // Fonctionne sûr sûr 
-
+/*
     public static Matrice SommeNoeudS(NoeudSimple S) {
         Matrice Mns = new Matrice(2, S.getLiee().size() + 1);
-        Matrice Test= new Matrice (1,1);
-        
+
         for (int j = 0; j < S.getLiee().size(); j++) {
 
             Mns.coeffs[0][j] = Math.cos(pAngle(S, S.getLiee().get(j).getFin())); //force de traction en X
             Mns.coeffs[1][j] = Math.sin(pAngle(S, S.getLiee().get(j).getFin()));// Force de de traction en Y
-            
+
         }
-            Mns.coeffs[1][S.getLiee().size()] =  S.forceY;
+        Mns.coeffs[1][S.getLiee().size()] = S.forceY;
 
-        
-
-        return Test;
+        return Mns;
     }
 
     public static Matrice SommeAppuiSimple(AppuiSimple A) {
@@ -76,7 +76,8 @@ public class Calcul {
 
         return K;
     }
-
+*/
+    
     public static Matrice Calcul(Treillis T) {
 
         //int k = T.compose.size()+ 2 + T.contient.size() - nbr de noeud simple ;  
@@ -84,13 +85,27 @@ public class Calcul {
 
         Matrice Total = new Matrice(2 * T.contient.size(), k);
 
-        for (int i = 0; i < T.contient.size(); i++) {
+        for (int i = 0; i < T.contient.size(); i=i+2) {
             if (T.contient.get(i) instanceof NoeudSimple) {
-
+                for (int j=0;j<T.contient.get(i).getLiee().size();j++){
+                    
+                Total.coeffs[i][T.contient.get(i).getLiee().get(j).getId()]= Math.cos(pAngle(T.contient.get(i), T.contient.get(i).getLiee().get(j).getFin()));
+                Total.coeffs[i+1][T.contient.get(i).getLiee().get(j).getId()]= Math.sin(pAngle(T.contient.get(i), T.contient.get(i).getLiee().get(j).getFin()));
             }
+                Total.coeffs[i+1][999]= T.contient.get(i).forceY;
+            }
+            
+            
+            
             if (T.contient.get(i) instanceof AppuiDouble) {
+                for (int j=0;j<T.contient.get(i).getLiee().size();j++){
+                    Total.coeffs[i][T.contient.get(i).getLiee().get(j).getId()]= Math.cos(pAngle(T.contient.get(i), T.contient.get(i).getLiee().get(j).getFin()));
+                }
 
             }
+            
+            
+            
             if (T.contient.get(i) instanceof AppuiSimple) {
 
             }
@@ -98,11 +113,10 @@ public class Calcul {
         return Total;
     }
     
-    
 
     public static void main(String[] args) {
         Point pos1 = new Point(1, 1);
-        Point pos2 = new Point(2,2 );
+        Point pos2 = new Point(2, 2);
         Point pos3 = new Point(2, 2);
         Point pos4 = new Point(4, 4);
         Point pos5 = new Point(1, 4);
@@ -110,8 +124,7 @@ public class Calcul {
         NoeudSimple nS2 = new NoeudSimple(pos3);
         NoeudSimple nS4 = new NoeudSimple(pos4);
         NoeudSimple nS5 = new NoeudSimple(pos5);
-        nS1.id=8;
-        
+        nS1.id = 8;
 
         //Barre b3 = new Barre(nS4, nS1, 5, 25, 56, 800, 1000);
         SegmentTerrain seg4 = new SegmentTerrain(pos2, pos4);
@@ -120,17 +133,14 @@ public class Calcul {
         Barre b1 = new Barre(nS1, nS2);
         Barre b2 = new Barre(nS1, nS4);
         //Matrice M = SommeNoeudS(nS1);
-        b1.id=6;
-        b2.id=87;
-        
-       Matrice K= SommeNoeudS(nS1);
+        b1.id = 6;
+        b2.id = 87;
 
-       System.out.println(K);
-       
-       char T = '\u0054';
-       double M= 9;
-       // System.out.println(M + "T" );
+        Matrice K = SommeNoeudS(nS1);
 
+        System.out.println(K);
+
+        // System.out.println(M + "T" );
     }
 
 }
