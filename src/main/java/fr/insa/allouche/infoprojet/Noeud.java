@@ -46,7 +46,7 @@ public abstract class Noeud {
         return id;
     }
 
-    void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -146,4 +146,5 @@ public abstract class Noeud {
         double dy = this.position.getPY() - p.getPY();
         return Math.sqrt(dx * dx + dy * dy);
     }
+    
 }

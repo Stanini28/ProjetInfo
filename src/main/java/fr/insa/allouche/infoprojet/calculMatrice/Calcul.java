@@ -83,38 +83,38 @@ public class Calcul {
         //int k = T.compose.size()+ 2 + T.contient.size() - nbr de noeud simple ;  
         int k = 999;
 
-        Matrice Total = new Matrice(2 * T.contient.size(), k);
+        Matrice Total = new Matrice(2 * T.getContient().size(), k);
 
-        for (int i = 0; i < T.contient.size(); i=i+2) {
-            if (T.contient.get(i) instanceof NoeudSimple) {
-                for (int j=0;j<T.contient.get(i).getLiee().size();j++){
+        for (int i = 0; i < T.getContient().size(); i=i+2) {
+            if (T.getContient().get(i) instanceof NoeudSimple) {
+                for (int j=0;j<T.getContient().get(i).getLiee().size();j++){
                     
-                Total.coeffs[i][T.contient.get(i).getLiee().get(j).getId()]= Math.cos(pAngle(T.contient.get(i), T.contient.get(i).getLiee().get(j).getFin()));
-                Total.coeffs[i+1][T.contient.get(i).getLiee().get(j).getId()]= Math.sin(pAngle(T.contient.get(i), T.contient.get(i).getLiee().get(j).getFin()));
+                Total.coeffs[i][T.getContient().get(i).getLiee().get(j).getId()]= Math.cos(pAngle(T.getContient().get(i), T.getContient().get(i).getLiee().get(j).getFin()));
+                Total.coeffs[i+1][T.getContient().get(i).getLiee().get(j).getId()]= Math.sin(pAngle(T.getContient().get(i), T.getContient().get(i).getLiee().get(j).getFin()));
             }
-                Total.coeffs[i+1][999]= T.contient.get(i).forceY;
+                Total.coeffs[i+1][999]= T.getContient().get(i).forceY;
             }
             
             
             
-            if (T.contient.get(i) instanceof AppuiDouble) {
-                for (int j=0;j<T.contient.get(i).getLiee().size();j++){
-                    Total.coeffs[i][T.contient.get(i).getLiee().get(j).getId()]= Math.cos(pAngle(T.contient.get(i), T.contient.get(i).getLiee().get(j).getFin()));
-                    Total.coeffs[i+1][T.contient.get(i).getLiee().get(j).getId()]= Math.sin(pAngle(T.contient.get(i), T.contient.get(i).getLiee().get(j).getFin()));
+            if (T.getContient().get(i) instanceof AppuiDouble) {
+                for (int j=0;j<T.getContient().get(i).getLiee().size();j++){
+                    Total.coeffs[i][T.getContient().get(i).getLiee().get(j).getId()]= Math.cos(pAngle(T.getContient().get(i), T.getContient().get(i).getLiee().get(j).getFin()));
+                    Total.coeffs[i+1][T.getContient().get(i).getLiee().get(j).getId()]= Math.sin(pAngle(T.getContient().get(i), T.getContient().get(i).getLiee().get(j).getFin()));
                 }
-                Total.coeffs[i+1][999]=T.contient.get(i).forceY;
+                Total.coeffs[i+1][999]=T.getContient().get(i).forceY;
                //AJOUTER FORCE REACTION EN X ET EN Y
 
             }
             
             
             
-            if (T.contient.get(i) instanceof AppuiSimple) {
-                for (int j=0;j<T.contient.get(i).getLiee().size();j++){
-                    Total.coeffs[i][T.contient.get(i).getLiee().get(j).getId()]= Math.cos(pAngle(T.contient.get(i), T.contient.get(i).getLiee().get(j).getFin()));
-                    Total.coeffs[i+1][T.contient.get(i).getLiee().get(j).getId()]= Math.sin(pAngle(T.contient.get(i), T.contient.get(i).getLiee().get(j).getFin()));
+            if (T.getContient().get(i) instanceof AppuiSimple) {
+                for (int j=0;j<T.getContient().get(i).getLiee().size();j++){
+                    Total.coeffs[i][T.getContient().get(i).getLiee().get(j).getId()]= Math.cos(pAngle(T.getContient().get(i), T.getContient().get(i).getLiee().get(j).getFin()));
+                    Total.coeffs[i+1][T.getContient().get(i).getLiee().get(j).getId()]= Math.sin(pAngle(T.getContient().get(i), T.getContient().get(i).getLiee().get(j).getFin()));
                 }
-                Total.coeffs[i+1][999]=T.contient.get(i).forceY;
+                Total.coeffs[i+1][999]=T.getContient().get(i).forceY;
                 //AJOUTER FORCE REACTION X ET Y
 
             }
@@ -133,7 +133,7 @@ public class Calcul {
         NoeudSimple nS2 = new NoeudSimple(pos3);
         NoeudSimple nS4 = new NoeudSimple(pos4);
         NoeudSimple nS5 = new NoeudSimple(pos5);
-        nS1.id = 8;
+        nS1.setId(8);
 
         //Barre b3 = new Barre(nS4, nS1, 5, 25, 56, 800, 1000);
         SegmentTerrain seg4 = new SegmentTerrain(pos2, pos4);
@@ -142,8 +142,8 @@ public class Calcul {
         Barre b1 = new Barre(nS1, nS2);
         Barre b2 = new Barre(nS1, nS4);
         //Matrice M = SommeNoeudS(nS1);
-        b1.id = 6;
-        b2.id = 87;
+        b1.setId(6);
+        b2.setId(87);
 
         //Matrice K = SommeNoeudS(nS1);
 

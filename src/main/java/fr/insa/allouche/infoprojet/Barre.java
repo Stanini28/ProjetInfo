@@ -76,7 +76,7 @@ public class Barre {
         return this.fin;
     }
 
-    void setId(int id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -160,4 +160,5 @@ public class Barre {
             return p4.distancePoint(p);
         }
     }
+    
 }
