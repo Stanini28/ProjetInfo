@@ -374,7 +374,7 @@ public class Matrice {
                 a = 0;
             }
         }
-        System.out.println("res= " + res);
+        //System.out.println("res= " + res);
         return res;
     }
 
