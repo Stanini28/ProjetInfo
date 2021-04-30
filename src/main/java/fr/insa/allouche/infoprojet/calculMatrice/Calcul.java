@@ -100,13 +100,22 @@ public class Calcul {
             if (T.contient.get(i) instanceof AppuiDouble) {
                 for (int j=0;j<T.contient.get(i).getLiee().size();j++){
                     Total.coeffs[i][T.contient.get(i).getLiee().get(j).getId()]= Math.cos(pAngle(T.contient.get(i), T.contient.get(i).getLiee().get(j).getFin()));
+                    Total.coeffs[i+1][T.contient.get(i).getLiee().get(j).getId()]= Math.sin(pAngle(T.contient.get(i), T.contient.get(i).getLiee().get(j).getFin()));
                 }
+                Total.coeffs[i+1][999]=T.contient.get(i).forceY;
+               //AJOUTER FORCE REACTION EN X ET EN Y
 
             }
             
             
             
             if (T.contient.get(i) instanceof AppuiSimple) {
+                for (int j=0;j<T.contient.get(i).getLiee().size();j++){
+                    Total.coeffs[i][T.contient.get(i).getLiee().get(j).getId()]= Math.cos(pAngle(T.contient.get(i), T.contient.get(i).getLiee().get(j).getFin()));
+                    Total.coeffs[i+1][T.contient.get(i).getLiee().get(j).getId()]= Math.sin(pAngle(T.contient.get(i), T.contient.get(i).getLiee().get(j).getFin()));
+                }
+                Total.coeffs[i+1][999]=T.contient.get(i).forceY;
+                //AJOUTER FORCE REACTION X ET Y
 
             }
         }
@@ -136,9 +145,9 @@ public class Calcul {
         b1.id = 6;
         b2.id = 87;
 
-        Matrice K = SommeNoeudS(nS1);
+        //Matrice K = SommeNoeudS(nS1);
 
-        System.out.println(K);
+        //System.out.println(K);
 
         // System.out.println(M + "T" );
     }
