@@ -6,6 +6,8 @@
 package fr.insa.allouche.infoprojet;
 
 import fr.insa.allouche.infoprojet.outils.Lire;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.canvas.GraphicsContext;
@@ -157,5 +159,18 @@ public class Terrain {
         context.strokeLine(xmax, ymax, xmax, ymin);
         context.strokeLine(xmax, ymin, xmin, ymin);
     }
+    
+    public void save(Writer w, Identificateur num) throws IOException{
+        if(!num.objExist(this)){
+        int id1 = num.getOrCreateId(this);
+        int id2 = num.getOrCreateId(this);
+        w.append("Point MAX;" + id1 + this.xmax + ";" + this.ymax + 
+                ";" + "Point Min;" + id2 + this.xmin + ";" + this.ymin  
+                + "\n");
+        }
+        
+    }
+    
+    
     
 }

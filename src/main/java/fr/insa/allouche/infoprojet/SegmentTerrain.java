@@ -5,6 +5,8 @@
  */
 package fr.insa.allouche.infoprojet;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.canvas.GraphicsContext;
@@ -150,6 +152,16 @@ public class SegmentTerrain {
         context.setLineWidth(1);
         context.strokeLine(this.debut.getPX(), this.debut.getPY(),
                 this.fin.getPX(), this.fin.getPY());
+    }
+public void save(Writer w, Identificateur num) throws IOException {
+        if (!num.objExist(this)) {
+            int id = num.getOrCreateId(this);
+            this.debut.save(w, num);
+            this.fin.save(w, num);
+            w.append("Segment;" + id + ";" +
+                    num.getID(this.debut) + ";" + num.getID(this.fin) +
+                    ";" +"\n");
+        }
     }
 
     public double distancePoint(Point p) {

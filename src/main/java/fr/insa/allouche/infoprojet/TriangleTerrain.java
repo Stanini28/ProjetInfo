@@ -5,6 +5,8 @@
  */
 package fr.insa.allouche.infoprojet;
 
+import java.io.IOException;
+import java.io.Writer;
 import javafx.scene.canvas.GraphicsContext;
 
 public class TriangleTerrain {
@@ -117,5 +119,14 @@ public class TriangleTerrain {
         this.SegTerrain2.dessine(context);
         this.SegTerrain3.dessine(context);
         
+    }
+    public void save(Writer w, Identificateur num) throws IOException {
+        if (!num.objExist(this)) {
+            int id = num.getOrCreateId(this);
+  
+            w.append("Segments;" + id + ";" +
+                    num.getID(this.SegTerrain1) + ";" + num.getID(this.SegTerrain2) +
+                    ";" + num.getID(this.SegTerrain3) +"\n");
+        }
     }
 }
