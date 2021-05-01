@@ -18,6 +18,9 @@ public class Treillis {
     private List<Barre> compose;
     private Identificateur identite;
     private List<TypeBarre> catalogueBarre;
+    private double segPlusProche;
+    private double noeudPlusProche;
+    private double barrePlusProche;
 
     public Treillis() {
 
@@ -161,6 +164,9 @@ public class Treillis {
             t.setBase(this);
             for (int i = 0; i < t.getConstitue().size(); i++) {
                 t.getConstitue().get(i).setId(this.identite.getOrCreateId(base.getConstitue().get(i)));
+                t.getConstitue().get(i).getSegTerrain1().setId(this.identite.getOrCreateId(base.getConstitue().get(i).getSegTerrain1()));
+                t.getConstitue().get(i).getSegTerrain2().setId(this.identite.getOrCreateId(base.getConstitue().get(i).getSegTerrain2()));
+                t.getConstitue().get(i).getSegTerrain3().setId(this.identite.getOrCreateId(base.getConstitue().get(i).getSegTerrain3()));
             }
         }
     }
@@ -171,6 +177,13 @@ public class Treillis {
         }
         this.base = null;
         t.setBase(null);
+    }
+    
+    public void removeTriangleTerrain(TriangleTerrain tT) {
+        if (tT.getConstitue().getBase() != this) {
+            throw new Error("Le TriangleTerrain n'appartient pas au treillis");
+        }
+        this.base.removeTriangleTerrain(tT);
     }
 
     public String toString() {
@@ -241,7 +254,8 @@ public class Treillis {
         SegmentTerrain seg4 = new SegmentTerrain(pos2, pos4);
         SegmentTerrain seg5 = new SegmentTerrain(pos4, pos1);
         AppuiDouble nAD2 = new AppuiDouble(pos2, seg1);
-        AppuiSimple nAS3 = new AppuiSimple(pos3, seg4);
+        AppuiSimple nAS3 = new AppuiSimple(pos3, seg2);
+        AppuiSimple nAS1 = new AppuiSimple (0.9, seg3);
         Barre bAd = new Barre(nAD2, nAS3, 6, 7, 78, 567, 789);
         TriangleTerrain tT1 = new TriangleTerrain(seg1, seg2, seg3);
         TriangleTerrain tT2 = new TriangleTerrain(pos2, pos4, pos1);
@@ -533,7 +547,7 @@ public class Treillis {
         }
     }
 
-    public Noeud plusProcheN(Point p, double distMax) {
+    public Noeud plusProcheN(Point p) {
         if (this.contient.isEmpty()) {
             return null;
         } else {
@@ -547,20 +561,19 @@ public class Treillis {
                     nmin = ncur;
                 }
             }
-            if (Nmin <= distMax) {
-                return nmin;
-            } else {
-                return null;
-            }
+            this.noeudPlusProche = Nmin;
+            return nmin;
+
         }
     }
-    public Barre plusProcheB(Point p, double distMax) {
-        if (this.contient.isEmpty()) {
+
+    public Barre plusProcheB(Point p) {
+        if (this.compose.isEmpty()) {
             return null;
         } else {
             Barre bmin = this.compose.get(0);
             double Bmin = bmin.distancePoint(p);
-            for (int i = 1; i < this.contient.size(); i++) {
+            for (int i = 1; i < this.compose.size(); i++) {
                 Barre bcur = this.compose.get(i);
                 double cur = bcur.distancePoint(p);
                 if (cur < Bmin) {
@@ -568,76 +581,86 @@ public class Treillis {
                     bmin = bcur;
                 }
             }
-            if (Bmin <= distMax) {
-                return bmin;
-            } else {
-                return null;
-            }
+            this.barrePlusProche = Bmin;
+            return bmin;
+
         }
     }
-    public SegmentTerrain plusProcheST(Point p, double distMax) {
+
+    public SegmentTerrain plusProcheST(Point p) {
         if (this.contient.isEmpty()) {
             return null;
         } else {
             SegmentTerrain stmin = this.base.getConstitue().get(0).getSegTerrain1();
-            System.out.println("prout seg1");
             double sTmin = stmin.distancePoint(p);
             for (int i = 0; i < this.base.getConstitue().size(); i++) {
                 SegmentTerrain sTcur1 = this.base.getConstitue().get(i).getSegTerrain1();
-                System.out.println("sTcur1 = "+this.base.getConstitue().get(i).getSegTerrain1());
                 double cur = sTcur1.distancePoint(p);
                 if (cur < sTmin) {
                     sTmin = cur;
                     stmin = sTcur1;
-                    System.out.println("prout seg1");
                 }
 
                 SegmentTerrain sTcur2 = this.base.getConstitue().get(i).getSegTerrain2();
-                System.out.println("sTcur2 = "+this.base.getConstitue().get(i).getSegTerrain2());
                 double cur2 = sTcur2.distancePoint(p);
                 if (cur2 < sTmin) {
                     sTmin = cur2;
                     stmin = sTcur2;
-                    System.out.println("prout seg2");
                 }
 
                 SegmentTerrain sTcur3 = this.base.getConstitue().get(i).getSegTerrain3();
-                System.out.println("sTcur3 = "+this.base.getConstitue().get(i).getSegTerrain3());
                 double cur3 = sTcur3.distancePoint(p);
                 if (cur3 < sTmin) {
                     sTmin = cur;
                     stmin = sTcur3;
-                    System.out.println("prout seg3");
                 }
             }
-           if (sTmin <= distMax) {
-               System.out.println("stmin = "+ stmin.toString());
-                return stmin;
-            } else {
-                return null;
+            this.segPlusProche = sTmin;
+            return stmin;
+
+        }
+
+    }
+
+    public String lePlusProche() {
+        String res = "";
+        if (this.barrePlusProche < this.noeudPlusProche && this.barrePlusProche < this.segPlusProche) {
+            res = "B";
+            System.out.println("barre plus proche");
+            return res;
+
+        } else if (this.noeudPlusProche < this.barrePlusProche && this.noeudPlusProche < this.segPlusProche) {
+            res = "N";
+            System.out.println("noeud plus proche");
+            return res;
+
+        } else if (this.noeudPlusProche - this.segPlusProche < 3) {
+            res = "NS";
+            return res;
+        } else if (this.barrePlusProche - this.noeudPlusProche < 5) {
+            res = "BN";
+            return res;
+        } else if (this.barrePlusProche - this.segPlusProche < 1) {
+            res = "BS";
+            return res;
+        } else {
+            res = "S";
+            System.out.println("segt plus proche");
+            return res;
+
+        }
+    }
+
+    public TriangleTerrain segtTrouveTT(SegmentTerrain segt) {
+        TriangleTerrain tt = null;
+        for (int i = 0; i < this.getBase().getConstitue().size(); i++) {
+            if (segt == this.getBase().getConstitue().get(i).getSegTerrain1()
+                    || segt == this.getBase().getConstitue().get(i).getSegTerrain2()
+                    || segt == this.getBase().getConstitue().get(i).getSegTerrain3()) {
+                tt = this.getBase().getConstitue().get(i);
             }
         }
-        
+       return tt; 
     }
-    
-//    if (Bmin < Nmin && Bmin < sTmin) {
-//                if (Bmin <= distMax) {
-//                    return bmin;
-//                } else {
-//                    return null;
-//                }
-//            } else if (Nmin < Bmin && Nmin < sTmin) {
-//                if (Nmin <= distMax) {
-//                    return nmin;
-//                } else {
-//                    return null;
-//                }
-//            } else {
-//                if (sTmin <= distMax) {
-//                    return stmin;
-//                } else {
-//                    return null;
-//                }
-//            }
 
 }

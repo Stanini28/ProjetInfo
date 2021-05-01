@@ -5,6 +5,8 @@
  */
 package fr.insa.allouche.infoprojet;
 
+import javafx.scene.paint.Color;
+
 /**
  *
  * @author stanislasallouche
@@ -27,25 +29,27 @@ public abstract class NoeudAppui extends Noeud {
         this.appartient = appartient;
     }
     
-    public NoeudAppui(Point position, SegmentTerrain appartient) {
-        super(position);
+    public NoeudAppui(Point position, SegmentTerrain appartient, Color color) {
+        super(position, color);
         this.appartient = appartient;
-        this.appartient.add(this);
         this.calculAlpha();
     }
-    public NoeudAppui(double alpha, SegmentTerrain segT) {
-        super(calculP(alpha, segT));
+    public NoeudAppui(double alpha, SegmentTerrain segT, Color color) {
+        super(calculP(alpha, segT), color);
         System.out.println("calculP(alpha, segT"+calculP(alpha, segT));
         this.appartient = segT;
-        this.appartient.add(this);
+        System.out.println("segt = "+segT);
+        //this.appartient.add(this);
+//        for (int i = 0; i < segT.getAppartient().size(); i++) {
+//            System.out.println("liste noeud segT = "+segT.getAppartient().get(i));
+//        }
         this.calculAlpha();
     }
     
-    public NoeudAppui(SegmentTerrain segT){
-        new AppuiSimple(0, segT);
-    }
-    
-    
+//    public NoeudAppui(SegmentTerrain segT, Color color){
+//        new AppuiSimple(0, segT, color);
+//    }
+//    
     public void calculAlpha(){
         double px = this.getPosition().getPX();
         double py = this.getPosition().getPY();

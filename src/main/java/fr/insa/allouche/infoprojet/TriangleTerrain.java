@@ -34,15 +34,14 @@ public class TriangleTerrain {
     public TriangleTerrain(Point pt1, Point pt2, Point pt3) {
 
         //pas sur que la classe identificateur attribut le bon identifiant
-        this.id = getId();
+        //this.id = getId();
         this.pointToSeg(pt1, pt2, pt3);
-
         //defini à quel Triangle terrain appartient les segment terrain
         SegTerrain1.setFaitPartieDe(this);
         SegTerrain2.setFaitPartieDe(this);
         SegTerrain2.setFaitPartieDe(this);
     }
-
+    
     public int getId() {
         return id;
     }

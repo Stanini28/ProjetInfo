@@ -104,6 +104,11 @@ public class Barre {
         return color;
     }
 
+    public void setColor(Color color) {
+        this.color = color;
+    }
+    
+
     public String toString() {
         String res = "Barre "+this.id+"{ ";
         res = res + "[" + this.getDebut().getPosition().getPX()

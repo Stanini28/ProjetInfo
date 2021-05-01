@@ -6,6 +6,7 @@
 package fr.insa.allouche.infoprojet;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -16,11 +17,15 @@ public class NoeudSimple extends Noeud {
     public static double RAYON_NOEUD = 5;
 
     public NoeudSimple(Point position) {
-        super(position);
+        super(position, Color.CRIMSON);
     }
 
     public NoeudSimple() {
-        super(new Point());
+        super(new Point(), Color.CRIMSON);
+    }
+    
+    public NoeudSimple(Point position, Color color) {
+        super(position, color);
     }
 
     public void sommeX() {
@@ -39,7 +44,7 @@ public class NoeudSimple extends Noeud {
 
     @Override
     public void dessine(GraphicsContext context) {
-        //context.setFill(this.getColor);
+        context.setFill(this.getColor());
         context.fillOval(this.position.getPX() - RAYON_NOEUD,
                 this.position.getPY() - RAYON_NOEUD, 2 * RAYON_NOEUD, 2 * RAYON_NOEUD);
 

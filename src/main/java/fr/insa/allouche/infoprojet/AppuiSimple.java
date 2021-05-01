@@ -6,6 +6,7 @@
 package fr.insa.allouche.infoprojet;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -16,15 +17,38 @@ public class AppuiSimple extends NoeudAppui {
     public static double RAYON_NOEUD = 5;
     
     public AppuiSimple(Point noeud, SegmentTerrain st) {
-        super(noeud, st);
+        super(noeud, st, Color.CHOCOLATE);
+        st.getAppartient().add(this);
     }
     
     public AppuiSimple(double alpha, SegmentTerrain segT) {
-        super(alpha, segT);
+        super(alpha, segT, Color.CHOCOLATE);
+        //segT.add(this);
+        segT.getAppartient().add(this);
     }
     
     public AppuiSimple(SegmentTerrain segT){
-        super(0, segT);
+        super(0, segT, Color.CHOCOLATE);
+        //segT.add(this);
+        segT.getAppartient().add(this);
+    }
+    
+    public AppuiSimple(Point noeud, SegmentTerrain st, Color color) {
+        super(noeud, st, color);
+        //st.add(this);
+        st.getAppartient().add(this);
+    }
+    
+    public AppuiSimple(double alpha, SegmentTerrain segT, Color color) {
+        super(alpha, segT, color);
+        //segT.add(this);
+         segT.getAppartient().add(this);
+    }
+    
+    public AppuiSimple(SegmentTerrain segT, Color color){
+        super(0, segT, color);
+        //segT.add(this);
+        segT.getAppartient().add(this);
     }
 
     private double dTangentielle;
@@ -37,11 +61,12 @@ public class AppuiSimple extends NoeudAppui {
         String res = "NoeudAppuiSimple " + this.getId() + " [";
         res = res + this.getPosition().getPX()
                 + " , " + this.getPosition().getPY() + "]\nAlpha = "+this.getAlpha();
+        
         return res;
     }
     
     public void dessine(GraphicsContext context) {
-        //context.setFill(this.getColor());
+        context.setFill(this.getColor());
         context.fillOval(this.position.getPX() - RAYON_NOEUD, this.position.getPY()- RAYON_NOEUD, 2*RAYON_NOEUD, 2*RAYON_NOEUD);
     }
 

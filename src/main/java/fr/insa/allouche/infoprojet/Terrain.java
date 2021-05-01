@@ -9,6 +9,7 @@ import fr.insa.allouche.infoprojet.outils.Lire;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Terrain {
 
@@ -92,6 +93,9 @@ public class Terrain {
             throw new Error("Le Triangle Terrain n'appartient pas au terrain");
         }
         this.constitue.remove(tT);
+        tT.getSegTerrain1().removeAll();
+        tT.getSegTerrain2().removeAll();
+        tT.getSegTerrain3().removeAll();
         tT.getSegTerrain1().getAppartient().clear();
         tT.getSegTerrain2().getAppartient().clear();
         tT.getSegTerrain3().getAppartient().clear();
@@ -142,10 +146,12 @@ public class Terrain {
         return t;
     }
     public void dessine(GraphicsContext context) {
-        //context.setStroke(this.color);
+       
         for (int i = 0; i < this.constitue.size(); i++) {
             this.constitue.get(i).dessine(context);
         }
+        context.setStroke(Color.BROWN);
+        context.setLineWidth(1);
         context.strokeLine(xmin, ymin, xmin, ymax);
         context.strokeLine(xmin, ymax, xmax, ymax);
         context.strokeLine(xmax, ymax, xmax, ymin);

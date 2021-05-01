@@ -8,6 +8,7 @@ package fr.insa.allouche.infoprojet;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class SegmentTerrain {
 
@@ -16,13 +17,37 @@ public class SegmentTerrain {
     private List<NoeudAppui> appartient;
     //Est defini dans la classe TriangleTerrain, lorqu'un Triangle terrain est créé
     private TriangleTerrain faitPartieDe;
+    private Color color;
+    private int id;
 
     public SegmentTerrain(Point posDbt, Point posFin) {
         this.debut = new Point(posDbt.getPX(), posDbt.getPY());
         this.fin = new Point(posFin.getPX(), posFin.getPY());
         this.appartient = new ArrayList<NoeudAppui>();
+        this.color = Color.BLACK;
+    }
+    
+    public SegmentTerrain(SegmentTerrain segt) {
+        this.debut = segt.debut;
+        this.fin = segt.fin;
+        this.appartient = new ArrayList<NoeudAppui>();
+        this.color = Color.BLACK;
     }
 
+    public SegmentTerrain(Point posDbt, Point posFin, Color color) {
+        this.debut = new Point(posDbt.getPX(), posDbt.getPY());
+        this.fin = new Point(posFin.getPX(), posFin.getPY());
+        this.appartient = new ArrayList<NoeudAppui>();
+        this.color = color;
+    }
+    
+    public SegmentTerrain(SegmentTerrain segt, Color color) {
+        this.debut = segt.debut;
+        this.fin = segt.fin;
+        this.appartient = new ArrayList<NoeudAppui>();
+        this.color = color;
+    }
+    
     public Point getDebut() {
         return debut;
     }
@@ -47,14 +72,42 @@ public class SegmentTerrain {
         this.appartient = appartient;
     }
 
-    public void add(NoeudAppui nA) {
-        if (nA.getappartient() != this) {
-            if (nA.getappartient() != null) {
+    public void setColor(Color color) {
+        this.color = color;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    void setId(int id) {
+        this.id = id;
+    }
+    
+
+    public void add(AppuiSimple as) {
+        if (as.getappartient() != this) {
+            if (as.getappartient() != null) {
                 throw new Error("Le Noeud appui appartient déjà à un autre SegmentTerrain");
             }
-            this.appartient.add(nA);
-            nA.setSegmentTerrain(this);
-            nA.calculAlpha();
+            this.appartient.add(as);
+            as.setSegmentTerrain(this);
+            as.calculAlpha();
+        }
+    }
+    
+    public void add(AppuiDouble ad) {
+        if (ad.getappartient() != this) {
+            if (ad.getappartient() != null) {
+                throw new Error("Le Noeud appui appartient déjà à un autre SegmentTerrain");
+            }
+            this.appartient.add(ad);
+            ad.setSegmentTerrain(this);
+            ad.calculAlpha();
         }
     }
 
@@ -62,21 +115,24 @@ public class SegmentTerrain {
         if (nA.getappartient() != this) {
             throw new Error("Le Noeud appui n'appartient pas à SegmentTerrain");
         }
+        nA.setContient(null);
         this.appartient.remove(nA);
         nA.setSegmentTerrain(null);
     }
 
-    public void removeAll(List<NoeudAppui> lNA) {
+    public void removeAll() {
         //pas sur d'avoir compris comment fonctionne le for
-        for (NoeudAppui nA : lNA) {
-            this.remove(nA);
+        for (int i = 0; i < this.appartient.size(); i++) {
+            this.remove(this.appartient.get(i));
         }
+        this.appartient.clear();
     }
 
     // Manque size et clear par rapport à la classe groupe du prof
     public String toString() {
         String res = "";
         res = "{" + this.debut.toString() + " ," + this.fin.toString() + "}";
+        res = res +"taille liste noeud: "+this.appartient.size();
         return res;
     }
 
@@ -90,7 +146,7 @@ public class SegmentTerrain {
     }
 
     public void dessine(GraphicsContext context) {
-        //context.setStroke(this.color);
+        context.setStroke(this.color);
         context.setLineWidth(1);
         context.strokeLine(this.debut.getPX(), this.debut.getPY(),
                 this.fin.getPX(), this.fin.getPY());
@@ -112,7 +168,6 @@ public class SegmentTerrain {
         } else {
             Point p4 = new Point(x1 + up * (x2 - x1),
                     y1 + up * (y2 - y1));
-            System.out.println("prouuuuuuuuuuut3");
             return p4.distancePoint(p);
         }
     }

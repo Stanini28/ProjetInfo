@@ -6,6 +6,7 @@
 package fr.insa.allouche.infoprojet;
 
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -18,12 +19,27 @@ public class AppuiDouble extends NoeudAppui {
     private double Tangent;
     private double Normal;
 
-    public AppuiDouble(Point noeud, SegmentTerrain st) {
-        super(noeud, st);
+    public AppuiDouble(Point noeud, SegmentTerrain segT) {
+        super(noeud, segT, Color.CORAL);
+        segT.getAppartient().add(this);
     }
     
     public AppuiDouble(double alpha, SegmentTerrain segT) {
-        super(alpha, segT);
+        super(alpha, segT, Color.CORAL);
+        //segT.add(this);
+         segT.getAppartient().add(this);
+    }
+    
+    public AppuiDouble(Point noeud, SegmentTerrain segT, Color color) {
+        super(noeud, segT, color);
+        //segT.add(this);
+         segT.getAppartient().add(this);
+    }
+    
+    public AppuiDouble(double alpha, SegmentTerrain segT, Color color) {
+        super(alpha, segT, color);
+        //segT.add(this);
+         segT.getAppartient().add(this);
     }
 
     public AppuiDouble demandeNoeudAppui() {
@@ -38,7 +54,7 @@ public class AppuiDouble extends NoeudAppui {
     }
     
     public void dessine(GraphicsContext context) {
-        //context.setFill(this.getColor());
+        context.setFill(this.getColor());
         context.fillOval(this.position.getPX() - RAYON_NOEUD, this.position.getPY()- RAYON_NOEUD, 2*RAYON_NOEUD, 2*RAYON_NOEUD);
     }
     

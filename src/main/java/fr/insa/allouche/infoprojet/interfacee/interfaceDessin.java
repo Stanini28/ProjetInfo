@@ -88,6 +88,9 @@ public class interfaceDessin extends BorderPane {
         });
         
         this.supprimer = new ToggleButton("Supprimer");
+        this.supprimer.setOnAction((t) -> {
+            this.controleur.bouttonSuprimer(t);
+        });
 
         this.calcul = new Button("Calcul");
 
@@ -141,7 +144,7 @@ public class interfaceDessin extends BorderPane {
         
         this.cpCouleur = new ColorPicker(Color.BLACK);
 
-        this.entete = new HBox(this.triangle_Terrain, this.choiceBoxN, this.catalogueBarre,
+        this.entete = new HBox(this.triangle_Terrain,this.Select, this.choiceBoxN, this.catalogueBarre,
                 this.supprimer, this.zoneconstructible,this.cpCouleur, this.remove);
 
         this.setTop(this.entete);
