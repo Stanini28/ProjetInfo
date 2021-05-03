@@ -21,6 +21,9 @@ public class Treillis {
     private double segPlusProche;
     private double noeudPlusProche;
     private double barrePlusProche;
+    private List<NoeudSimple> Simp;
+    private List<AppuiDouble> Adoub;
+    private List<AppuiSimple> Asimp;
 
     public Treillis() {
 
@@ -28,6 +31,9 @@ public class Treillis {
         this.contient = new ArrayList();
         this.identite = new Identificateur();
         this.catalogueBarre = new ArrayList();
+        this.Adoub= new ArrayList();
+        this.Asimp= new ArrayList();
+        this.Simp= new ArrayList();
     }
 
     void setBase(Terrain base) {
@@ -86,6 +92,7 @@ public class Treillis {
             this.contient.add(noeud);
             noeud.setContient(this);
             noeud.setId(this.identite.getOrCreateId(contient));
+            this.Asimp.add(noeud);
         }
     }
 
@@ -97,6 +104,7 @@ public class Treillis {
             this.contient.add(noeud);
             noeud.setContient(this);
             noeud.setId(this.identite.getOrCreateId(contient));
+            this.Adoub.add(noeud);
         }
     }
 
@@ -108,6 +116,7 @@ public class Treillis {
             this.contient.add(noeud);
             noeud.setContient(this);
             noeud.setId(this.identite.getOrCreateId(contient));
+            this.Simp.add(noeud);
         }
     }
 
@@ -663,4 +672,17 @@ public class Treillis {
        return tt; 
     }
 
+    public List<AppuiDouble> getAdoub() {
+        return Adoub;
+    }
+
+    public List<AppuiSimple> getAsimp() {
+        return Asimp;
+    }
+
+    public List<NoeudSimple> getSimp() {
+        return Simp;
+    }
+
+    
 }

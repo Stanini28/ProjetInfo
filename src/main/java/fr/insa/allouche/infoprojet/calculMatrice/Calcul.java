@@ -13,15 +13,18 @@ import fr.insa.allouche.infoprojet.NoeudAppui;
 import fr.insa.allouche.infoprojet.NoeudSimple;
 import fr.insa.allouche.infoprojet.Point;
 import fr.insa.allouche.infoprojet.SegmentTerrain;
+import fr.insa.allouche.infoprojet.Terrain;
 import fr.insa.allouche.infoprojet.Treillis;
+import fr.insa.allouche.infoprojet.TriangleTerrain;
+import fr.insa.allouche.infoprojet.TypeBarre;
 
 /**
  *
  * @author stanislasallouche
  */
 public class Calcul {
-    
-    public static int NoeudAPPl(NoeudAppui S){
+
+    public static int NoeudAPPl(NoeudAppui S) {
         return S.getappartient().getId();
     }
 
@@ -35,8 +38,10 @@ public class Calcul {
 
         return angle;
 
-    } // Fonctionne sûr sûr 
-/*
+    }
+    
+
+    /*
     public static Matrice SommeNoeudS(NoeudSimple S) {
         Matrice Mns = new Matrice(2, S.getLiee().size() + 1);
 
@@ -81,71 +86,98 @@ public class Calcul {
         return K;
     }
      */
-
     public static Matrice Calcul(Treillis T) {
 
-        Matrice Total = new Matrice(2 * T.getContient().size(), T.getContient().size() + T.getCompose().size() + T.getBase().getConstitue().size() * 3);
-        Matrice Membre2= new Matrice (2* T.getContient().size(), 1);
+        Matrice Total = new Matrice(2 * T.getContient().size(), T.getContient().size() + T.getCompose().size() + T.getBase().getConstitue().size() * 3 + T.getCatalogueBarre().size());
+        Matrice Membre2 = new Matrice(2 * T.getContient().size(), 1);
 
-        for (int i = 0; i < T.getContient().size(); i = i + 2) {
-            if (T.getContient().get(i) instanceof NoeudSimple) {
-                for (int j = 0; j < T.getContient().get(i).getLiee().size(); j++) {
-
-                    Total.coeffs[i][T.getContient().get(i).getLiee().get(j).getId()] = Math.cos(pAngle(T.getContient().get(i), T.getContient().get(i).getLiee().get(j).getFin()));
-                    Total.coeffs[i + 1][T.getContient().get(i).getLiee().get(j).getId()] = Math.sin(pAngle(T.getContient().get(i), T.getContient().get(i).getLiee().get(j).getFin()));
+        for (int i = 0; i < T.getContient().size(); i = i + 2) {//Ligne de la matrice
+            
+            for (int k = 0; k < T.getSimp().size(); k++) { //Ajoute tous les noeuds simples
+                for (int j = 0; j < T.getSimp().get(k).getLiee().size(); j++) { // Affiche les barres liées au Noeud Simple au dessus
+                    Total.coeffs[i][T.getSimp().get(k).getLiee().get(j).getId()] = Math.cos(pAngle(T.getSimp().get(k), T.getSimp().get(k).getLiee().get(j).getFin()));
+                    Total.coeffs[i + 1][T.getSimp().get(k).getLiee().get(j).getId()] = Math.sin(pAngle(T.getSimp().get(k), T.getContient().get(k).getLiee().get(j).getFin()));
                 }
-                Membre2.coeffs[i+1][0]=T.getContient().get(i).forceY;
+                Membre2.coeffs[i+1][0] = T.getSimp().get(k).forceY;
             }
 
-            if (T.getContient().get(i) instanceof AppuiDouble) {
-                for (int j = 0; j < T.getContient().get(i).getLiee().size(); j++) {
-                    Total.coeffs[i][T.getContient().get(i).getLiee().get(j).getId()] = Math.cos(pAngle(T.getContient().get(i), T.getContient().get(i).getLiee().get(j).getFin())) + PangleTerrain((NoeudAppui) T.getContient().get(i));
-                    Total.coeffs[i + 1][T.getContient().get(i).getLiee().get(j).getId()] = Math.sin(pAngle(T.getContient().get(i), T.getContient().get(i).getLiee().get(j).getFin())) + PangleTerrain((NoeudAppui) T.getContient().get(i));
+            
+           for (int k=0;k<T.getAdoub().size();k++){
+                for (int j = 0; j < T.getAdoub().get(k).getLiee().size(); j++) {
+                    Total.coeffs[i][T.getAdoub().get(k).getLiee().get(j).getId()] = Math.cos(pAngle(T.getAdoub().get(k), T.getAdoub().get(k).getLiee().get(j).getFin())) + PangleTerrain(T.getAdoub().get(k));
+                    Total.coeffs[i + 1][T.getAdoub().get(k).getLiee().get(j).getId()] = Math.sin(pAngle(T.getAdoub().get(k), T.getAdoub().get(k).getLiee().get(j).getFin())) + PangleTerrain(T.getAdoub().get(k));
                 }
-                Total.coeffs[i][T.getContient().get(i).getappartient().getId()]=1;
-                Total.coeffs[i+1][T.getContient().get(i).getappartient().getId()]=1;//Problème Classe
-                Membre2.coeffs[i+1][0]=T.getContient().get(i).forceY;
+                Total.coeffs[i][T.getAdoub().get(k).getappartient().getId()] = 1;
+                Total.coeffs[i + 1][T.getAdoub().get(k).getappartient().getId()] = 1;//Problème Classe
+                Membre2.coeffs[i+1][0] = T.getAdoub().get(k).forceY;
                 //AJOUTER FORCE REACTION EN X ET EN Y
 
             }
 
-            if (T.getContient().get(i) instanceof AppuiSimple) {
-                for (int j = 0; j < T.getContient().get(i).getLiee().size(); j++) {
-                    Total.coeffs[i][T.getContient().get(i).getLiee().get(j).getId()] = Math.cos(pAngle(T.getContient().get(i), T.getContient().get(i).getLiee().get(j).getFin())) + PangleTerrain((NoeudAppui) T.getContient().get(i));
-                    Total.coeffs[i + 1][T.getContient().get(i).getLiee().get(j).getId()] = Math.sin(pAngle(T.getContient().get(i), T.getContient().get(i).getLiee().get(j).getFin())) + PangleTerrain((NoeudAppui) T.getContient().get(i));
+            for (int k=0;k< T.getAsimp().size();k++){
+                for (int j = 0; j < T.getAsimp().get(k).getLiee().size(); j++) {
+                    Total.coeffs[i][T.getAsimp().get(k).getLiee().get(j).getId()] = Math.cos(pAngle(T.getAsimp().get(k), T.getAsimp().get(k).getLiee().get(j).getFin())) + PangleTerrain(T.getAsimp().get(k));
+                    Total.coeffs[i + 1][T.getAsimp().get(k).getLiee().get(j).getId()] = Math.sin(pAngle(T.getAsimp().get(k), T.getAsimp().get(k).getLiee().get(j).getFin())) + PangleTerrain(T.getAsimp().get(k));
                 }
-                //A VÉRIFIER AU DESSUS CAR PROBLÈME!!!
-                Total.coeffs[i][T.getContient().get(i).getappartient().getId()] = Math.cos(pAngle(T.getContient().get(i).getappartient().getDebut(), T.getContient().get(i).getappartient().getFin()) + Math.PI/2);
-                Total.coeffs[i+1][T.getContient().get(i).getappartient().getId()] = Math.sin(pAngle(T.getContient().get(i).getappartient().getDebut(), T.getContient().get(i).getappartient().getFin()) + Math.PI/2);
-               Membre2.coeffs[i+1][0]=T.getContient().get(i).forceY;
+                Total.coeffs[i][T.getAsimp().get(k).getappartient().getId()] = Math.cos(PangleTerrain(T.getAsimp().get(k)) + Math.PI / 2);
+                Total.coeffs[i + 1][T.getAsimp().get(k).getappartient().getId()] = Math.cos(PangleTerrain(T.getAsimp().get(k)) + Math.PI / 2);
+                Membre2.coeffs[i+1][0] = T.getAdoub().get(k).forceY;
                 //AJOUTER FORCE REACTION X ET Y
 
             }
         }
-        return Total;
-    }
+    
+
+return Total;
+}  
 
     public static void main(String[] args) {
-        Point pos1 = new Point(1, 1);
-        Point pos2 = new Point(2, 2);
-        Point pos3 = new Point(2, 2);
-        Point pos4 = new Point(4, 4);
-        Point pos5 = new Point(1, 4);
+        Point pos1 = new Point();
+        Point pos2 = new Point(20, 30);
+        Point pos3 = new Point(40, 50);
+        Point pos4 = new Point(10, 40);
+        Point pos5 = new Point(60, 50);
         NoeudSimple nS1 = new NoeudSimple(pos1);
-        NoeudSimple nS2 = new NoeudSimple(pos3);
+        NoeudSimple nS2 = new NoeudSimple(pos4);
         NoeudSimple nS4 = new NoeudSimple(pos4);
         NoeudSimple nS5 = new NoeudSimple(pos5);
-        nS1.setId(8);
-
-        //Barre b3 = new Barre(nS4, nS1, 5, 25, 56, 800, 1000);
-        SegmentTerrain seg4 = new SegmentTerrain(pos2, pos4);
-        AppuiSimple nAS3 = new AppuiSimple(pos3, seg4);
-        nS1.forceY = 9;
         Barre b1 = new Barre(nS1, nS2);
-        Barre b2 = new Barre(nS1, nS4);
-        //Matrice M = SommeNoeudS(nS1);
-        b1.setId(6);
-        b2.setId(87);
+        Barre b2 = new Barre(nS4, nS5);
+        Barre b3 = new Barre(nS4, nS1, 5, 25, 56, 800, 1000);
+        Treillis res = new Treillis();
+        Terrain t1 = new Terrain(pos1, pos2, pos3, pos4);
+        SegmentTerrain seg1 = new SegmentTerrain(pos1, pos2);
+        SegmentTerrain seg2 = new SegmentTerrain(pos2, pos3);
+        SegmentTerrain seg3 = new SegmentTerrain(pos3, pos1);
+        SegmentTerrain seg4 = new SegmentTerrain(pos2, pos4);
+        SegmentTerrain seg5 = new SegmentTerrain(pos4, pos1);
+        AppuiDouble nAD2 = new AppuiDouble(pos2, seg1);
+        AppuiSimple nAS3 = new AppuiSimple(pos3, seg2);
+        AppuiSimple nAS1 = new AppuiSimple (0.9, seg3);
+        Barre bAd = new Barre(nAD2, nAS3, 6, 7, 78, 567, 789);
+        TriangleTerrain tT1 = new TriangleTerrain(seg1, seg2, seg3);
+        TriangleTerrain tT2 = new TriangleTerrain(pos2, pos4, pos1);
+        TypeBarre tB1 = new TypeBarre(2, 30, 55, 550, 500);
+        TypeBarre tB2 = new TypeBarre();
+        t1.addTriangleTerrain(tT1);
+        t1.addTriangleTerrain(tT2);
+//        res.addBarre(b1);
+//        res.addBarre(b2);
+        res.addTerrain(t1);
+        res.addBarre(b3);
+        res.addBarre(bAd);
+        res.addNoeudSimple(nS1);
+        res.addNoeudSimple(nS2);
+        res.addNoeudSimple(nS4);
+        res.addNoeudSimple(nS5);
+        res.addAppuiDouble(nAD2);
+        res.addAppuiSimple(nAS3);
+        res.addTypeBarre(tB1);
+        res.addTypeBarre(tB2);
+        
+        Matrice M = Calcul(res);
+        
+        System.out.println(M.toString());
 
         //Matrice K = SommeNoeudS(nS1);
         //System.out.println(K);

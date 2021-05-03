@@ -21,14 +21,14 @@ public abstract class Noeud {
     public List<Barre> liee;
     public double forceY;
     private Color color;
-
+   
     //public Set<Barre> extremites;
     public Noeud(Point position, Color color) {
         this.position = new Point(position.getPX(), position.getPY());
         this.liee = new ArrayList();
         this.color = color;
     }
-
+    
     public Noeud() {
         this.position = new Point();
         this.color = Color.BLACK;

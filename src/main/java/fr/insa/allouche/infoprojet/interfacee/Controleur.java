@@ -425,10 +425,10 @@ public class Controleur {
         if (res.equals("NS")) {
             Alert dBox = new Alert(AlertType.CONFIRMATION);
             dBox.setTitle("choix du type de la selection");
-            dBox.setHeaderText("Noeud ou Segment Terrain ???");
-            dBox.setContentText("Voulez vous séléctinez le noeud ou le segment terrain");
+            dBox.setHeaderText("Noeud ou Segment Terrain ?");
+            dBox.setContentText("Voulez vous sélectionnez le noeud ou le segment terrain");
             ButtonType btnN = new ButtonType("Noeud");
-            ButtonType btnS = new ButtonType("Sgment Terrain");
+            ButtonType btnS = new ButtonType("Segment Terrain");
             ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
             dBox.getButtonTypes().setAll(btnN, btnS, btnCancel);
             Optional<ButtonType> choice = dBox.showAndWait();
