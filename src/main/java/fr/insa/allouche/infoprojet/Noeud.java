@@ -16,7 +16,6 @@ public abstract class Noeud {
 
     private int id;
     public Point position;
-    private Poids P;
     private Treillis contient;
     public List<Barre> liee;
     public double forceY;

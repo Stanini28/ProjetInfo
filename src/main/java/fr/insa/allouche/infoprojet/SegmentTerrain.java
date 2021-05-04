@@ -21,6 +21,7 @@ public class SegmentTerrain {
     private TriangleTerrain faitPartieDe;
     private Color color;
     private int id;
+    
 
     public SegmentTerrain(Point posDbt, Point posFin) {
         this.debut = new Point(posDbt.getPX(), posDbt.getPY());
@@ -184,5 +185,6 @@ public void save(Writer w, Identificateur num) throws IOException {
         }
     }
 
+    
 }
 //oooo

@@ -17,7 +17,6 @@ import fr.insa.allouche.infoprojet.Terrain;
 import fr.insa.allouche.infoprojet.Treillis;
 import fr.insa.allouche.infoprojet.TriangleTerrain;
 import fr.insa.allouche.infoprojet.TypeBarre;
-
 /**
  *
  * @author stanislasallouche
@@ -90,6 +89,7 @@ public class Calcul {
 
         Matrice Total = new Matrice(2 * T.getContient().size(), T.getContient().size() + T.getCompose().size() + T.getBase().getConstitue().size() * 3 + T.getCatalogueBarre().size());
         Matrice Membre2 = new Matrice(2 * T.getContient().size(), 1);
+        double epsilon_pivot = 0.00000001;
 
         //Ligne de la matrice
         for (int i = 0; i < T.getSimp().size(); i = i + 2) {
@@ -143,6 +143,16 @@ public class Calcul {
                 //AJOUTER FORCE REACTION X ET Y
             }
         }
+        
+        
+        
+        for (int i=0;i<2 * T.getContient().size();i++){
+            for (int j=0;j<T.getContient().size() + T.getCompose().size() + T.getBase().getConstitue().size() * 3 + T.getCatalogueBarre().size();j++){
+                if (Total.coeffs[i][j] < epsilon_pivot && Total.coeffs[i][j]>0){
+                    Total.coeffs[i][j]=0;
+                }
+            }
+        }
 
         return Total;
     }
@@ -159,6 +169,7 @@ public class Calcul {
         Point pos9 = new Point(1, 1);
         Point pos10 = new Point(0, 0);
         Point pos11 = new Point(0, 2);
+        Point pos12= new Point(7,9);
         NoeudSimple nS1 = new NoeudSimple(pos9);
         Treillis res = new Treillis();
         Terrain t1 = new Terrain(pos1, pos2, pos3, pos4);
@@ -171,6 +182,7 @@ public class Calcul {
         Barre b1 = new Barre(AD1, nS1);
         Barre b2 = new Barre(AS1, nS1);
         Barre b3 = new Barre(AD1, AS1);
+        
         
          
         res.addTerrain(t1);
@@ -193,8 +205,8 @@ public class Calcul {
         b2.setId(8);
         b3.setId(9);
         
-        
 
+        
         Matrice M = Calcul(res);
         System.out.println(M.toString());
         System.out.println(PangleTerrain(AS1));
