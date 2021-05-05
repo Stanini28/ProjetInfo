@@ -31,7 +31,7 @@ public class Calcul {
     }
 
     public static double PangleTerrain(NoeudAppui A) {
-        double An = (Math.atan2(A.getappartient().getDebut().getPY() - A.getappartient().getFin().getPY(), A.getappartient().getDebut().getPX() - A.getappartient().getFin().getPX()) - Math.atan2(0, 1));
+        double An = (Math.atan2(A.getappartient().getFin().getPY() - A.getappartient().getDebut().getPY(), A.getappartient().getFin().getPX() - A.getappartient().getDebut().getPX()) - Math.atan2(0, 1));
         return An;
     }
 
@@ -95,22 +95,7 @@ public class Calcul {
         double epsilon_pivot = 0.00000001;
 
         //Ligne de la matrice
-        for (int i = 0; i < T.getSimp().size(); i = i + 2) {
-            for (int k = 0; k < T.getSimp().size(); k++) { //Ajoute tous les noeuds simples
-                for (int j = 0; j < T.getSimp().get(k).getLiee().size(); j++) {// Affiche les barres liées au Noeud Simple au dessus
-                    if (T.getSimp().get(k) == T.getSimp().get(k).getLiee().get(j).getDebut()) {
-                        Total.coeffs[i][T.getSimp().get(k).getLiee().get(j).getId()] = Math.cos(pAngle(T.getSimp().get(k), T.getSimp().get(k).getLiee().get(j).getFin()));
-                        Total.coeffs[i + 1][T.getSimp().get(k).getLiee().get(j).getId()] = Math.sin(pAngle(T.getSimp().get(k), T.getContient().get(k).getLiee().get(j).getFin()));
-                    } else {
-                        Total.coeffs[i][T.getSimp().get(k).getLiee().get(j).getId()] = Math.cos(pAngle(T.getSimp().get(k), T.getSimp().get(k).getLiee().get(j).getDebut()));
-                        Total.coeffs[i + 1][T.getSimp().get(k).getLiee().get(j).getId()] = Math.sin(pAngle(T.getSimp().get(k), T.getContient().get(k).getLiee().get(j).getDebut()));
-                    }
-
-                }
-            }
-        }
-
-        for (int i = T.getSimp().size() * 2; i < (T.getSimp().size() + T.getAdoub().size()) * 2; i = i + 2) {
+        for (int i = 0; i < T.getAdoub().size() * 2; i = i + 2) {
             for (int k = 0; k < T.getAdoub().size(); k++) {
                 for (int j = 0; j < T.getAdoub().get(k).getLiee().size(); j++) {
                     if (T.getAdoub().get(k) == T.getAdoub().get(k).getLiee().get(j).getDebut()) {
@@ -124,11 +109,10 @@ public class Calcul {
 
                 Total.coeffs[i][T.getRx().get(k).getIdRx()] = 1;
                 Total.coeffs[i + 1][T.getRy().get(k).getIdRy()] = 1;//Problème Classe
-                Membre2.coeffs[i + 1][0] = T.getAdoub().get(k).forceY;
                 //AJOUTER FORCE REACTION EN X ET EN Y
             }
         }
-        for (int i = (T.getSimp().size() + T.getAdoub().size()) * 2; i < (T.getContient().size()) * 2; i = i + 2) {
+        for (int i = T.getAdoub().size() * 2; i < (T.getAdoub().size() + T.getAsimp().size()) * 2; i = i + 2) {
             for (int k = 0; k < T.getAsimp().size(); k++) {
                 for (int j = 0; j < T.getAsimp().get(k).getLiee().size(); j++) {
                     if (T.getAsimp().get(k) == T.getAsimp().get(k).getLiee().get(j).getDebut()) {
@@ -141,8 +125,22 @@ public class Calcul {
                 }
                 Total.coeffs[i][T.getRx().get(k + T.getAdoub().size()).getIdRx()] = Math.cos(PangleTerrain(T.getAsimp().get(k)) + (Math.PI / 2));
                 Total.coeffs[i + 1][T.getRx().get(k + T.getAdoub().size()).getIdRx()] = Math.sin(PangleTerrain(T.getAsimp().get(k)) + (Math.PI / 2));
-                Membre2.coeffs[i + 1][0] = T.getAsimp().get(k).forceY;
+          
                 //AJOUTER FORCE REACTION X ET Y
+            }
+        }
+        for (int i = (T.getAdoub().size() + T.getAsimp().size()) * 2; i < (T.getContient().size()) * 2; i = i + 2) {
+            for (int k = 0; k < T.getSimp().size(); k++) { //Ajoute tous les noeuds simples
+                for (int j = 0; j < T.getSimp().get(k).getLiee().size(); j++) {// Affiche les barres liées au Noeud Simple au dessus
+                    if (T.getSimp().get(k) == T.getSimp().get(k).getLiee().get(j).getDebut()) {
+                        Total.coeffs[i][T.getSimp().get(k).getLiee().get(j).getId()] = Math.cos(pAngle(T.getSimp().get(k), T.getSimp().get(k).getLiee().get(j).getFin()));
+                        Total.coeffs[i + 1][T.getSimp().get(k).getLiee().get(j).getId()] = Math.sin(pAngle(T.getSimp().get(k), T.getContient().get(k).getLiee().get(j).getFin()));
+                    } else {
+                        Total.coeffs[i][T.getSimp().get(k).getLiee().get(j).getId()] = Math.cos(pAngle(T.getSimp().get(k), T.getSimp().get(k).getLiee().get(j).getDebut()));
+                        Total.coeffs[i + 1][T.getSimp().get(k).getLiee().get(j).getId()] = Math.sin(pAngle(T.getSimp().get(k), T.getContient().get(k).getLiee().get(j).getDebut()));
+                    }
+
+                }
             }
         }
 
@@ -166,18 +164,16 @@ public class Calcul {
         }
         for (int i = T.getSimp().size() * 2; i < (T.getSimp().size() + T.getAdoub().size()) * 2; i = i + 2) {
             for (int k = 0; k < T.getAdoub().size(); k++) {
-                Membre2.coeffs[i+1][0]=T.getAdoub().get(k).forceY;
+                Membre2.coeffs[i + 1][0] = T.getAdoub().get(k).forceY;
             }
         }
         for (int i = (T.getSimp().size() + T.getAdoub().size()) * 2; i < (T.getContient().size()) * 2; i = i + 2) {
             for (int k = 0; k < T.getAsimp().size(); k++) {
-                Membre2.coeffs[i+1][0]=T.getAsimp().get(k).forceY;
+                Membre2.coeffs[i + 1][0] = T.getAsimp().get(k).forceY;
             }
         }
         return Membre2;
     }
-    
-    
 
     public static Matrice Création(Matrice M) {
         Matrice N = new Matrice(M.getNbrLig(), M.getNbrLig());
@@ -254,12 +250,8 @@ public class Calcul {
 
         Matrice M = Calcul(res);
         Matrice N = Création(M);
-        Matrice Membre2= Membre2(res);
-        
-        
-        
+        Matrice Membre2 = Membre2(res);
 
-        
         System.out.println(N.toString());
 
         //Matrice K = SommeNoeudS(nS1);
