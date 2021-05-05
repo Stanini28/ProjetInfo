@@ -12,11 +12,14 @@ import fr.insa.allouche.infoprojet.Noeud;
 import fr.insa.allouche.infoprojet.NoeudAppui;
 import fr.insa.allouche.infoprojet.NoeudSimple;
 import fr.insa.allouche.infoprojet.Point;
+import fr.insa.allouche.infoprojet.Reaction_Rx;
+import fr.insa.allouche.infoprojet.Reaction_Ry;
 import fr.insa.allouche.infoprojet.SegmentTerrain;
 import fr.insa.allouche.infoprojet.Terrain;
 import fr.insa.allouche.infoprojet.Treillis;
 import fr.insa.allouche.infoprojet.TriangleTerrain;
 import fr.insa.allouche.infoprojet.TypeBarre;
+
 /**
  *
  * @author stanislasallouche
@@ -84,10 +87,10 @@ public class Calcul {
 
         return K;
     }
-     */
+     2 * T.getContient().size()*/
     public static Matrice Calcul(Treillis T) {
 
-        Matrice Total = new Matrice(2 * T.getContient().size(), T.getContient().size() + T.getCompose().size() + T.getBase().getConstitue().size() * 3 + T.getCatalogueBarre().size());
+        Matrice Total = new Matrice(2 * T.getContient().size(), T.getContient().size() + T.getCompose().size() + T.getBase().getConstitue().size() * 6 + T.getCatalogueBarre().size());
         Matrice Membre2 = new Matrice(2 * T.getContient().size(), 1);
         double epsilon_pivot = 0.00000001;
 
@@ -104,11 +107,10 @@ public class Calcul {
                     }
 
                 }
-                Membre2.coeffs[i + 1][0] = T.getSimp().get(k).forceY;
             }
         }
 
-        for (int i = T.getSimp().size()*2; i < (T.getSimp().size() + T.getAdoub().size())*2; i = i + 2) {
+        for (int i = T.getSimp().size() * 2; i < (T.getSimp().size() + T.getAdoub().size()) * 2; i = i + 2) {
             for (int k = 0; k < T.getAdoub().size(); k++) {
                 for (int j = 0; j < T.getAdoub().get(k).getLiee().size(); j++) {
                     if (T.getAdoub().get(k) == T.getAdoub().get(k).getLiee().get(j).getDebut()) {
@@ -120,13 +122,13 @@ public class Calcul {
                     }
                 }
 
-                Total.coeffs[i][T.getAdoub().get(k).getappartient().getId()] = 999;
-                Total.coeffs[i + 1][T.getAdoub().get(k).getappartient().getId()] = 999;//Problème Classe
+                Total.coeffs[i][T.getRx().get(k).getIdRx()] = 1;
+                Total.coeffs[i + 1][T.getRy().get(k).getIdRy()] = 1;//Problème Classe
                 Membre2.coeffs[i + 1][0] = T.getAdoub().get(k).forceY;
                 //AJOUTER FORCE REACTION EN X ET EN Y
             }
         }
-        for (int i = (T.getSimp().size() + T.getAdoub().size())*2; i < (T.getContient().size())*2; i = i + 2) {
+        for (int i = (T.getSimp().size() + T.getAdoub().size()) * 2; i < (T.getContient().size()) * 2; i = i + 2) {
             for (int k = 0; k < T.getAsimp().size(); k++) {
                 for (int j = 0; j < T.getAsimp().get(k).getLiee().size(); j++) {
                     if (T.getAsimp().get(k) == T.getAsimp().get(k).getLiee().get(j).getDebut()) {
@@ -137,24 +139,59 @@ public class Calcul {
                         Total.coeffs[i + 1][T.getAsimp().get(k).getLiee().get(j).getId()] = Math.sin(pAngle(T.getAsimp().get(k), T.getAsimp().get(k).getLiee().get(j).getDebut()));// + PangleTerrain(T.getAsimp().get(k));
                     }
                 }
-                Total.coeffs[i][T.getAsimp().get(k).getappartient().getId()] = Math.cos(PangleTerrain(T.getAsimp().get(k)) + (Math.PI/ 2));
-                Total.coeffs[i + 1][T.getAsimp().get(k).getappartient().getId()] = Math.sin(PangleTerrain(T.getAsimp().get(k)) + (Math.PI / 2));
+                Total.coeffs[i][T.getRx().get(k + T.getAdoub().size()).getIdRx()] = Math.cos(PangleTerrain(T.getAsimp().get(k)) + (Math.PI / 2));
+                Total.coeffs[i + 1][T.getRx().get(k + T.getAdoub().size()).getIdRx()] = Math.sin(PangleTerrain(T.getAsimp().get(k)) + (Math.PI / 2));
                 Membre2.coeffs[i + 1][0] = T.getAsimp().get(k).forceY;
                 //AJOUTER FORCE REACTION X ET Y
             }
         }
-        
-        
-        
-        for (int i=0;i<2 * T.getContient().size();i++){
-            for (int j=0;j<T.getContient().size() + T.getCompose().size() + T.getBase().getConstitue().size() * 3 + T.getCatalogueBarre().size();j++){
-                if (Total.coeffs[i][j] < epsilon_pivot && Total.coeffs[i][j]>0){
-                    Total.coeffs[i][j]=0;
+
+        for (int i = 0; i < 2 * T.getContient().size(); i++) {
+            for (int j = 0; j < T.getContient().size() + T.getCompose().size() + T.getBase().getConstitue().size() * 6 + T.getCatalogueBarre().size(); j++) {
+                if (Total.coeffs[i][j] < epsilon_pivot && Total.coeffs[i][j] > 0) {
+                    Total.coeffs[i][j] = 0;
                 }
             }
         }
 
         return Total;
+    }
+
+    public static Matrice Membre2(Treillis T) {
+        Matrice Membre2 = new Matrice(2 * T.getContient().size(), 1);
+        for (int i = 0; i < T.getSimp().size(); i = i + 2) {
+            for (int k = 0; k < T.getSimp().size(); k++) {
+                Membre2.coeffs[i + 1][0] = T.getSimp().get(k).forceY;
+            }
+        }
+        for (int i = T.getSimp().size() * 2; i < (T.getSimp().size() + T.getAdoub().size()) * 2; i = i + 2) {
+            for (int k = 0; k < T.getAdoub().size(); k++) {
+                Membre2.coeffs[i+1][0]=T.getAdoub().get(k).forceY;
+            }
+        }
+        for (int i = (T.getSimp().size() + T.getAdoub().size()) * 2; i < (T.getContient().size()) * 2; i = i + 2) {
+            for (int k = 0; k < T.getAsimp().size(); k++) {
+                Membre2.coeffs[i+1][0]=T.getAsimp().get(k).forceY;
+            }
+        }
+        return Membre2;
+    }
+    
+    
+
+    public static Matrice Création(Matrice M) {
+        Matrice N = new Matrice(M.getNbrLig(), M.getNbrLig());
+        int H = 0;
+        for (int i = 0; i < M.getNbrCol(); i++) {
+            if (M.Max(i) != -1) {
+                for (int k = 0; k < M.getNbrLig(); k++) {
+                    N.coeffs[k][H] = M.coeffs[k][i];
+                }
+                H++;
+            }
+        }
+
+        return N;
     }
 
     public static void main(String[] args) {
@@ -169,7 +206,7 @@ public class Calcul {
         Point pos9 = new Point(1, 1);
         Point pos10 = new Point(0, 0);
         Point pos11 = new Point(0, 2);
-        Point pos12= new Point(7,9);
+        Point pos12 = new Point(7, 9);
         NoeudSimple nS1 = new NoeudSimple(pos9);
         Treillis res = new Treillis();
         Terrain t1 = new Terrain(pos1, pos2, pos3, pos4);
@@ -182,9 +219,10 @@ public class Calcul {
         Barre b1 = new Barre(AD1, nS1);
         Barre b2 = new Barre(AS1, nS1);
         Barre b3 = new Barre(AD1, AS1);
-        
-        
-         
+        Reaction_Rx ADX = new Reaction_Rx(AD1);
+        Reaction_Ry ADY = new Reaction_Ry(AD1);
+        Reaction_Rx ASX = new Reaction_Rx(AS1);
+
         res.addTerrain(t1);
         t1.addTriangleTerrain(tT1);
         res.addAppuiDouble(AD1);
@@ -193,7 +231,10 @@ public class Calcul {
         res.addBarre(b1);
         res.addBarre(b2);
         res.addBarre(b3);
-        
+        res.getRx().add(ASX);
+        res.getRx().add(ADX);
+        res.getRy().add(ADY);
+
         tT1.setId(0);
         seg1.setId(1);
         seg2.setId(2);
@@ -204,12 +245,22 @@ public class Calcul {
         b1.setId(7);
         b2.setId(8);
         b3.setId(9);
+        ADX.setIdRx(10);
+        ADY.setIdRy(11);
+        ASX.setIdRx(12);
+        AD1.forceY = 0;
+        AS1.forceY = 0;
+        nS1.forceY = -1000;
+
+        Matrice M = Calcul(res);
+        Matrice N = Création(M);
+        Matrice Membre2= Membre2(res);
+        
+        
         
 
         
-        Matrice M = Calcul(res);
-        System.out.println(M.toString());
-        System.out.println(PangleTerrain(AS1));
+        System.out.println(N.toString());
 
         //Matrice K = SommeNoeudS(nS1);
         //System.out.println(K);

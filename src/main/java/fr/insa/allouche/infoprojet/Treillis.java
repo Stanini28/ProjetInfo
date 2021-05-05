@@ -101,9 +101,6 @@ public class Treillis {
             Reaction_Rx rx = new Reaction_Rx (noeud);
             this.rx.add(rx);
             rx.setIdRx(this.identite.getOrCreateId(rx));
-            Reaction_Ry ry = new Reaction_Ry (noeud);
-            this.ry.add(ry);
-            ry.setIdRy(this.identite.getOrCreateId(ry));
         }
     }
 
@@ -703,6 +700,14 @@ public class Treillis {
 
     public List<NoeudSimple> getSimp() {
         return Simp;
+    }
+
+    public List<Reaction_Rx> getRx() {
+        return rx;
+    }
+
+    public List<Reaction_Ry> getRy() {
+        return ry;
     }
 
     

@@ -18,6 +18,9 @@ public class AppuiDouble extends NoeudAppui {
     
     private double Tangent;
     private double Normal;
+    private Reaction_Rx Rx;
+    private Reaction_Ry Ry;
+    
 
     public AppuiDouble(Point noeud, SegmentTerrain segT) {
         super(noeud, segT, Color.CORAL);
@@ -57,5 +60,14 @@ public class AppuiDouble extends NoeudAppui {
         context.setFill(this.getColor());
         context.fillOval(this.position.getPX() - RAYON_NOEUD, this.position.getPY()- RAYON_NOEUD, 2*RAYON_NOEUD, 2*RAYON_NOEUD);
     }
+
+    public Reaction_Rx getRx() {
+        return Rx;
+    }
+
+    public Reaction_Ry getRy() {
+        return Ry;
+    }
+    
     
 }

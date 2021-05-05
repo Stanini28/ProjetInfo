@@ -16,6 +16,7 @@ public abstract class NoeudAppui extends Noeud {
     private double alpha; 
     private SegmentTerrain appartient;
     private Point coord;
+   
     
     public SegmentTerrain getappartient(){
         return appartient;
@@ -67,5 +68,5 @@ public abstract class NoeudAppui extends Noeud {
                 alpha*segT.getFin().getPY() + (1-alpha) * segT.getDebut().getPY());
     return p;
     }
-    
+
 }

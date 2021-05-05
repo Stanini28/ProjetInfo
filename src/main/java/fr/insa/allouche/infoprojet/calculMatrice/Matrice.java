@@ -442,7 +442,21 @@ public class Matrice {
         }
         return res;
     }
+    
+ 
 
+    public double Max(int e){
+        double res=-1;
+        double epsilon_pivot = 0.00000001;
+        for (int i=1; i<this.nbrLig;i++){ 
+            if (epsilon_pivot<Math.abs(this.coeffs[i][e])){
+                res = Math.abs(this.coeffs[i][e]);
+            }
+        }
+        return res;
+    }
+    
+    
     public ResGauss descenteGauss() {
         int ligPlusGrandPivot = 0;
         int nbEtape = 0;

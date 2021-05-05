@@ -15,6 +15,7 @@ import javafx.scene.paint.Color;
 public class AppuiSimple extends NoeudAppui {
     
     public static double RAYON_NOEUD = 5;
+    private Reaction_Rx Rx;
     
     public AppuiSimple(Point noeud, SegmentTerrain st) {
         super(noeud, st, Color.CHOCOLATE);
@@ -70,4 +71,11 @@ public class AppuiSimple extends NoeudAppui {
         context.fillOval(this.position.getPX() - RAYON_NOEUD, this.position.getPY()- RAYON_NOEUD, 2*RAYON_NOEUD, 2*RAYON_NOEUD);
     }
 
+    public Reaction_Rx getRx() {
+        return Rx;
+        
+    
+    }
+
+    
 }
