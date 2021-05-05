@@ -24,6 +24,9 @@ public class Treillis {
     private List<NoeudSimple> Simp;
     private List<AppuiDouble> Adoub;
     private List<AppuiSimple> Asimp;
+    
+    private List<Reaction_Rx> rx;
+    private List<Reaction_Ry> ry;
 
     public Treillis() {
 
@@ -34,6 +37,8 @@ public class Treillis {
         this.Adoub= new ArrayList();
         this.Asimp= new ArrayList();
         this.Simp= new ArrayList();
+        this.rx= new ArrayList();
+        this.ry= new ArrayList();
     }
 
     void setBase(Terrain base) {
@@ -93,6 +98,12 @@ public class Treillis {
             noeud.setContient(this);
             noeud.setId(this.identite.getOrCreateId(contient));
             this.Asimp.add(noeud);
+            Reaction_Rx rx = new Reaction_Rx (noeud);
+            this.rx.add(rx);
+            rx.setIdRx(this.identite.getOrCreateId(rx));
+            Reaction_Ry ry = new Reaction_Ry (noeud);
+            this.ry.add(ry);
+            ry.setIdRy(this.identite.getOrCreateId(ry));
         }
     }
 
@@ -105,6 +116,12 @@ public class Treillis {
             noeud.setContient(this);
             noeud.setId(this.identite.getOrCreateId(contient));
             this.Adoub.add(noeud);
+            Reaction_Rx rx = new Reaction_Rx (noeud);
+            this.rx.add(rx);
+            rx.setIdRx(this.identite.getOrCreateId(rx));
+            Reaction_Ry ry = new Reaction_Ry (noeud);
+            this.ry.add(ry);
+            ry.setIdRy(this.identite.getOrCreateId(ry));
         }
     }
 
@@ -209,6 +226,10 @@ public class Treillis {
             res = res + this.catalogueBarre.get(i).toString() + "\n";
         }
         res = res + this.base.toString();
+        for (int i = 0; i < this.rx.size(); i++) {
+            res= res + this.rx.get(i).toString() +"\n";
+            res= res + this.ry.get(i).toString() +"\n";
+        }
         return res + "}";
     }
 

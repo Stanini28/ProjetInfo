@@ -11,7 +11,18 @@ public class Reaction {
     private int idRy;
     private double Rx;
     private double Ry;
+//    private AppuiSimple as;
+//    private AppuiDouble ad;
+    private NoeudAppui nA;
 
+    public Reaction(AppuiSimple noeud){
+        this.nA =noeud;
+    }
+    
+    public Reaction(AppuiDouble noeud){
+        this.nA =noeud;
+    }
+    
     public int getIdRx() {
         return idRx;
     }
@@ -43,13 +54,11 @@ public class Reaction {
     public void setRy(double Ry) {
         this.Ry = Ry;
     }
-
     
-    
-
-   
-   
-
-    
+    public String toString(){
+        String res ="";
+        res = "Réaction sur "+this.nA+": Rx "+this.idRx+"et Ry "+this.idRy;
+        return res;
+    }
     
 }
