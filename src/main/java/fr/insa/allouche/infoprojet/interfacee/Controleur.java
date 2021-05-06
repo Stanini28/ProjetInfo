@@ -33,6 +33,7 @@ import javafx.scene.paint.Color;
  */
 public class Controleur {
 
+    private TypeBarre type1;
     private Point[] pointzc = new Point[4];
     private Point[] pointTT = new Point[3];
     private Point[] pointB = new Point[2];
@@ -171,7 +172,7 @@ public class Controleur {
             //---Getresponsevalue (traditionalway)
             if (textIn.isPresent()) {
                 double distance = Double.parseDouble(textIn.get());
-                AppuiDouble ad= new AppuiDouble(distance, segt);
+                AppuiDouble ad = new AppuiDouble(distance, segt);
                 model.addAppuiDouble(ad);
                 segt.add(ad);
                 this.vue.redrawAll();
@@ -179,7 +180,8 @@ public class Controleur {
             this.changeEtat(60);
         } else if (this.etat == 70) {
             Treillis model = this.vue.getModel();
-            model.addTypeBarre(new TypeBarre(20, 40, 67, 700, 800));
+            this.type1 = new TypeBarre(20, 40, 200, 700, 800);
+            model.addTypeBarre(this.type1);
             Alert dialogC = new Alert(AlertType.CONFIRMATION);
             dialogC.setTitle("A confirmation choix type barre");
             dialogC.setHeaderText(null);
@@ -216,6 +218,24 @@ public class Controleur {
             }
         } else if (this.etat == 71) {
             Treillis model = this.vue.getModel();
+            double longeure = Barre.longueur(this.pointB[0], new Point(t.getX(), t.getY()));
+            if (longeure < this.type1.getlMin()
+                    || longeure > this.type1.getlMax()) {
+                Alert dialogW = new Alert(AlertType.WARNING);
+                dialogW.setTitle("A warning dialog-box");
+                dialogW.setHeaderText(null);  // No header
+                if (longeure < this.type1.getlMin()) {
+                    dialogW.setContentText("Caution : La barre est trop petite, elle mesure "+longeure+
+                            "\n Alors que la longeure min pour votre type de barre est "+this.type1.getlMin()+" !\n"
+                                    + "Veuillez cliquer à nouveau sur la zone dessin pour definir un nouveau noeud de fin de barre");
+                } else {
+                    dialogW.setContentText("Caution : La barre est trop grande, elle mesure "+longeure+
+                            "\n Alors que la longeure max pour votre type de barre est "+this.type1.getlMax()+" !\n"
+                                    + "Veuillez cliquer à nouveau sur la zone dessin pour definir un nouveau noeud de fin de barre");
+                }
+                dialogW.showAndWait();
+                this.changeEtat(71);
+            } else {
             Alert dBox = new Alert(AlertType.CONFIRMATION);
             dBox.setTitle("choix du type de noeud");
             dBox.setHeaderText("Ma barre !");
@@ -247,6 +267,7 @@ public class Controleur {
             }
             this.changeEtat(70);
             this.vue.redrawAll();
+            }
         } else if (this.etat == 100) {
             Treillis model = this.vue.getModel();
             Point clic = new Point(t.getX(), t.getY());
@@ -404,20 +425,22 @@ public class Controleur {
         }
         if (res.equals("S")) {
             TriangleTerrain tt = model.segtTrouveTT(segt);
-            System.out.println("tt ="+tt+"\n");
-            System.out.println("tt.getSegTerrain1().getAppartient().size()"+tt.getSegTerrain1().getAppartient().size());
+            System.out.println("tt =" + tt + "\n");
+            System.out.println("tt.getSegTerrain1().getAppartient().size()" + tt.getSegTerrain1().getAppartient().size());
             for (int i = 0; i < tt.getSegTerrain1().getAppartient().size(); i++) {
                 System.out.println("prout 1");
-                System.out.println("liste noeud seg1 : " +tt.getSegTerrain1().getAppartient().get(i));
-                
-            }for (int i = 0; i < tt.getSegTerrain2().getAppartient().size(); i++) {
+                System.out.println("liste noeud seg1 : " + tt.getSegTerrain1().getAppartient().get(i));
+
+            }
+            for (int i = 0; i < tt.getSegTerrain2().getAppartient().size(); i++) {
                 System.out.println("prout 2");
-                System.out.println("liste noeud seg2 : " +tt.getSegTerrain2().getAppartient().get(i));
-                
-            } for (int i = 0; i < tt.getSegTerrain3().getAppartient().size(); i++) {
+                System.out.println("liste noeud seg2 : " + tt.getSegTerrain2().getAppartient().get(i));
+
+            }
+            for (int i = 0; i < tt.getSegTerrain3().getAppartient().size(); i++) {
                 System.out.println("prout 3");
-                System.out.println("liste noeud seg3 : " +tt.getSegTerrain3().getAppartient().get(i));
-                
+                System.out.println("liste noeud seg3 : " + tt.getSegTerrain3().getAppartient().get(i));
+
             }
             model.removeTriangleTerrain(tt);
             System.out.println("seg ");

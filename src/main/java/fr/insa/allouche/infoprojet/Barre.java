@@ -165,5 +165,10 @@ public class Barre {
             return p4.distancePoint(p);
         }
     }
+    public static double longueur(Point p1, Point p2){
+        double res;
+        res = Math.sqrt(Math.pow(p2.getPX()- p1.getPX(), 2) + Math.pow(p2.getPY() - p1.getPY(), 2));
+        return res;
+    }
     
 }
