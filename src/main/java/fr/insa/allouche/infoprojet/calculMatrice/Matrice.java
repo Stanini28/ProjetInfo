@@ -498,7 +498,7 @@ public class Matrice {
         return res;
     }
 
-    public void remonteeGauss() {
+    public Matrice remonteeGauss() {
         Matrice ResGauss = new Matrice(this.nbrLig, this.nbrCol);
         for (int i = 0; i < this.nbrLig; i++) {
             for (int j = 0; j < this.nbrCol; j++) {
@@ -511,6 +511,7 @@ public class Matrice {
             }
         }
         System.out.println("après remontée : \n" + ResGauss);
+        return ResGauss;
     }
 
     public static void test4() {
@@ -545,10 +546,10 @@ public class Matrice {
             System.out.println(res1.toString1());
             return res1;
         } else {
-            inte.remonteeGauss();
+            inte=inte.remonteeGauss();
             sol = inte.subCols(inte.nbrCol - 1, inte.nbrCol - 1);
             ResSup res2 = ResSup.solUnique(sol);
-            System.out.println(res2);
+            //System.out.println(res2);
             return res2;
         }
     }
