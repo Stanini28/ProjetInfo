@@ -24,7 +24,7 @@ public class Treillis {
     private List<NoeudSimple> Simp;
     private List<AppuiDouble> Adoub;
     private List<AppuiSimple> Asimp;
-    
+
     private List<Reaction_Rx> rx;
     private List<Reaction_Ry> ry;
 
@@ -34,11 +34,11 @@ public class Treillis {
         this.contient = new ArrayList();
         this.identite = new Identificateur();
         this.catalogueBarre = new ArrayList();
-        this.Adoub= new ArrayList();
-        this.Asimp= new ArrayList();
-        this.Simp= new ArrayList();
-        this.rx= new ArrayList();
-        this.ry= new ArrayList();
+        this.Adoub = new ArrayList();
+        this.Asimp = new ArrayList();
+        this.Simp = new ArrayList();
+        this.rx = new ArrayList();
+        this.ry = new ArrayList();
     }
 
     void setBase(Terrain base) {
@@ -98,7 +98,7 @@ public class Treillis {
             noeud.setContient(this);
             noeud.setId(this.identite.getOrCreateId(contient));
             this.Asimp.add(noeud);
-            Reaction_Rx rx = new Reaction_Rx (noeud);
+            Reaction_Rx rx = new Reaction_Rx(noeud);
             this.rx.add(rx);
             rx.setIdRx(this.identite.getOrCreateId(rx));
         }
@@ -113,10 +113,10 @@ public class Treillis {
             noeud.setContient(this);
             noeud.setId(this.identite.getOrCreateId(contient));
             this.Adoub.add(noeud);
-            Reaction_Rx rx = new Reaction_Rx (noeud);
+            Reaction_Rx rx = new Reaction_Rx(noeud);
             this.rx.add(rx);
             rx.setIdRx(this.identite.getOrCreateId(rx));
-            Reaction_Ry ry = new Reaction_Ry (noeud);
+            Reaction_Ry ry = new Reaction_Ry(noeud);
             this.ry.add(ry);
             ry.setIdRy(this.identite.getOrCreateId(ry));
         }
@@ -194,6 +194,21 @@ public class Treillis {
         }
     }
 
+    public void addTriangleTerrain(TriangleTerrain tt) {
+        if (tt.getConstitue() != this.getBase()) {
+            if (tt.getConstitue() != null) {
+                throw new Error("Le Terrain appartient déjà à un autre Treillis");
+            }
+            this.base.addTriangleTerrain(tt);
+            this.addTerrain(this.base);
+            tt.setId(this.identite.getOrCreateId(tt));
+            tt.getSegTerrain1().setId(this.identite.getOrCreateId(tt.getSegTerrain1()));
+            tt.getSegTerrain2().setId(this.identite.getOrCreateId(tt.getSegTerrain2()));
+            tt.getSegTerrain3().setId(this.identite.getOrCreateId(tt.getSegTerrain3()));
+            System.out.println("id s1= " + tt.getId());
+        }
+    }
+
     public void removeTerrain(Terrain t) {
         if (t.getBase() != this) {
             throw new Error("Le Terrain n'appartient pas au treillis");
@@ -201,7 +216,7 @@ public class Treillis {
         this.base = null;
         t.setBase(null);
     }
-    
+
     public void removeTriangleTerrain(TriangleTerrain tT) {
         if (tT.getConstitue().getBase() != this) {
             throw new Error("Le TriangleTerrain n'appartient pas au treillis");
@@ -224,8 +239,10 @@ public class Treillis {
         }
         res = res + this.base.toString();
         for (int i = 0; i < this.rx.size(); i++) {
-            res= res + this.rx.get(i).toString() +"\n";
-            res= res + this.ry.get(i).toString() +"\n";
+            res = res + this.rx.get(i).toString() + "\n";
+        }
+        for (int i = 0; i < this.ry.size(); i++) {
+            res = res + this.ry.get(i).toString() + "\n";
         }
         return res + "}";
     }
@@ -282,7 +299,7 @@ public class Treillis {
         SegmentTerrain seg5 = new SegmentTerrain(pos4, pos1);
         AppuiDouble nAD2 = new AppuiDouble(pos2, seg1);
         AppuiSimple nAS3 = new AppuiSimple(pos3, seg2);
-        AppuiSimple nAS1 = new AppuiSimple (0.9, seg3);
+        AppuiSimple nAS1 = new AppuiSimple(0.9, seg3);
         Barre bAd = new Barre(nAD2, nAS3, 6, 7, 78, 567, 789);
         TriangleTerrain tT1 = new TriangleTerrain(seg1, seg2, seg3);
         TriangleTerrain tT2 = new TriangleTerrain(pos2, pos4, pos1);
@@ -520,7 +537,9 @@ public class Treillis {
         for (int i = 0; i < this.contient.size(); i++) {
             this.contient.get(i).dessine(context);
         }
-        this.base.dessine(context);
+        if (this.base != null) {
+            this.base.dessine(context);
+        }
     }
 
     public Terrain getBase() {
@@ -615,7 +634,8 @@ public class Treillis {
     }
 
     public SegmentTerrain plusProcheST(Point p) {
-        if (this.contient.isEmpty()) {
+        if (this.base.getConstitue().isEmpty()) {
+            System.out.println("empty");
             return null;
         } else {
             SegmentTerrain stmin = this.base.getConstitue().get(0).getSegTerrain1();
@@ -653,7 +673,7 @@ public class Treillis {
         String res = "";
         if (this.barrePlusProche < this.noeudPlusProche && this.barrePlusProche < this.segPlusProche) {
             res = "B";
-            System.out.println("barre plus proche");
+            System.out.println("barre plus proche");  
             return res;
 
         } else if (this.noeudPlusProche < this.barrePlusProche && this.noeudPlusProche < this.segPlusProche) {
@@ -687,7 +707,7 @@ public class Treillis {
                 tt = this.getBase().getConstitue().get(i);
             }
         }
-       return tt; 
+        return tt;
     }
 
     public List<AppuiDouble> getAdoub() {
@@ -710,5 +730,4 @@ public class Treillis {
         return ry;
     }
 
-    
 }

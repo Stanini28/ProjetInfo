@@ -20,8 +20,8 @@ public class Main extends Application {
 
     @Override
     public void start(Stage stage) {
-        //Scene sc = new Scene(new interfaceDessin(stage,Treillis.treillisTest()),800,600);
-        Scene sc = new Scene (new interfaceDessin(Treillis.TTest()),800,600);
+        //Scene sc = new Scene(new interfaceDessin(Treillis.treillisTest()),800,600);
+        Scene sc = new Scene (new interfaceDessin(new Treillis()),800,600);
         stage.setScene(sc);
         stage.setTitle("Nouveau");
           stage.show();

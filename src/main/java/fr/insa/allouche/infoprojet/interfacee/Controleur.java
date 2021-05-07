@@ -94,8 +94,7 @@ public class Controleur {
             double px = t.getX();
             double py = t.getY();
             this.pointzc[3] = new Point(px, py);
-            Treillis model = this.vue.getModel();
-            model.addTerrain(new Terrain(pointzc[0], pointzc[1],
+            this.vue.getModel().addTerrain(new Terrain(pointzc[0], pointzc[1],
                     pointzc[2], pointzc[3]));
             this.vue.redrawAll();
             this.changeEtat(29);
@@ -114,18 +113,21 @@ public class Controleur {
             double py = t.getY();
             this.pointTT[2] = new Point(px, py);
             Treillis model = this.vue.getModel();
-            model.getBase().addTriangleTerrain(new TriangleTerrain(pointTT[0], pointTT[1], pointTT[2]));
+            TriangleTerrain tT = new TriangleTerrain(pointTT[0], pointTT[1], pointTT[2]);
+           // this.vue.getModel().getBase().addTriangleTerrain(tT);
+            this.vue.getModel().addTriangleTerrain(tT);
+            System.out.println("tt :" +this.vue.getModel().getBase().toString());
             this.vue.redrawAll();
             this.changeEtat(39);
         } else if (this.etat == 40) {
             double px = t.getX();
             double py = t.getY();
-            Treillis model = this.vue.getModel();
-            model.addNoeudSimple(new NoeudSimple(new Point(px, py)));
+            this.vue.getModel().addNoeudSimple(new NoeudSimple(new Point(px, py)));
             this.vue.redrawAll();
             this.changeEtat(40);
         } else if (this.etat == 50) {
             Treillis model = this.vue.getModel();
+            System.out.println("model :"+model);
 //            Alert dialog = new Alert(AlertType.INFORMATION);
 //            dialog.setTitle("An information dialog-box");
 //            dialog.setHeaderText("An information dialogwithheader");

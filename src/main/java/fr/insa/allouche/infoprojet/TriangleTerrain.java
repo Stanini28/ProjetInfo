@@ -94,9 +94,13 @@ public class TriangleTerrain {
     }
 
     public void pointToSeg(Point pt1, Point pt2, Point pt3) {
-        this.setSegTerrain1(new SegmentTerrain(pt1, pt2));
-        this.setSegTerrain2(new SegmentTerrain(pt2, pt3));
-        this.setSegTerrain3(new SegmentTerrain(pt3, pt1));
+//        this.setSegTerrain1(new SegmentTerrain(pt1, pt2));
+//        this.setSegTerrain2(new SegmentTerrain(pt2, pt3));
+//        this.setSegTerrain3(new SegmentTerrain(pt3, pt1));
+        this.SegTerrain1 = new SegmentTerrain(pt1, pt2);
+        this.SegTerrain2 = new SegmentTerrain(pt2, pt3);
+        this.SegTerrain3 = new SegmentTerrain(pt3, pt1);
+        //this.id=9;
     }
 
     public void angle() {
