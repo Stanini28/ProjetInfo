@@ -729,5 +729,16 @@ public class Treillis {
     public List<Reaction_Ry> getRy() {
         return ry;
     }
+    
+    public boolean nZoneConstructible(Point pt){
+        boolean res = true;
+        if  (pt.getPX() < this.getBase().getXmin() || 
+                pt.getPX() > this.getBase().getXmax() || 
+                pt.getPY() < this.getBase().getYmin() || 
+                pt.getPY() > this.getBase().getYmax()) {
+            res = false;
+        }
+        return res;
+    }
 
 }

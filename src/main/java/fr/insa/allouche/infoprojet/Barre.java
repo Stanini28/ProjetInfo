@@ -140,10 +140,10 @@ public class Barre {
         return b;
     }
     public void dessine(GraphicsContext context) {
+        context.setLineWidth(4);
         context.setStroke(this.color);
         context.strokeLine(this.debut.position.getPX(), this.debut.position.getPY(),
                 this.fin.position.getPX(), this.fin.position.getPY());
-        context.setLineWidth(4);
     }
     
     public double distancePoint(Point p) {

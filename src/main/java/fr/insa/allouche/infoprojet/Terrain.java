@@ -170,6 +170,22 @@ public class Terrain {
         }
         
     }
+
+    public double getXmin() {
+        return xmin;
+    }
+
+    public double getXmax() {
+        return xmax;
+    }
+
+    public double getYmin() {
+        return ymin;
+    }
+
+    public double getYmax() {
+        return ymax;
+    }
     
     
     
