@@ -6,6 +6,8 @@
 package fr.insa.allouche.infoprojet;
 
 import fr.insa.allouche.infoprojet.outils.Lire;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.canvas.GraphicsContext;
@@ -153,6 +155,10 @@ public abstract class Noeud {
         }
     }
     
+    public String saveColor(Color c) {
+        return c.getRed()+";"+c.getGreen()+";"+c.getBlue();
+    }
+    
     public abstract void dessine(GraphicsContext context);
     public double distancePoint(Point p) {
         double dx = this.position.getPX() - p.getPX();
@@ -160,4 +166,12 @@ public abstract class Noeud {
         return Math.sqrt(dx * dx + dy * dy);
     }
     
+   public void save(Writer w, Identificateur num) throws IOException {
+        if (!num.objExist(this)) {
+            int id = num.getOrCreateId(this);
+            w.append("Noeud;" + id + this.position+ ";"+ this.saveColor(this.getColor()) + ";" + this.forceY 
+                    + ";" + this.liee +"\n");
+        }
+
+    }
 }

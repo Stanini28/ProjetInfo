@@ -8,6 +8,8 @@ package fr.insa.allouche.infoprojet;
 import java.util.ArrayList;
 import java.util.List;
 import fr.insa.allouche.infoprojet.outils.Lire;
+import java.io.IOException;
+import java.io.Writer;
 
 public class TypeBarre {
 
@@ -129,6 +131,15 @@ public class TypeBarre {
                 + "     force de traction ax : "+this.rTraction+"\n"
                 + "     force de compression ax : "+this.rComp+"\n"; 
         return res;
+    }
+    
+    public void save(Writer w, Identificateur num) throws IOException{
+        if(!num.objExist(this)){
+        int id = num.getOrCreateId(this);
+        w.append("Type de Barre" +id+ ";" + this.coutAuMetre+ ";" +  this.lMax+ ";"
+                + this.lMin + ";"+ this.rComp+ ";"+ this.rTraction + "\n");
+        }
+        
     }
 }
 

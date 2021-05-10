@@ -6,6 +6,8 @@
 package fr.insa.allouche.infoprojet;
 
 import java.awt.BasicStroke;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.Set;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -171,4 +173,18 @@ public class Barre {
         return res;
     }
     
+    public String saveColor(Color c) {
+        return c.getRed()+";"+c.getGreen()+";"+c.getBlue();
+    }
+    
+    public void save(Writer w, Identificateur num) throws IOException {
+        if (!num.objExist(this)) {
+            int id = num.getOrCreateId(this);
+            this.debut.save(w, num);
+            this.fin.save(w, num);
+            this.type.save(w, num);
+            w.append("Barre" + id +";"+ num.getID(this.debut)+ ";"+ num.getID(this.fin)+ ";" + this.saveColor(this.getColor())+ ";" + num.getID(this.type)  + "\n");
+        }
+
+    }
 }

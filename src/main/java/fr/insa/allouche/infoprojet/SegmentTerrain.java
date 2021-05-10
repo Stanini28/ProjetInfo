@@ -154,14 +154,20 @@ public class SegmentTerrain {
         context.strokeLine(this.debut.getPX(), this.debut.getPY(),
                 this.fin.getPX(), this.fin.getPY());
     }
+    
+    public String saveColor(Color c) {
+        return c.getRed()+";"+c.getGreen()+";"+c.getBlue();
+    }
+    
 public void save(Writer w, Identificateur num) throws IOException {
         if (!num.objExist(this)) {
             int id = num.getOrCreateId(this);
             this.debut.save(w, num);
             this.fin.save(w, num);
+            this.faitPartieDe.save(w, num);
             w.append("Segment;" + id + ";" +
                     num.getID(this.debut) + ";" + num.getID(this.fin) +
-                    ";" +"\n");
+                    ";" +  num.getID(this.faitPartieDe) +";"+ this.saveColor(this.getColor()) +"\n");
         }
     }
 

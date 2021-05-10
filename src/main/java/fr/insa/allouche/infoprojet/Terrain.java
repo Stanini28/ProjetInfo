@@ -163,10 +163,8 @@ public class Terrain {
     public void save(Writer w, Identificateur num) throws IOException{
         if(!num.objExist(this)){
         int id1 = num.getOrCreateId(this);
-        int id2 = num.getOrCreateId(this);
-        w.append("Point MAX;" + id1 + this.xmax + ";" + this.ymax + 
-                ";" + "Point Min;" + id2 + this.xmin + ";" + this.ymin  
-                + "\n");
+        w.append("Terrain"+ id1 + ": Limite Xmax " + this.xmax+ "; Xmin" + this.xmin +
+                "Ymax " + this.ymax+ "; Ymin" + this.ymin + ";"+ this.constitue+ "\n");
         }
         
     }
