@@ -22,7 +22,7 @@ public class CatalogueBarre {
     /**
      * 
      */
-    private ArrayList catlogue;
+    private ArrayList catalogue;
 
 
 

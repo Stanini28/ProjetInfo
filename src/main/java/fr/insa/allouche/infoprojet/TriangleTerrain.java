@@ -126,13 +126,12 @@ public class TriangleTerrain {
     }
     public void save(Writer w, Identificateur num) throws IOException {
         if (!num.objExist(this)) {
-            int id = num.getOrCreateId(this);
             this.SegTerrain1.save(w, num);
             this.SegTerrain2.save(w, num);
             this.SegTerrain3.save(w, num);
-            w.append("TriangleTerrain;" + id + ";" +
-                    num.getID(this.SegTerrain1) + ";" + num.getID(this.SegTerrain2) +
-                    ";" + num.getID(this.SegTerrain3) +"\n");
+            w.append("TriangleTerrain;" + this.id + ";" +
+                    this.SegTerrain1.getId() + ";" + this.SegTerrain2.getId() +
+                    ";" + this.SegTerrain3.getId()+";"+ this.constitue +"\n");
         }
     }
 }

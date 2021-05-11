@@ -166,12 +166,4 @@ public abstract class Noeud {
         return Math.sqrt(dx * dx + dy * dy);
     }
     
-   public void save(Writer w, Identificateur num) throws IOException {
-        if (!num.objExist(this)) {
-            int id = num.getOrCreateId(this);
-            w.append("Noeud;" + id + this.position+ ";"+ this.saveColor(this.getColor()) + ";" + this.forceY 
-                    + ";" + this.liee +"\n");
-        }
-
-    }
 }

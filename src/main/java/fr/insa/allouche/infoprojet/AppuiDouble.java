@@ -5,6 +5,8 @@
  */
 package fr.insa.allouche.infoprojet;
 
+import java.io.IOException;
+import java.io.Writer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -69,5 +71,10 @@ public class AppuiDouble extends NoeudAppui {
         return Ry;
     }
     
-    
+    public void save(Writer w, Identificateur num) throws IOException {
+        if (!num.objExist(this)) {
+            w.append("NoeudAppuiDouble;" + this.getId() + this.position+ ";"+ this.getappartient().getId()+ ";" + this.saveColor(this.getColor()) + ";" + this.forceY 
+                    + "\n");
+        }
+    }
 }

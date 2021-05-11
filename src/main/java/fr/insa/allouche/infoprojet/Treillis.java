@@ -7,6 +7,11 @@ package fr.insa.allouche.infoprojet;
 
 import java.util.List;
 import fr.insa.allouche.infoprojet.outils.Lire;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.scene.canvas.GraphicsContext;
@@ -526,9 +531,9 @@ public class Treillis {
         t.menuTexte();
     }
 
-    public static void main(String[] args) {
-        testMenu();
-    }
+    //public static void main(String[] args) {
+    //    testMenu();
+    //}
 
     public void dessine(GraphicsContext context) {
         for (int i = 0; i < this.compose.size(); i++) {
@@ -740,5 +745,109 @@ public class Treillis {
         }
         return res;
     }
-
+    
+    public void sauvegarde(File F) throws IOException{
+        Identificateur Num= new Identificateur();
+        
+        try (BufferedWriter bout = new BufferedWriter(new FileWriter(F))){
+            for (int i=0;i<this.Adoub.size();i++){
+                this.Adoub.get(i).save(bout, Num);
+            }//AJOUT APPUI DOUBLE
+            for (int i=0;i<this.Asimp.size();i++){
+                this.Asimp.get(i).save(bout, Num);
+            }//AJOUT APPUI SIMPLE
+            for (int i=0;i<this.Simp.size();i++){
+                this.Simp.get(i).save(bout, Num);
+            }//AJOUT NOEUD SIMPLE
+            for (int i=0;i<this.compose.size();i++){
+                this.compose.get(i).save(bout, Num);
+            }//AJOUT BARRE
+            for (int i=0;i<this.catalogueBarre.size();i++){
+                this.catalogueBarre.get(i).save(bout, Num);
+            }//AJOUT TYPE BARRE
+            for (int i=0;i<this.base.getConstitue().size();i++){
+                this.base.getConstitue().get(i).save(bout, Num);
+            }//AJOUT TRIANGLE TERRAIN+ SEGMENT TERRAIN
+            this.base.save(bout, Num);
+        }
+    }
+    
+    public static void ExempleSauvegarde(){
+        Point pos1 = new Point();
+        Point pos2 = new Point(20, 30);
+        Point pos3 = new Point(40, 50);
+        Point pos4 = new Point(10, 40);
+        Point pos5 = new Point(60, 50);
+        NoeudSimple nS1 = new NoeudSimple(pos1);
+        NoeudSimple nS2 = new NoeudSimple(pos4);
+        NoeudSimple nS4 = new NoeudSimple(pos4);
+        NoeudSimple nS5 = new NoeudSimple(pos5);
+        Barre b1 = new Barre(nS1, nS2);
+        Barre b2 = new Barre(nS4, nS5);
+        Barre b3 = new Barre(nS4, nS1, 5, 25, 56, 800, 1000);
+        Treillis res = new Treillis();
+        Terrain t1 = new Terrain(pos1, pos2, pos3, pos4);
+        SegmentTerrain seg1 = new SegmentTerrain(pos1, pos2);
+        SegmentTerrain seg2 = new SegmentTerrain(pos2, pos3);
+        SegmentTerrain seg3 = new SegmentTerrain(pos3, pos1);
+        SegmentTerrain seg4 = new SegmentTerrain(pos2, pos4);
+        SegmentTerrain seg5 = new SegmentTerrain(pos4, pos1);
+        AppuiDouble nAD2 = new AppuiDouble(pos2, seg1);
+        AppuiSimple nAS3 = new AppuiSimple(pos3, seg2);
+        AppuiSimple nAS1 = new AppuiSimple(0.9, seg3);
+        Barre bAd = new Barre(nAD2, nAS3, 6, 7, 78, 567, 789);
+        TriangleTerrain tT1 = new TriangleTerrain(seg1, seg2, seg3);
+        TriangleTerrain tT2 = new TriangleTerrain(pos2, pos4, pos1);
+        TypeBarre tB1 = new TypeBarre(2, 30, 55, 550, 500);
+        TypeBarre tB2 = new TypeBarre();
+        
+        nS1.setId(0);
+        nS2.setId(1);
+        nS4.setId(2);
+        nS5.setId(3);
+        b1.setId(4);
+        b2.setId(5);
+        b3.setId(6);
+        seg1.setId(7);
+        seg2.setId(8);
+        seg3.setId(9);
+        nAD2.setId(12);
+        nAS3.setId(13);
+        nAS1.setId(14);
+        bAd.setId(15);
+        tT1.setId(16);
+        tB1.setId(18);
+        tB2.setId(19);
+        
+        tT1.setSegTerrain1(seg1);
+        tT1.setSegTerrain2(seg2);
+        tT1.setSegTerrain3(seg3);
+        seg1.setFaitPartieDe(tT1);
+        seg2.setFaitPartieDe(tT1);
+        seg3.setFaitPartieDe(tT1);
+        t1.addTriangleTerrain(tT1);
+        res.addBarre(b1);
+        res.addBarre(b2);
+        res.addTerrain(t1);
+        res.addBarre(b3);
+        res.addBarre(bAd);
+        res.addNoeudSimple(nS1);
+        res.addNoeudSimple(nS2);
+        res.addNoeudSimple(nS4);
+        res.addNoeudSimple(nS5);
+        res.addAppuiDouble(nAD2);
+        res.addAppuiSimple(nAS3);
+        res.addTypeBarre(tB1);
+        res.addTypeBarre(tB2);
+        
+        try{
+           res.sauvegarde(new File("Test 1")); 
+        }catch (IOException ex){
+            throw new Error("Problème :"+ ex.getMessage());
+        }
+    }
+    
+    public static void main(String[] args){
+        ExempleSauvegarde();
+    }
 }

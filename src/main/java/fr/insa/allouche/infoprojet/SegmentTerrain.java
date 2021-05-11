@@ -161,13 +161,9 @@ public class SegmentTerrain {
     
 public void save(Writer w, Identificateur num) throws IOException {
         if (!num.objExist(this)) {
-            int id = num.getOrCreateId(this);
-            this.debut.save(w, num);
-            this.fin.save(w, num);
-            this.faitPartieDe.save(w, num);
-            w.append("Segment;" + id + ";" +
-                    num.getID(this.debut) + ";" + num.getID(this.fin) +
-                    ";" +  num.getID(this.faitPartieDe) +";"+ this.saveColor(this.getColor()) +"\n");
+            w.append("SegmentTerrain;" + this.id + ";" +
+                    this.debut.getPX()+ ";"+ this.debut.getPY() + ";" + this.fin.getPX() +
+                    ";" + this.fin.getPY()+ ";"+  this.faitPartieDe.getId() +";"+ this.saveColor(this.getColor()) +"\n");
         }
     }
 

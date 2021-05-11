@@ -179,11 +179,8 @@ public class Barre {
     
     public void save(Writer w, Identificateur num) throws IOException {
         if (!num.objExist(this)) {
-            int id = num.getOrCreateId(this);
-            this.debut.save(w, num);
-            this.fin.save(w, num);
             this.type.save(w, num);
-            w.append("Barre" + id +";"+ num.getID(this.debut)+ ";"+ num.getID(this.fin)+ ";" + this.saveColor(this.getColor())+ ";" + num.getID(this.type)  + "\n");
+            w.append("Barre" + this.id +";"+ this.debut.getId()+ ";"+ this.fin.getId()+ ";" + this.saveColor(this.getColor())+ ";" + this.type.getId()  + "\n");
         }
 
     }

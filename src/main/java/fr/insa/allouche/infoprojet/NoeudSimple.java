@@ -51,4 +51,13 @@ public class NoeudSimple extends Noeud {
                 this.position.getPY() - RAYON_NOEUD, 2 * RAYON_NOEUD, 2 * RAYON_NOEUD);
 
     }
+    
+    public void save(Writer w, Identificateur num) throws IOException {
+        if (!num.objExist(this)) {
+            int id = num.getOrCreateId(this);
+            w.append("NoeudSimple;" + this.getId()+";" + this.position+ ";"+ this.saveColor(this.getColor()) + ";" + this.forceY 
+                    +"\n");
+        }
+
+    }
 }

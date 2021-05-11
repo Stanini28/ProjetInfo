@@ -5,6 +5,8 @@
  */
 package fr.insa.allouche.infoprojet;
 
+import java.io.IOException;
+import java.io.Writer;
 import javafx.scene.paint.Color;
 
 /**
