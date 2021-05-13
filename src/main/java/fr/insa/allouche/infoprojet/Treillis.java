@@ -15,6 +15,7 @@ import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class Treillis {
 
@@ -59,22 +60,71 @@ public class Treillis {
     }
 
     public void addBarre(Barre barre) {
+        System.out.println("ajout barre au trellis");
         if (barre.getCompose() != this) {
             if (barre.getCompose() != null) {
                 throw new Error("La Barre appartient déjà au treillis");
             }
             this.compose.add(barre);
             barre.setCompose(this);
-            barre.setId(this.identite.getOrCreateId(compose));;
+            barre.setId(this.identite.getOrCreateId(compose));
             int p = this.compose.size();
+            // pk -1 ?
             if (this.compose.get(p - 1).getType() == null) {
+                System.out.println("ici");
                 TypeBarre tb = new TypeBarre();
                 tb.DemandeTypeBarre();
                 this.addTypeBarre(tb);
                 this.compose.get(p - 1).setType(tb);
-            } else {
-                this.addTypeBarre(this.compose.get(p - 1).getType());
+//            } else {
+//                int n = 0;
+//                for (int i = 0; i < this.catalogueBarre.size(); i++) {
+//                    if (barre.getType().getCoutAuMetre() == this.catalogueBarre.get(i).getCoutAuMetre()
+//                            && barre.getType().getlMax() == this.catalogueBarre.get(i).getlMax()
+//                            && barre.getType().getlMin() == this.catalogueBarre.get(i).getlMin()
+//                            && barre.getType().getrComp() == this.catalogueBarre.get(i).getrComp()
+//                            && barre.getType().getrTraction() == this.catalogueBarre.get(i).getrTraction()) {
+//                        n++;
+//                    }
+//                }
+//                if (n == 0) {
+//                    this.addTypeBarre(this.compose.get(p-1).getType());
+//                }
             }
+
+            System.out.println(" barre ajouté au trellis");
+        }
+    }
+
+    public void addBarre(Barre barre, double coutAuMetre, double lMin,
+            double lMax, double rTraction, double rComp, Color color) {
+        System.out.println("ajout barre au trellis");
+        if (barre.getCompose() != this) {
+            if (barre.getCompose() != null) {
+                throw new Error("La Barre appartient déjà au treillis");
+            }
+            this.compose.add(barre);
+            barre.setCompose(this);
+            barre.setId(this.identite.getOrCreateId(compose));
+            // pk -1 ?
+            int n = 0;
+            for (int i = 0; i < this.catalogueBarre.size(); i++) {
+                if (coutAuMetre == this.catalogueBarre.get(i).getCoutAuMetre()
+                        && lMax == this.catalogueBarre.get(i).getlMax()
+                        && lMin == this.catalogueBarre.get(i).getlMin()
+                        && rComp == this.catalogueBarre.get(i).getrComp()
+                        && rTraction == this.catalogueBarre.get(i).getrTraction()) {
+                    n++;
+                    barre.setType(this.catalogueBarre.get(i));
+                    this.catalogueBarre.get(i).addTBarre(barre);
+                }
+            }
+            if (n == 0) {
+                barre.setType(new TypeBarre(coutAuMetre, lMin, lMax, rTraction, rComp));
+                this.addTypeBarre(barre.getType());
+            }
+
+            System.out.println(" barre ajouté au trellis");
         }
     }
 
@@ -534,7 +584,6 @@ public class Treillis {
     //public static void main(String[] args) {
     //    testMenu();
     //}
-
     public void dessine(GraphicsContext context) {
         for (int i = 0; i < this.compose.size(); i++) {
             this.compose.get(i).dessine(context);
@@ -600,6 +649,7 @@ public class Treillis {
 
     public Noeud plusProcheN(Point p) {
         if (this.contient.isEmpty()) {
+            this.noeudPlusProche = 999;
             return null;
         } else {
             Noeud nmin = this.contient.get(0);
@@ -620,6 +670,7 @@ public class Treillis {
 
     public Barre plusProcheB(Point p) {
         if (this.compose.isEmpty()) {
+            this.barrePlusProche = 999;
             return null;
         } else {
             Barre bmin = this.compose.get(0);
@@ -632,6 +683,7 @@ public class Treillis {
                     bmin = bcur;
                 }
             }
+            System.out.println("barre min = " + bmin.getId());
             this.barrePlusProche = Bmin;
             return bmin;
 
@@ -641,6 +693,7 @@ public class Treillis {
     public SegmentTerrain plusProcheST(Point p) {
         if (this.base.getConstitue().isEmpty()) {
             System.out.println("empty");
+            this.segPlusProche = 999;
             return null;
         } else {
             SegmentTerrain stmin = this.base.getConstitue().get(0).getSegTerrain1();
@@ -676,28 +729,32 @@ public class Treillis {
 
     public String lePlusProche() {
         String res = "";
-        if (this.barrePlusProche < this.noeudPlusProche && this.barrePlusProche < this.segPlusProche) {
+        if (Math.abs(this.noeudPlusProche - this.segPlusProche) < 1 && this.noeudPlusProche != 999 && this.segPlusProche != 999) {
+            res = "NS";
+            return res;
+        } else if (Math.abs(this.barrePlusProche - this.noeudPlusProche) < 1 && this.barrePlusProche != 999 && this.noeudPlusProche != 999) {
+            res = "BN";
+            return res;
+        } else if (Math.abs(this.barrePlusProche - this.segPlusProche) < 1 && this.barrePlusProche != 999 && this.segPlusProche != 999) {
+            res = "BS";
+            return res;
+        } else if (this.barrePlusProche < this.noeudPlusProche && this.barrePlusProche < this.segPlusProche && this.barrePlusProche != 999) {
             res = "B";
-            System.out.println("barre plus proche");  
+            System.out.println("barre plus proche");
             return res;
 
-        } else if (this.noeudPlusProche < this.barrePlusProche && this.noeudPlusProche < this.segPlusProche) {
+        } else if ((this.segPlusProche < this.noeudPlusProche && this.segPlusProche < this.barrePlusProche && this.segPlusProche != 999)) {
+            res = "S";
+            System.out.println("segt plus proche");
+            return res;
+        } else if (this.noeudPlusProche < this.barrePlusProche && this.noeudPlusProche < this.segPlusProche && this.noeudPlusProche != 999) {
             res = "N";
             System.out.println("noeud plus proche");
             return res;
 
-        } else if (this.noeudPlusProche - this.segPlusProche < 3) {
-            res = "NS";
-            return res;
-        } else if (this.barrePlusProche - this.noeudPlusProche < 5) {
-            res = "BN";
-            return res;
-        } else if (this.barrePlusProche - this.segPlusProche < 1) {
-            res = "BS";
-            return res;
         } else {
-            res = "S";
-            System.out.println("segt plus proche");
+            res = null;
+            System.out.println("rien est assez proche");
             return res;
 
         }
@@ -734,45 +791,45 @@ public class Treillis {
     public List<Reaction_Ry> getRy() {
         return ry;
     }
-    
-    public boolean nZoneConstructible(Point pt){
+
+    public boolean nZoneConstructible(Point pt) {
         boolean res = true;
-        if  (pt.getPX() < this.getBase().getXmin() || 
-                pt.getPX() > this.getBase().getXmax() || 
-                pt.getPY() < this.getBase().getYmin() || 
-                pt.getPY() > this.getBase().getYmax()) {
+        if (pt.getPX() < this.getBase().getXmin()
+                || pt.getPX() > this.getBase().getXmax()
+                || pt.getPY() < this.getBase().getYmin()
+                || pt.getPY() > this.getBase().getYmax()) {
             res = false;
         }
         return res;
     }
-    
-    public void sauvegarde(File F) throws IOException{
-        Identificateur Num= new Identificateur();
-        
-        try (BufferedWriter bout = new BufferedWriter(new FileWriter(F))){
-            for (int i=0;i<this.Adoub.size();i++){
+
+    public void sauvegarde(File F) throws IOException {
+        Identificateur Num = new Identificateur();
+
+        try ( BufferedWriter bout = new BufferedWriter(new FileWriter(F))) {
+            for (int i = 0; i < this.Adoub.size(); i++) {
                 this.Adoub.get(i).save(bout, Num);
             }//AJOUT APPUI DOUBLE
-            for (int i=0;i<this.Asimp.size();i++){
+            for (int i = 0; i < this.Asimp.size(); i++) {
                 this.Asimp.get(i).save(bout, Num);
             }//AJOUT APPUI SIMPLE
-            for (int i=0;i<this.Simp.size();i++){
+            for (int i = 0; i < this.Simp.size(); i++) {
                 this.Simp.get(i).save(bout, Num);
             }//AJOUT NOEUD SIMPLE
-            for (int i=0;i<this.compose.size();i++){
+            for (int i = 0; i < this.compose.size(); i++) {
                 this.compose.get(i).save(bout, Num);
             }//AJOUT BARRE
-            for (int i=0;i<this.catalogueBarre.size();i++){
+            for (int i = 0; i < this.catalogueBarre.size(); i++) {
                 this.catalogueBarre.get(i).save(bout, Num);
             }//AJOUT TYPE BARRE
-            for (int i=0;i<this.base.getConstitue().size();i++){
+            for (int i = 0; i < this.base.getConstitue().size(); i++) {
                 this.base.getConstitue().get(i).save(bout, Num);
             }//AJOUT TRIANGLE TERRAIN+ SEGMENT TERRAIN
             this.base.save(bout, Num);
         }
     }
-    
-    public static void ExempleSauvegarde(){
+
+    public static void ExempleSauvegarde() {
         Point pos1 = new Point();
         Point pos2 = new Point(20, 30);
         Point pos3 = new Point(40, 50);
@@ -800,7 +857,7 @@ public class Treillis {
         TriangleTerrain tT2 = new TriangleTerrain(pos2, pos4, pos1);
         TypeBarre tB1 = new TypeBarre(2, 30, 55, 550, 500);
         TypeBarre tB2 = new TypeBarre();
-        
+
         nS1.setId(0);
         nS2.setId(1);
         nS4.setId(2);
@@ -818,7 +875,7 @@ public class Treillis {
         tT1.setId(16);
         tB1.setId(18);
         tB2.setId(19);
-        
+
         tT1.setSegTerrain1(seg1);
         tT1.setSegTerrain2(seg2);
         tT1.setSegTerrain3(seg3);
@@ -839,15 +896,16 @@ public class Treillis {
         res.addAppuiSimple(nAS3);
         res.addTypeBarre(tB1);
         res.addTypeBarre(tB2);
-        
-        try{
-           res.sauvegarde(new File("Test 1")); 
-        }catch (IOException ex){
-            throw new Error("Problème :"+ ex.getMessage());
+
+        try {
+            res.sauvegarde(new File("Test 1"));
+        } catch (IOException ex) {
+            throw new Error("Problème :" + ex.getMessage());
         }
     }
-    
-    public static void main(String[] args){
+
+    public static void main(String[] args) {
         ExempleSauvegarde();
     }
+
 }
