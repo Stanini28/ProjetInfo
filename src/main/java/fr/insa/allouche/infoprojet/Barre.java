@@ -201,7 +201,7 @@ public class Barre {
     public void save(Writer w, Identificateur num) throws IOException {
         if (!num.objExist(this)) {
             this.type.save(w, num);
-            w.append("Barre" + this.id + ";" + this.debut.getId() + ";" + this.fin.getId() + ";" + this.saveColor(this.getColor()) + ";" + this.type.getId() + "\n");
+            w.append("Barre;" + this.id + ";" + this.debut.getId() + ";" + this.fin.getId() + ";" + this.saveColor(this.getColor()) + ";" + this.type.getId() + "\n");
         }
 
     }

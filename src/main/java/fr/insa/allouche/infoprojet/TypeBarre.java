@@ -132,12 +132,12 @@ public class TypeBarre {
                 + "     force de compression ax : " + this.rComp + "\n";
         return res;
     }
-
-    public void save(Writer w, Identificateur num) throws IOException {
-        if (!num.objExist(this)) {
-            int id = num.getOrCreateId(this);
-            w.append("Type de Barre" + id + ";" + this.coutAuMetre + ";" + this.lMax + ";"
-                    + this.lMin + ";" + this.rComp + ";" + this.rTraction + "\n");
+    
+    public void save(Writer w, Identificateur num) throws IOException{
+        if(!num.objExist(this)){
+        int id = num.getOrCreateId(this);
+        w.append("Type de Barre;" +id+ ";" + this.coutAuMetre+ ";" +  this.lMax+ ";"
+                + this.lMin + ";"+ this.rComp+ ";"+ this.rTraction + "\n");
         }
 
     }

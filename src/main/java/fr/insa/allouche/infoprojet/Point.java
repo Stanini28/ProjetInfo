@@ -64,7 +64,7 @@ public class Point {
     public void save(Writer w, Identificateur num) throws IOException {
         if (!num.objExist(this)) {
             int id = num.getOrCreateId(this);
-            w.append("Point;" + id + this.PX + ";" + this.PY + "\n");
+            w.append("Point;" + id + ";" + this.PX + ";" + this.PY + "\n");
         }
 
     }
