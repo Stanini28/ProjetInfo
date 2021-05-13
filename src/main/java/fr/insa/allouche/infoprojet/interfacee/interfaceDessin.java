@@ -12,8 +12,14 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import static javafx.application.Application.launch;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Cursor;
+import javafx.scene.Group;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
@@ -74,10 +80,11 @@ public class interfaceDessin extends BorderPane {
         this.controleur = new Controleur(this);
 
         this.Select = new ToggleButton("Select");
+        
         this.Select.setOnAction((t) -> {
             this.controleur.boutonSelect(t);
         });
-
+              
         this.zoneconstructible = new ToggleButton("Zone constructible");
         this.zoneconstructible.setOnAction((t) -> {
             this.controleur.boutonZoneConstructible(t);
@@ -146,7 +153,26 @@ public class interfaceDessin extends BorderPane {
 
         this.entete = new HBox(this.triangle_Terrain,this.Select, this.choiceBoxN, this.catalogueBarre,
                 this.supprimer, this.zoneconstructible,this.cpCouleur, this.remove);
-
+        
+        this.entete.setStyle(" -fx-padding: 2;");
+        this.Select.setStyle("-fx-background-color: #00f8c3; -fx-padding: 10;");
+        this.remove.setStyle("-fx-background-color: #67d5c1; -fx-padding: 10;");
+        this.zoneconstructible.setStyle("-fx-background-color: #ffb12e; -fx-padding: 10;");
+        this.cpCouleur.setStyle("-fx-background-color: #c5dfff; -fx-padding: 10;");
+        this.choiceBoxN.setStyle("-fx-background-color: #fbad84; -fx-padding: 10;");
+        this.triangle_Terrain.setStyle("-fx-background-color: #6bd314; -fx-padding: 10;");
+        this.supprimer.setStyle("-fx-background-color: #fe2705; -fx-padding: 10;");
+        this.choiceN1.setStyle("-fx-background-color: #e7a9a7; -fx-padding: 8;");
+        this.choiceN2.setStyle("-fx-background-color: #f1cccb; -fx-padding: 8;");
+        this.choiceN3.setStyle("-fx-background-color: #f6e0df; -fx-padding: 8;");
+        this.choiceB1.setStyle("-fx-background-color: #b5b6eb; -fx-padding: 8;");
+        this.choiceB2.setStyle("-fx-background-color: #cfcff2; -fx-padding: 8;");
+        this.choiceB3.setStyle("-fx-background-color: #e7e7f8; -fx-padding: 8;");
+        
+        
+        
+        
+        
         this.setTop(this.entete);
 
         this.zoneDessin = new DessinCanvas(this);
@@ -260,5 +286,5 @@ public class interfaceDessin extends BorderPane {
     public MenuItem getChoiceN3() {
         return choiceN3;
     }
-
 }
+
