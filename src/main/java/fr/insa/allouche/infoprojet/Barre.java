@@ -11,7 +11,9 @@ import java.io.Writer;
 import java.util.Set;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-/**s
+
+/**
+ * s
  *
  * @author stanislasallouche
  */
@@ -24,9 +26,8 @@ public class Barre {
     private TypeBarre type;
     public double Fx;
     public double Fy;
-    public Color color; 
-    
-    
+    public Color color;
+
     public Barre(Noeud debut, Noeud fin, Color color) {
         this.debut = debut;
         this.fin = fin;
@@ -35,10 +36,11 @@ public class Barre {
         this.fin.addBarre(this);
         this.color = color;
     }
+
     public Barre(Noeud debut, Noeud fin) {
         this(debut, fin, Color.BLUE);
     }
-    
+
     public Barre(Noeud debut, Noeud fin, double coutAuMetre, double lMin,
             double lMax, double rTraction, double rComp, Color color) {
         this.debut = debut;
@@ -46,10 +48,29 @@ public class Barre {
 //        this.id= Identificateuer.getOrCreateId(this);
         this.debut.addBarre(this);
         this.fin.addBarre(this);
+//        int n = 0;
+//        if (this.compose != null) {
+//            for (int i = 0; i < this.compose.getCatalogueBarre().size(); i++) {
+//                if (coutAuMetre == this.compose.getCatalogueBarre().get(i).getCoutAuMetre()
+//                        && lMax == this.compose.getCatalogueBarre().get(i).getlMax()
+//                        && lMin == this.compose.getCatalogueBarre().get(i).getlMin()
+//                        && rComp == this.compose.getCatalogueBarre().get(i).getrComp()
+//                        && rTraction == this.compose.getCatalogueBarre().get(i).getrTraction()) {
+//                    n++;
+//                    this.type = this.compose.getCatalogueBarre().get(i);
+//                }
+//            }
+//        }
+//        if (n == 0) {
+//            this.type = new TypeBarre(coutAuMetre, lMin, lMax, rTraction, rComp);
+//            this.type.addTBarre(this);
+//        }
+        System.out.println("création barre");
         this.type = new TypeBarre(coutAuMetre, lMin, lMax, rTraction, rComp);
         this.type.addTBarre(this);
         this.color = color;
     }
+
     public Barre(Noeud debut, Noeud fin, double coutAuMetre, double lMin,
             double lMax, double rTraction, double rComp) {
         this(debut, fin, coutAuMetre, lMin, lMax, rTraction, rComp, Color.BLUE);
@@ -59,8 +80,6 @@ public class Barre {
         this.debut = new NoeudSimple();
         this.fin = new NoeudSimple();
     }
-    
-    
 
     void setDebut(Noeud debut) {
         this.debut = debut;
@@ -85,7 +104,7 @@ public class Barre {
     public int getId() {
         return id;
     }
-    
+
     public TypeBarre getType() {
         return type;
     }
@@ -93,7 +112,7 @@ public class Barre {
     void setType(TypeBarre type) {
         this.type = type;
     }
-    
+
     void setCompose(Treillis compose) {
         this.compose = compose;
     }
@@ -109,10 +128,9 @@ public class Barre {
     public void setColor(Color color) {
         this.color = color;
     }
-    
 
     public String toString() {
-        String res = "Barre "+this.id+"{ ";
+        String res = "Barre " + this.id + "{ ";
         res = res + "[" + this.getDebut().getPosition().getPX()
                 + " , " + this.getDebut().getPosition().getPY() + "] ,";
         res = res + "[" + this.getFin().getPosition().getPX()
@@ -127,27 +145,29 @@ public class Barre {
 
         System.out.println("noeud de fin : ");
         Noeud noeudF = Noeud.demandeNoeud();
-        
+
         Barre b = new Barre(noeudD, noeudF, tB.getCoutAuMetre(), tB.getlMin(), tB.getlMax(), tB.getrTraction(), tB.getrComp());
         return b;
     }
+
     public static Barre demandeBarreNewTB() {
         System.out.println("noeud de début : ");
         Noeud noeudD = Noeud.demandeNoeud();
 
         System.out.println("noeud de fin : ");
         Noeud noeudF = Noeud.demandeNoeud();
-        
+
         Barre b = new Barre(noeudD, noeudF);
         return b;
     }
+
     public void dessine(GraphicsContext context) {
         context.setLineWidth(4);
         context.setStroke(this.color);
         context.strokeLine(this.debut.position.getPX(), this.debut.position.getPY(),
                 this.fin.position.getPX(), this.fin.position.getPY());
     }
-    
+
     public double distancePoint(Point p) {
         double x1 = this.debut.position.getPX();
         double y1 = this.debut.position.getPY();
@@ -167,20 +187,21 @@ public class Barre {
             return p4.distancePoint(p);
         }
     }
-    public static double longueur(Point p1, Point p2){
+
+    public static double longueur(Point p1, Point p2) {
         double res;
-        res = Math.sqrt(Math.pow(p2.getPX()- p1.getPX(), 2) + Math.pow(p2.getPY() - p1.getPY(), 2));
+        res = Math.sqrt(Math.pow(p2.getPX() - p1.getPX(), 2) + Math.pow(p2.getPY() - p1.getPY(), 2));
         return res;
     }
-    
+
     public String saveColor(Color c) {
-        return c.getRed()+";"+c.getGreen()+";"+c.getBlue();
+        return c.getRed() + ";" + c.getGreen() + ";" + c.getBlue();
     }
-    
+
     public void save(Writer w, Identificateur num) throws IOException {
         if (!num.objExist(this)) {
             this.type.save(w, num);
-            w.append("Barre" + this.id +";"+ this.debut.getId()+ ";"+ this.fin.getId()+ ";" + this.saveColor(this.getColor())+ ";" + this.type.getId()  + "\n");
+            w.append("Barre" + this.id + ";" + this.debut.getId() + ";" + this.fin.getId() + ";" + this.saveColor(this.getColor()) + ";" + this.type.getId() + "\n");
         }
 
     }

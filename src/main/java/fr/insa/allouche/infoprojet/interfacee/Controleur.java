@@ -33,7 +33,7 @@ import javafx.scene.paint.Color;
  */
 public class Controleur {
 
-    private TypeBarre type1;
+    private double[] type1= {20, 40, 200, 700, 800};
     private Point[] pointzc = new Point[4];
     private Point[] pointTT = new Point[3];
     private Point[] pointB = new Point[2];
@@ -163,12 +163,10 @@ public class Controleur {
             this.changeEtat(60);
         } else if (this.etat == 70) {
             Treillis model = this.vue.getModel();
-            this.type1 = new TypeBarre(20, 40, 200, 700, 800);
-            this.vue.getModel().addTypeBarre(this.type1);
             Alert dialogC = new Alert(AlertType.CONFIRMATION);
             dialogC.setTitle("A confirmation choix type barre");
             dialogC.setHeaderText(null);
-            dialogC.setContentText("Le type de barre selectioné et :" + this.vue.getModel().getCatalogueBarre().get(0).toString());
+            dialogC.setContentText("Le type de barre selectioné et :" + this.type1.toString());
             Optional<ButtonType> answer = dialogC.showAndWait();
             if (answer.get() == ButtonType.OK) {
                 Alert dBox = new Alert(AlertType.CONFIRMATION);
@@ -263,11 +261,14 @@ public class Controleur {
             double py = t.getY();
             if (choice.get() == btnNS) {
                 if (bonneLongeurB(clic) == false) {
+                    if (this.noeudB[0].getLiee()==null){
+                        this.vue.getModel().removeNoeud(this.noeudB[0]);
+                    }
                     this.changeEtat(71);
                 } else {
                     if (this.vue.getModel().nZoneConstructible(clic) == true) {
                         this.noeudB[1] = new NoeudSimple(clic);
-                        this.vue.getModel().addBarre(new Barre(this.noeudB[0], this.noeudB[1], 50, 70, 78, 99, 800));
+                        this.vue.getModel().addBarre(new Barre(this.noeudB[0], this.noeudB[1]), 20, 40, 200, 700, 800, Color.BLUE);
                         this.vue.getModel().addNoeudSimple(new NoeudSimple(this.noeudB[1].getPosition()));
                         this.changeEtat(70);
                     } else {
@@ -285,6 +286,10 @@ public class Controleur {
                 AppuiSimple as = creationAS(clic);
 
                 if (bonneLongeurB(as.getPosition()) == false) {
+                    this.vue.getModel().removeNoeud(as);
+                    if (this.noeudB[0].getLiee()==null){
+                        this.vue.getModel().removeNoeud(this.noeudB[0]);
+                    }
                     this.changeEtat(71);
                 } else {
                     //condition pour savoir si le appui simple à pu être crée
@@ -292,7 +297,7 @@ public class Controleur {
                         System.out.println("as != null");
                         this.noeudASB[1] = as;
                         // model.addBarre(new Barre(this.noeudASB[0], this.noeudASB[1], 50, 70, 78, 99, 800));
-                        model.addBarre(new Barre(this.noeudB[0], this.noeudASB[1], 50, 70, 78, 99, 800));
+                        model.addBarre(new Barre(this.noeudB[0], this.noeudASB[1]), 20, 40, 200, 700, 800, Color.BLUE);
                         this.changeEtat(70);
                     } else {
                         System.out.println("as != null");
@@ -304,13 +309,17 @@ public class Controleur {
                 AppuiDouble ad = creationAD(clic);
 
                 if (bonneLongeurB(ad.getPosition()) == false) {
+                    this.vue.getModel().removeNoeud(ad);
+                    if (this.noeudB[0].getLiee()==null){
+                        this.vue.getModel().removeNoeud(this.noeudB[0]);
+                    }
                     this.changeEtat(71);
                 } else {
                     //condition pour savoir si le appui double à pu être crée
                     if (ad != null) {
                         this.noeudADB[1] = ad;
                         //model.addBarre(new Barre(this.noeudADB[0], this.noeudADB[1], 50, 70, 78, 99, 800));
-                        model.addBarre(new Barre(this.noeudB[0], this.noeudADB[1], 50, 70, 78, 99, 800));
+                        model.addBarre(new Barre(this.noeudB[0], this.noeudADB[1]), 20, 40, 200, 700, 800, Color.BLUE);
                         this.changeEtat(70);
                     } else {
                         this.changeEtat(71);
@@ -322,7 +331,7 @@ public class Controleur {
                 if (bonneLongeurB(this.noeudB[1].getPosition()) == false) {
                     this.changeEtat(71);
                 } else {
-                    model.addBarre(new Barre(this.noeudB[0], this.noeudB[1], 50, 70, 78, 99, 800));
+                    model.addBarre(new Barre(this.noeudB[0], this.noeudB[1]), 20, 40, 200, 700, 800, Color.BLUE);
                     this.changeEtat(70);
                 }
             } else {
@@ -342,6 +351,8 @@ public class Controleur {
             this.vue.redrawAll();
             this.changeEtat(110);
         }
+
+        System.out.println(this.vue.getModel().toString());
 
     }
 
@@ -469,6 +480,7 @@ public class Controleur {
                 noeud.setColor(Color.GREEN);
             }
         }
+
     }
 
     public void supression(Treillis model, Point clic) {
@@ -476,75 +488,79 @@ public class Controleur {
         Noeud noeud = model.plusProcheN(clic);
         Barre barre = model.plusProcheB(clic);
         String res = model.lePlusProche();
-        if (res.equals("N")) {
+        if (res.equals("N") && noeud != null ) {
             model.removeNoeud(noeud);
             System.out.println("noeud");
         }
-        if (res.equals("B")) {
+        if (res.equals("B") && barre != null) {
             model.removeBarre(barre);
             System.out.println("barre ");
         }
-        if (res.equals("S")) {
-            TriangleTerrain tt = model.segtTrouveTT(segt);
-            System.out.println("tt =" + tt + "\n");
-            System.out.println("tt.getSegTerrain1().getAppartient().size()" + tt.getSegTerrain1().getAppartient().size());
-            for (int i = 0; i < tt.getSegTerrain1().getAppartient().size(); i++) {
-                System.out.println("prout 1");
-                System.out.println("liste noeud seg1 : " + tt.getSegTerrain1().getAppartient().get(i));
-
-            }
-            for (int i = 0; i < tt.getSegTerrain2().getAppartient().size(); i++) {
-                System.out.println("prout 2");
-                System.out.println("liste noeud seg2 : " + tt.getSegTerrain2().getAppartient().get(i));
-
-            }
-            for (int i = 0; i < tt.getSegTerrain3().getAppartient().size(); i++) {
-                System.out.println("prout 3");
-                System.out.println("liste noeud seg3 : " + tt.getSegTerrain3().getAppartient().get(i));
-
-            }
-            model.removeTriangleTerrain(tt);
-            System.out.println("seg ");
+//        if (res.equals("S")) {
+//            TriangleTerrain tt = model.segtTrouveTT(segt);
+//            System.out.println("tt =" + tt + "\n");
+//            System.out.println("tt.getSegTerrain1().getAppartient().size()" + tt.getSegTerrain1().getAppartient().size());
+//            for (int i = 0; i < tt.getSegTerrain1().getAppartient().size(); i++) {
+//                System.out.println("prout 1");
+//                System.out.println("liste noeud seg1 : " + tt.getSegTerrain1().getAppartient().get(i));
+//
+//            }
+//            for (int i = 0; i < tt.getSegTerrain2().getAppartient().size(); i++) {
+//                System.out.println("prout 2");
+//                System.out.println("liste noeud seg2 : " + tt.getSegTerrain2().getAppartient().get(i));
+//
+//            }
+//            for (int i = 0; i < tt.getSegTerrain3().getAppartient().size(); i++) {
+//                System.out.println("prout 3");
+//                System.out.println("liste noeud seg3 : " + tt.getSegTerrain3().getAppartient().get(i));
+//
+//            }
+//            model.removeTriangleTerrain(tt);
+//            System.out.println("seg ");
+//        }
+        if (res.equals("NS") && noeud != null) {
+//            Alert dBox = new Alert(AlertType.CONFIRMATION);
+//            dBox.setTitle("choix du type de la selection");
+//            dBox.setHeaderText("Noeud ou Segment Terrain ?");
+//            dBox.setContentText("Voulez vous sélectionnez le noeud ou le segment terrain");
+//            ButtonType btnN = new ButtonType("Noeud");
+//            ButtonType btnS = new ButtonType("Segment Terrain");
+//            ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+//            dBox.getButtonTypes().setAll(btnN, btnS, btnCancel);
+//            Optional<ButtonType> choice = dBox.showAndWait();
+//            if (choice.get() == btnN) {
+//                model.removeNoeud(noeud);
+//                System.out.println("noeud");
+//            }
+//            if (choice.get() == btnS) {
+//                TriangleTerrain tt = model.segtTrouveTT(segt);
+//                model.removeTriangleTerrain(tt);
+//                System.out.println("seg ");
+//            }
+            model.removeNoeud(noeud);
+            System.out.println("noeud");
         }
-        if (res.equals("NS")) {
-            Alert dBox = new Alert(AlertType.CONFIRMATION);
-            dBox.setTitle("choix du type de la selection");
-            dBox.setHeaderText("Noeud ou Segment Terrain ?");
-            dBox.setContentText("Voulez vous sélectionnez le noeud ou le segment terrain");
-            ButtonType btnN = new ButtonType("Noeud");
-            ButtonType btnS = new ButtonType("Segment Terrain");
-            ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-            dBox.getButtonTypes().setAll(btnN, btnS, btnCancel);
-            Optional<ButtonType> choice = dBox.showAndWait();
-            if (choice.get() == btnN) {
-                model.removeNoeud(noeud);
-                System.out.println("noeud");
-            }
-            if (choice.get() == btnS) {
-                TriangleTerrain tt = model.segtTrouveTT(segt);
-                model.removeTriangleTerrain(tt);
-                System.out.println("seg ");
-            }
-        }
-        if (res.equals("BS")) {
-            Alert dBox = new Alert(AlertType.CONFIRMATION);
-            dBox.setTitle("choix du type de la selection");
-            dBox.setHeaderText("Barre ou Segment Terrain ???");
-            dBox.setContentText("Voulez vous séléctinez la barre ou le segment terrain");
-            ButtonType btnB = new ButtonType("Barre");
-            ButtonType btnS = new ButtonType("Sgment Terrain");
-            ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-            dBox.getButtonTypes().setAll(btnB, btnS, btnCancel);
-            Optional<ButtonType> choice = dBox.showAndWait();
-            if (choice.get() == btnB) {
-                model.removeBarre(barre);
-                System.out.println("barre ");
-            }
-            if (choice.get() == btnS) {
-                TriangleTerrain tt = model.segtTrouveTT(segt);
-                model.removeTriangleTerrain(tt);
-                System.out.println("seg ");
-            }
+        if (res.equals("BS")&& barre != null) {
+//            Alert dBox = new Alert(AlertType.CONFIRMATION);
+//            dBox.setTitle("choix du type de la selection");
+//            dBox.setHeaderText("Barre ou Segment Terrain ???");
+//            dBox.setContentText("Voulez vous séléctinez la barre ou le segment terrain");
+//            ButtonType btnB = new ButtonType("Barre");
+//            ButtonType btnS = new ButtonType("Sgment Terrain");
+//            ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+//            dBox.getButtonTypes().setAll(btnB, btnS, btnCancel);
+//            Optional<ButtonType> choice = dBox.showAndWait();
+//            if (choice.get() == btnB) {
+//                model.removeBarre(barre);
+//                System.out.println("barre ");
+//            }
+//            if (choice.get() == btnS) {
+//                TriangleTerrain tt = model.segtTrouveTT(segt);
+//                model.removeTriangleTerrain(tt);
+//                System.out.println("seg ");
+//            }
+            model.removeBarre(barre);
+            System.out.println("barre ");
         }
         if (res.equals("BN")) {
             Alert dBox = new Alert(AlertType.CONFIRMATION);
@@ -641,18 +657,18 @@ public class Controleur {
 
     public boolean bonneLongeurB(Point clic) {
         double longeure = Barre.longueur(this.noeudB[0].getPosition(), clic);
-        if (longeure < this.type1.getlMin()
-                || longeure > this.type1.getlMax()) {
+        if (longeure < this.type1 [1]
+                || longeure > this.type1 [2]) {
             Alert dialogW = new Alert(AlertType.WARNING);
             dialogW.setTitle("A warning dialog-box");
             dialogW.setHeaderText(null);  // No header
-            if (longeure < this.type1.getlMin()) {
+            if (longeure < this.type1 [1]) {
                 dialogW.setContentText("Caution : La barre est trop petite, elle mesure " + longeure
-                        + "\n Alors que la longeure min pour votre type de barre est " + this.type1.getlMin() + " !\n"
+                        + "\n Alors que la longeure min pour votre type de barre est " + this.type1 [1] + " !\n"
                         + "Veuillez cliquer à nouveau sur la zone dessin pour definir un nouveau noeud de fin de barre");
             } else {
                 dialogW.setContentText("Caution : La barre est trop grande, elle mesure " + longeure
-                        + "\n Alors que la longeure max pour votre type de barre est " + this.type1.getlMax() + " !\n"
+                        + "\n Alors que la longeure max pour votre type de barre est " + this.type1 [2] + " !\n"
                         + "Veuillez cliquer à nouveau sur la zone dessin pour definir un nouveau noeud de fin de barre");
             }
             dialogW.showAndWait();
