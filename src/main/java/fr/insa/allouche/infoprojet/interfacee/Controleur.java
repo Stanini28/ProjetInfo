@@ -261,6 +261,9 @@ public class Controleur {
             double py = t.getY();
             if (choice.get() == btnNS) {
                 if (bonneLongeurB(clic) == false) {
+                    if (this.noeudB[0].getLiee()==null){
+                        this.vue.getModel().removeNoeud(this.noeudB[0]);
+                    }
                     this.changeEtat(71);
                 } else {
                     if (this.vue.getModel().nZoneConstructible(clic) == true) {
@@ -283,6 +286,10 @@ public class Controleur {
                 AppuiSimple as = creationAS(clic);
 
                 if (bonneLongeurB(as.getPosition()) == false) {
+                    this.vue.getModel().removeNoeud(as);
+                    if (this.noeudB[0].getLiee()==null){
+                        this.vue.getModel().removeNoeud(this.noeudB[0]);
+                    }
                     this.changeEtat(71);
                 } else {
                     //condition pour savoir si le appui simple à pu être crée
@@ -302,6 +309,10 @@ public class Controleur {
                 AppuiDouble ad = creationAD(clic);
 
                 if (bonneLongeurB(ad.getPosition()) == false) {
+                    this.vue.getModel().removeNoeud(ad);
+                    if (this.noeudB[0].getLiee()==null){
+                        this.vue.getModel().removeNoeud(this.noeudB[0]);
+                    }
                     this.changeEtat(71);
                 } else {
                     //condition pour savoir si le appui double à pu être crée

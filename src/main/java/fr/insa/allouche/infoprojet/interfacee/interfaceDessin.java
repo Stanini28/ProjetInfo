@@ -64,7 +64,7 @@ public class interfaceDessin extends BorderPane {
     private MenuItem choiceN2;
     private MenuItem choiceN3;
 
-    private RadioButton remove;
+    private Button removeAll;
 
     private ColorPicker cpCouleur;
 
@@ -80,11 +80,11 @@ public class interfaceDessin extends BorderPane {
         this.controleur = new Controleur(this);
 
         this.Select = new ToggleButton("Select");
-        
+
         this.Select.setOnAction((t) -> {
             this.controleur.boutonSelect(t);
         });
-              
+
         this.zoneconstructible = new ToggleButton("Zone constructible");
         this.zoneconstructible.setOnAction((t) -> {
             this.controleur.boutonZoneConstructible(t);
@@ -93,7 +93,7 @@ public class interfaceDessin extends BorderPane {
         this.triangle_Terrain.setOnAction((t) -> {
             this.controleur.boutontriangle_Terrain(t);
         });
-        
+
         this.supprimer = new ToggleButton("Supprimer");
         this.supprimer.setOnAction((t) -> {
             this.controleur.bouttonSuprimer(t);
@@ -101,8 +101,7 @@ public class interfaceDessin extends BorderPane {
 
         this.calcul = new Button("Calcul");
 
-        this.remove = new RadioButton("Remove");
-
+        this.removeAll = new Button("Remove All");
 
         this.choiceBoxN = new SplitMenuButton();
 //        String var = "C:\\Users\\Portable\\OneDrive\\Desktop\\point.png";
@@ -130,7 +129,7 @@ public class interfaceDessin extends BorderPane {
             this.controleur.splitMenuButtonAD(t);
         });
 
-        this.catalogueBarre = new  SplitMenuButton();
+        this.catalogueBarre = new SplitMenuButton();
         this.catalogueBarre.setText("Barre");;;
         this.choiceB1 = new MenuItem("Barre type 1");
         this.choiceB2 = new MenuItem("Barre type 2");
@@ -148,15 +147,15 @@ public class interfaceDessin extends BorderPane {
             this.catalogueBarre.setText("Barre type 3");
             this.controleur.buttonBarre3(t);
         });
-        
+
         this.cpCouleur = new ColorPicker(Color.BLACK);
 
-        this.entete = new HBox(this.triangle_Terrain,this.Select, this.choiceBoxN, this.catalogueBarre,
-                this.supprimer, this.zoneconstructible,this.cpCouleur, this.remove);
-        
+        this.entete = new HBox(this.triangle_Terrain, this.Select, this.choiceBoxN, this.catalogueBarre,
+                this.supprimer, this.zoneconstructible, this.cpCouleur, this.removeAll);
+
         this.entete.setStyle(" -fx-padding: 2;");
         this.Select.setStyle("-fx-background-color: #00f8c3; -fx-padding: 10;");
-        this.remove.setStyle("-fx-background-color: #67d5c1; -fx-padding: 10;");
+        this.removeAll.setStyle("-fx-background-color: #67d5c1; -fx-padding: 10;");
         this.zoneconstructible.setStyle("-fx-background-color: #ffb12e; -fx-padding: 10;");
         this.cpCouleur.setStyle("-fx-background-color: #c5dfff; -fx-padding: 10;");
         this.choiceBoxN.setStyle("-fx-background-color: #fbad84; -fx-padding: 10;");
@@ -168,18 +167,14 @@ public class interfaceDessin extends BorderPane {
         this.choiceB1.setStyle("-fx-background-color: #b5b6eb; -fx-padding: 8;");
         this.choiceB2.setStyle("-fx-background-color: #cfcff2; -fx-padding: 8;");
         this.choiceB3.setStyle("-fx-background-color: #e7e7f8; -fx-padding: 8;");
-        
-        
-        
-        
-        
+
         this.setTop(this.entete);
 
         this.zoneDessin = new DessinCanvas(this);
         this.setCenter(this.zoneDessin);
 
         this.controleur.changeEtat(20);
-
+        
     }
 
     public void redrawAll() {
@@ -238,7 +233,6 @@ public class interfaceDessin extends BorderPane {
         return triangle_Terrain;
     }
 
-    
     public SplitMenuButton getChoiceBoxN() {
         return choiceBoxN;
     }
@@ -287,4 +281,3 @@ public class interfaceDessin extends BorderPane {
         return choiceN3;
     }
 }
-

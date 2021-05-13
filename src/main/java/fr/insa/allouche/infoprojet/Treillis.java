@@ -98,7 +98,6 @@ public class Treillis {
 
     public void addBarre(Barre barre, double coutAuMetre, double lMin,
             double lMax, double rTraction, double rComp, Color color) {
-        System.out.println("ajout barre au trellis");
         if (barre.getCompose() != this) {
             if (barre.getCompose() != null) {
                 throw new Error("La Barre appartient déjà au treillis");
@@ -124,7 +123,6 @@ public class Treillis {
                 this.addTypeBarre(barre.getType());
             }
 
-            System.out.println(" barre ajouté au trellis");
         }
     }
 
