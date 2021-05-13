@@ -213,8 +213,8 @@ public class interfaceDessin extends BorderPane {
         return supprimer;
     }
 
-    public RadioButton getRemove() {
-        return remove;
+    public Button getRemove() {
+        return removeAll;
     }
 
     public ColorPicker getCpCouleur() {
