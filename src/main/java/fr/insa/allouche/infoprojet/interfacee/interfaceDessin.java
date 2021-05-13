@@ -12,8 +12,10 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import static javafx.application.Application.launch;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -79,9 +81,7 @@ public class interfaceDessin extends BorderPane {
         this.Select.setOnAction((t) -> {
             this.controleur.boutonSelect(t);
         });
-       
-        this.Select.setGraphic(new ImageView("file:///Users/badreddineali/Desktop/select.jpeg"));
-        
+              
         this.zoneconstructible = new ToggleButton("Zone constructible");
         this.zoneconstructible.setOnAction((t) -> {
             this.controleur.boutonZoneConstructible(t);
@@ -264,5 +264,30 @@ public class interfaceDessin extends BorderPane {
     public MenuItem getChoiceN3() {
         return choiceN3;
     }
-
+//      public void start(Stage stage) {
+//      //Creating a graphic (image)
+//      Image img = new Image("/Users/badreddineali/Desktop");
+//      ImageView view = new ImageView(img);
+//      view.setFitHeight(80);
+//      view.setPreserveRatio(true);
+//      //Creating a Button
+////      Button button = new Button();
+//      //Setting the location of the button
+//    this.Select.setTranslateX(200);
+//      this.Select.setTranslateY(25);
+//      //Setting the size of the button
+//      this.Select.setPrefSize(80, 80);
+//      //Setting a graphic to the button
+//     this.Select.setGraphic(view);
+//      //Setting the stage
+//      Group root = new Group(this.Select);
+//      Scene scene = new Scene(root, 595, 170, Color.BLUE);
+//      stage.setTitle("Button Graphics");
+//      stage.setScene(scene);
+//      stage.show();
+//   }
+//   public static void main(String args[]){
+//      launch(args);
+//   }
 }
+
