@@ -262,12 +262,12 @@ public class Treillis {
         }
     }
 
-    public void removeTerrain(Terrain t) {
-        if (t.getBase() != this) {
+    public void removeTerrain() {
+        if (this.base.getBase() != this) {
             throw new Error("Le Terrain n'appartient pas au treillis");
         }
+        this.base.setBase(null);
         this.base = null;
-        t.setBase(null);
     }
 
     public void removeTriangleTerrain(TriangleTerrain tT) {
@@ -802,7 +802,7 @@ public class Treillis {
     }
 
     public void sauvegarde(File F) throws IOException {
-        Identificateur Num = new Identificateur();
+        Identificateur Num = this.identite;
 
         try ( BufferedWriter bout = new BufferedWriter(new FileWriter(F))) {
             for (int i = 0; i < this.Adoub.size(); i++) {

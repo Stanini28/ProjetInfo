@@ -102,6 +102,9 @@ public class interfaceDessin extends BorderPane {
         this.calcul = new Button("Calcul");
 
         this.removeAll = new Button("Remove All");
+        this.removeAll.setOnAction((t) -> {
+            this.controleur.bouttonRemoveAll(t);
+        });
 
         this.choiceBoxN = new SplitMenuButton();
 //        String var = "C:\\Users\\Portable\\OneDrive\\Desktop\\point.png";
@@ -280,4 +283,9 @@ public class interfaceDessin extends BorderPane {
     public MenuItem getChoiceN3() {
         return choiceN3;
     }
+
+    public void setModel(Treillis model) {
+        this.model = model;
+    }
+    
 }
