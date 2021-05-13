@@ -29,6 +29,10 @@ import javafx.scene.layout.Pane;
  * @author francois
  */
 public class DessinCanvas extends Pane {
+
+    static GraphicsContext getGraphicsContext2D() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
     private interfaceDessin interfaceD;
 

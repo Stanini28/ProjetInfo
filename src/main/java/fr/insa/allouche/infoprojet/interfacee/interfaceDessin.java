@@ -20,6 +20,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
@@ -69,6 +70,7 @@ public class interfaceDessin extends BorderPane {
     private ColorPicker cpCouleur;
 
     private HBox entete;
+    private VBox AG;
 
     private DessinCanvas zoneDessin;
 
@@ -151,10 +153,13 @@ public class interfaceDessin extends BorderPane {
         
         this.cpCouleur = new ColorPicker(Color.BLACK);
 
-        this.entete = new HBox(this.triangle_Terrain,this.Select, this.choiceBoxN, this.catalogueBarre,
-                this.supprimer, this.zoneconstructible,this.cpCouleur, this.remove);
+        this.entete = new HBox(this.triangle_Terrain, this.choiceBoxN, this.catalogueBarre,
+               this.cpCouleur);
         
-        this.entete.setStyle(" -fx-padding: 2;");
+        this.AG= new VBox(this.zoneconstructible, this.Select,this.supprimer,this.remove);
+        this.setRight(this.AG);
+        this.AG.setStyle(" -fx-padding: 1;");
+        this.entete.setStyle(" -fx-padding: 1;");
         this.Select.setStyle("-fx-background-color: #00f8c3; -fx-padding: 10;");
         this.remove.setStyle("-fx-background-color: #67d5c1; -fx-padding: 10;");
         this.zoneconstructible.setStyle("-fx-background-color: #ffb12e; -fx-padding: 10;");
