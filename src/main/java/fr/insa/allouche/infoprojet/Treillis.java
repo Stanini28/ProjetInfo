@@ -7,8 +7,10 @@ package fr.insa.allouche.infoprojet;
 
 import java.util.List;
 import fr.insa.allouche.infoprojet.outils.Lire;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -856,30 +858,30 @@ public class Treillis {
         TypeBarre tB1 = new TypeBarre(2, 30, 55, 550, 500);
         TypeBarre tB2 = new TypeBarre();
 
-        nS1.setId(0);
-        nS2.setId(1);
-        nS4.setId(2);
-        nS5.setId(3);
-        b1.setId(4);
-        b2.setId(5);
-        b3.setId(6);
-        seg1.setId(7);
-        seg2.setId(8);
-        seg3.setId(9);
-        nAD2.setId(12);
-        nAS3.setId(13);
-        nAS1.setId(14);
-        bAd.setId(15);
-        tT1.setId(16);
-        tB1.setId(18);
-        tB2.setId(19);
-
-        tT1.setSegTerrain1(seg1);
-        tT1.setSegTerrain2(seg2);
-        tT1.setSegTerrain3(seg3);
-        seg1.setFaitPartieDe(tT1);
-        seg2.setFaitPartieDe(tT1);
-        seg3.setFaitPartieDe(tT1);
+//        nS1.setId(0);
+//        nS2.setId(1);
+//        nS4.setId(2);
+//        nS5.setId(3);
+//        b1.setId(4);
+//        b2.setId(5);
+//        b3.setId(6);
+//        seg1.setId(7);
+//        seg2.setId(8);
+//        seg3.setId(9);
+//        nAD2.setId(12);
+//        nAS3.setId(13);
+//        nAS1.setId(14);
+//        bAd.setId(15);
+//        tT1.setId(16);
+//        tB1.setId(18);
+//        tB2.setId(19);
+//
+//        tT1.setSegTerrain1(seg1);
+//        tT1.setSegTerrain2(seg2);
+//        tT1.setSegTerrain3(seg3);
+//        seg1.setFaitPartieDe(tT1);
+//        seg2.setFaitPartieDe(tT1);
+//        seg3.setFaitPartieDe(tT1);
         t1.addTriangleTerrain(tT1);
         res.addBarre(b1);
         res.addBarre(b2);
@@ -906,4 +908,31 @@ public class Treillis {
         ExempleSauvegarde();
     }
 
+    public static Treillis lecture(File fin) throws IOException {
+        Treillis dernier = null;
+        try ( BufferedReader bin = new BufferedReader(new FileReader(fin))) {
+            String line;
+            while ((line = bin.readLine()) != null && line.length() != 0) {
+                String[] bouts = line.split(";");
+                if (bouts[0].equals("AppuiDouble")) {
+
+                }else if (bouts[0].equals("AppuiSimple")) {
+                    
+                }else if (bouts[0].equals("NoeudSimple")) {
+                    
+                }else if (bouts[0].equals("TypeBarre")) {
+                    
+                }else if (bouts[0].equals("Barre")) {
+                    
+                }else if (bouts[0].equals("NoeudAppuiDouble")) {
+                    
+                }else if (bouts[0].equals("Terrain")) {
+                    
+                }else if (bouts[0].equals("Triangle")) {
+                    
+                }
+            }
+        }
+        return dernier;
+    }
 }

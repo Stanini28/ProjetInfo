@@ -31,6 +31,7 @@ public class Identificateur<Object> {
     public int getOrCreateId (Object objet){
         Integer id = this.ObjetVersId.get(objet) ;
         if ( id != null) {
+            System.out.println("id != null");
             return id;
         } else {
           this.ObjetVersId.put(objet, this.id);
