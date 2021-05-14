@@ -804,7 +804,14 @@ public class Treillis {
     public void sauvegarde(File F) throws IOException {
         Identificateur Num = this.identite;
 
-        try ( BufferedWriter bout = new BufferedWriter(new FileWriter(F))) {
+        try (BufferedWriter bout = new BufferedWriter(new FileWriter(F))) {
+            this.base.save(bout, Num);
+            for (int i = 0; i < this.base.getConstitue().size(); i++) {
+                this.base.getConstitue().get(i).save(bout, Num);
+            }//AJOUT TRIANGLE TERRAIN+ SEGMENT TERRAIN
+            for (int i = 0; i < this.catalogueBarre.size(); i++) {
+                this.catalogueBarre.get(i).save(bout, Num);
+            }//AJOUT TYPE BARRE
             for (int i = 0; i < this.Adoub.size(); i++) {
                 this.Adoub.get(i).save(bout, Num);
             }//AJOUT APPUI DOUBLE
@@ -817,13 +824,7 @@ public class Treillis {
             for (int i = 0; i < this.compose.size(); i++) {
                 this.compose.get(i).save(bout, Num);
             }//AJOUT BARRE
-            for (int i = 0; i < this.catalogueBarre.size(); i++) {
-                this.catalogueBarre.get(i).save(bout, Num);
-            }//AJOUT TYPE BARRE
-            for (int i = 0; i < this.base.getConstitue().size(); i++) {
-                this.base.getConstitue().get(i).save(bout, Num);
-            }//AJOUT TRIANGLE TERRAIN+ SEGMENT TERRAIN
-            this.base.save(bout, Num);
+
         }
     }
 

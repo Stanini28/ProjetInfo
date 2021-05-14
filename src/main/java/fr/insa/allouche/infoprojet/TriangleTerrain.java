@@ -131,7 +131,7 @@ public class TriangleTerrain {
             this.SegTerrain3.save(w, num);
             w.append("TriangleTerrain;" + this.id + ";" +
                     this.SegTerrain1.getId() + ";" + this.SegTerrain2.getId() +
-                    ";" + this.SegTerrain3.getId()+";"+ this.constitue +"\n");
+                    ";" + this.SegTerrain3.getId()+"\n");
         }
     }
 }
