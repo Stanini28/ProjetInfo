@@ -8,6 +8,7 @@ package fr.insa.allouche.infoprojet.calculMatrice;
 import fr.insa.allouche.infoprojet.AppuiDouble;
 import fr.insa.allouche.infoprojet.AppuiSimple;
 import fr.insa.allouche.infoprojet.Barre;
+import fr.insa.allouche.infoprojet.Identificateur;
 import fr.insa.allouche.infoprojet.Noeud;
 import fr.insa.allouche.infoprojet.NoeudAppui;
 import fr.insa.allouche.infoprojet.NoeudSimple;
@@ -125,7 +126,7 @@ public class Calcul {
                 }
                 Total.coeffs[i][T.getRx().get(k + T.getAdoub().size()).getIdRx()] = Math.cos(PangleTerrain(T.getAsimp().get(k)) + (Math.PI / 2));
                 Total.coeffs[i + 1][T.getRx().get(k + T.getAdoub().size()).getIdRx()] = -Math.sin(PangleTerrain(T.getAsimp().get(k)) + (Math.PI / 2));
-          
+
                 //AJOUTER FORCE REACTION X ET Y
             }
         }
@@ -145,7 +146,7 @@ public class Calcul {
         }
 
         for (int i = 0; i < 2 * T.getContient().size(); i++) {
-            for (int j = 0; j <  T.getContient().size() + T.getCompose().size() + T.getBase().getConstitue().size() * 6 + T.getCatalogueBarre().size(); j++) {
+            for (int j = 0; j < T.getContient().size() + T.getCompose().size() + T.getBase().getConstitue().size() * 6 + T.getCatalogueBarre().size(); j++) {
                 if (Total.coeffs[i][j] < epsilon_pivot && Total.coeffs[i][j] > 0) {
                     Total.coeffs[i][j] = 0;
                 }
@@ -157,25 +158,24 @@ public class Calcul {
 
     public static Matrice Membre2(Treillis T) {
         Matrice Membre2 = new Matrice(2 * T.getContient().size(), 1);
-        
-        for (int i = 0; i <T.getAdoub().size() * 2; i = i + 2) {
+
+        for (int i = 0; i < T.getAdoub().size() * 2; i = i + 2) {
             for (int k = 0; k < T.getAdoub().size(); k++) {
                 Membre2.coeffs[i + 1][0] = T.getAdoub().get(k).forceY;
             }
         }
-        for (int i = T.getAdoub().size() * 2; i < (T.getAdoub().size()+T.getAsimp().size()) * 2; i = i + 2) {
+        for (int i = T.getAdoub().size() * 2; i < (T.getAdoub().size() + T.getAsimp().size()) * 2; i = i + 2) {
             for (int k = 0; k < T.getAsimp().size(); k++) {
                 Membre2.coeffs[i + 1][0] = T.getAsimp().get(k).forceY;
             }
         }
-        
-        for (int i = (T.getAdoub().size()+T.getAsimp().size()) * 2; i < (T.getContient().size())*2; i = i + 2) {
+
+        for (int i = (T.getAdoub().size() + T.getAsimp().size()) * 2; i < (T.getContient().size()) * 2; i = i + 2) {
             for (int k = 0; k < T.getSimp().size(); k++) {
                 Membre2.coeffs[i + 1][0] = T.getSimp().get(k).forceY;
             }
         }
-        
-        
+
         return Membre2;
     }
 
@@ -192,6 +192,53 @@ public class Calcul {
         }
 
         return N;
+    }
+
+    public static Matrice Lien(Matrice M) {
+        Matrice K = new Matrice(M.getNbrLig(), 1);
+        int H = 0;
+        for (int i = 0; i < M.getNbrCol(); i++) {
+            if (M.Max(i) != -1) {
+                K.coeffs[H][0] = i;
+                H++;
+            }
+        }
+
+        return K;
+    }
+
+    public static String Regroup(Treillis T) {
+        Matrice M = Calcul(T);
+        Matrice N = Création(M);
+        Matrice A = Lien(M);
+        Matrice Membre2 = Membre2(T);
+        Matrice H = N.concatCol(Membre2);
+        ResSup Z = H.resolution(Membre2);
+        Matrice K = Z.getSet().concatCol(A);
+        String s="";
+
+        for (int i = 0; i < K.getNbrLig(); i++) {
+            double m = K.coeffs[i][1];
+            for (int k = 0; k < T.getCompose().size(); k++) {
+                if (T.getCompose().get(k).getId() ==m) {
+                    if(T.getCompose().get(k).getType().getrComp()> K.coeffs[i][0] || 
+                            T.getCompose().get(k).getType().getrTraction()<K.coeffs[i][0]){
+                        if(T.getCompose().get(k).getType().getrComp()> K.coeffs[i][0]){
+                            s= s+ "La barre n°" +T.getCompose().get(k).getId() + " a une trop faible compression.\n";
+                        }
+                        if (T.getCompose().get(k).getType().getrComp()> K.coeffs[i][0]){
+                            s = s+ "La barre n°" + T.getCompose().get(k).getId() + " a une trop forte traction.\n";
+                        }
+                    }
+                }
+            }
+        }
+        
+        if (s==""){
+            s=s+ "Les types de barres sont bons!";
+        }
+        
+        return s;
     }
 
     public static void main(String[] args) {
@@ -253,14 +300,16 @@ public class Calcul {
 
         Matrice M = Calcul(res);
         Matrice N = Création(M);
+        Matrice A = Lien(M);
         Matrice Membre2 = Membre2(res);
-        Matrice H= N.concatCol(Membre2);
-
-        System.out.println(N.toString());
+        Matrice H = N.concatCol(Membre2);
+        ResSup Z = H.resolution(Membre2);
+        Matrice K = Z.getSet().concatCol(A);
+        
+        System.out.println(Regroup(res));
 
         //Matrice K = SommeNoeudS(nS1);
         //System.out.println(K);
         // System.out.println(M + "T" );
     }
-
 }

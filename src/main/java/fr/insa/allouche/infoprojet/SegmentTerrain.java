@@ -21,7 +21,6 @@ public class SegmentTerrain {
     private TriangleTerrain faitPartieDe;
     private Color color;
     private int id;
-    
 
     public SegmentTerrain(Point posDbt, Point posFin) {
         this.debut = new Point(posDbt.getPX(), posDbt.getPY());
@@ -29,7 +28,7 @@ public class SegmentTerrain {
         this.appartient = new ArrayList<NoeudAppui>();
         this.color = Color.BLACK;
     }
-    
+
     public SegmentTerrain(SegmentTerrain segt) {
         this.debut = segt.debut;
         this.fin = segt.fin;
@@ -43,14 +42,14 @@ public class SegmentTerrain {
         this.appartient = new ArrayList<NoeudAppui>();
         this.color = color;
     }
-    
+
     public SegmentTerrain(SegmentTerrain segt, Color color) {
         this.debut = segt.debut;
         this.fin = segt.fin;
         this.appartient = new ArrayList<NoeudAppui>();
         this.color = color;
     }
-    
+
     public Point getDebut() {
         return debut;
     }
@@ -90,7 +89,6 @@ public class SegmentTerrain {
     public void setId(int id) {
         this.id = id;
     }
-    
 
     public void add(AppuiSimple as) {
         if (as.getappartient() != this) {
@@ -102,7 +100,7 @@ public class SegmentTerrain {
             as.calculAlpha();
         }
     }
-    
+
     public void add(AppuiDouble ad) {
         if (ad.getappartient() != this) {
             if (ad.getappartient() != null) {
@@ -135,7 +133,7 @@ public class SegmentTerrain {
     public String toString() {
         String res = "";
         res = "{" + this.debut.toString() + " ," + this.fin.toString() + "}";
-        res = res +"taille liste noeud: "+this.appartient.size();
+        res = res + "taille liste noeud: " + this.appartient.size();
         return res;
     }
 
@@ -154,16 +152,16 @@ public class SegmentTerrain {
         context.strokeLine(this.debut.getPX(), this.debut.getPY(),
                 this.fin.getPX(), this.fin.getPY());
     }
-    
+
     public String saveColor(Color c) {
-        return c.getRed()+";"+c.getGreen()+";"+c.getBlue();
+        return c.getRed() + ";" + c.getGreen() + ";" + c.getBlue();
     }
-    
-public void save(Writer w, Identificateur num) throws IOException {
+
+    public void save(Writer w, Identificateur num) throws IOException {
         if (!num.objExist(this)) {
-            w.append("SegmentTerrain;" + this.id + ";" +
-                    this.debut.getPX()+ ";"+ this.debut.getPY() + ";" + this.fin.getPX() +
-                    ";" + this.fin.getPY()+ ";"+  this.faitPartieDe.getId() +";"+ this.saveColor(this.getColor()) +"\n");
+            w.append("SegmentTerrain;" + this.id + ";"
+                    + this.debut.getPX() + ";" + this.debut.getPY() + ";" + this.fin.getPX()
+                    + ";" + this.fin.getPY() + ";" + this.faitPartieDe.getId() + ";" + this.saveColor(this.getColor()) + "\n");
         }
     }
 
@@ -186,7 +184,5 @@ public void save(Writer w, Identificateur num) throws IOException {
             return p4.distancePoint(p);
         }
     }
-
-    
 }
 //oooo

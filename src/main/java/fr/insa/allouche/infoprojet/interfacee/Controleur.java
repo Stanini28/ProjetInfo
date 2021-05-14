@@ -33,7 +33,7 @@ import javafx.scene.paint.Color;
  */
 public class Controleur {
 
-    private double[] type1= {20, 40, 200, 700, 800};
+    private double[] type1 = {20, 40, 200, 700, 800};
     private Point[] pointzc = new Point[4];
     private Point[] pointTT = new Point[3];
     private Point[] pointB = new Point[2];
@@ -261,6 +261,9 @@ public class Controleur {
             double py = t.getY();
             if (choice.get() == btnNS) {
                 if (bonneLongeurB(clic) == false) {
+                    if (this.noeudB[0].getLiee() == null) {
+                        this.vue.getModel().removeNoeud(this.noeudB[0]);
+                    }
                     this.changeEtat(71);
                 } else {
                     if (this.vue.getModel().nZoneConstructible(clic) == true) {
@@ -283,6 +286,10 @@ public class Controleur {
                 AppuiSimple as = creationAS(clic);
 
                 if (bonneLongeurB(as.getPosition()) == false) {
+                    this.vue.getModel().removeNoeud(as);
+                    if (this.noeudB[0].getLiee() == null) {
+                        this.vue.getModel().removeNoeud(this.noeudB[0]);
+                    }
                     this.changeEtat(71);
                 } else {
                     //condition pour savoir si le appui simple à pu être crée
@@ -302,6 +309,10 @@ public class Controleur {
                 AppuiDouble ad = creationAD(clic);
 
                 if (bonneLongeurB(ad.getPosition()) == false) {
+                    this.vue.getModel().removeNoeud(ad);
+                    if (this.noeudB[0].getLiee() == null) {
+                        this.vue.getModel().removeNoeud(this.noeudB[0]);
+                    }
                     this.changeEtat(71);
                 } else {
                     //condition pour savoir si le appui double à pu être crée
@@ -339,9 +350,17 @@ public class Controleur {
             this.supression(model, clic);
             this.vue.redrawAll();
             this.changeEtat(110);
+        } else if (this.etat == 120) {
+//            this.vue.getModel().removeAllBarre();
+//            this.vue.getModel().removeAllNoeud();
+//            this.vue.getModel().removeAllTypeBarre();
+//            this.vue.getModel().removeTerrain();
+//            this.vue.setModel(null);
+//            this.vue.redrawAll();
+//            this.changeEtat(20);
+//
+//            System.out.println(this.vue.getModel().toString());
         }
-
-        System.out.println(this.vue.getModel().toString());
 
     }
 
@@ -392,6 +411,10 @@ public class Controleur {
     void bouttonSuprimer(ActionEvent t
     ) {
         this.changeEtat(110);
+    }
+
+    void bouttonRemoveAll(ActionEvent t) {
+        this.changeEtat(120);
     }
 
     public void selction(Treillis model, Point clic) {
@@ -477,7 +500,7 @@ public class Controleur {
         Noeud noeud = model.plusProcheN(clic);
         Barre barre = model.plusProcheB(clic);
         String res = model.lePlusProche();
-        if (res.equals("N") && noeud != null ) {
+        if (res.equals("N") && noeud != null) {
             model.removeNoeud(noeud);
             System.out.println("noeud");
         }
@@ -529,7 +552,7 @@ public class Controleur {
             model.removeNoeud(noeud);
             System.out.println("noeud");
         }
-        if (res.equals("BS")&& barre != null) {
+        if (res.equals("BS") && barre != null) {
 //            Alert dBox = new Alert(AlertType.CONFIRMATION);
 //            dBox.setTitle("choix du type de la selection");
 //            dBox.setHeaderText("Barre ou Segment Terrain ???");
@@ -646,18 +669,18 @@ public class Controleur {
 
     public boolean bonneLongeurB(Point clic) {
         double longeure = Barre.longueur(this.noeudB[0].getPosition(), clic);
-        if (longeure < this.type1 [1]
-                || longeure > this.type1 [2]) {
+        if (longeure < this.type1[1]
+                || longeure > this.type1[2]) {
             Alert dialogW = new Alert(AlertType.WARNING);
             dialogW.setTitle("A warning dialog-box");
             dialogW.setHeaderText(null);  // No header
-            if (longeure < this.type1 [1]) {
+            if (longeure < this.type1[1]) {
                 dialogW.setContentText("Caution : La barre est trop petite, elle mesure " + longeure
-                        + "\n Alors que la longeure min pour votre type de barre est " + this.type1 [1] + " !\n"
+                        + "\n Alors que la longeure min pour votre type de barre est " + this.type1[1] + " !\n"
                         + "Veuillez cliquer à nouveau sur la zone dessin pour definir un nouveau noeud de fin de barre");
             } else {
                 dialogW.setContentText("Caution : La barre est trop grande, elle mesure " + longeure
-                        + "\n Alors que la longeure max pour votre type de barre est " + this.type1 [2] + " !\n"
+                        + "\n Alors que la longeure max pour votre type de barre est " + this.type1[2] + " !\n"
                         + "Veuillez cliquer à nouveau sur la zone dessin pour definir un nouveau noeud de fin de barre");
             }
             dialogW.showAndWait();
@@ -666,4 +689,5 @@ public class Controleur {
             return true;
         }
     }
+
 }

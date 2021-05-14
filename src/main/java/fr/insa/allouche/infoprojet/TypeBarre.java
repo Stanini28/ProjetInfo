@@ -32,8 +32,8 @@ public class TypeBarre {
         this.rTraction = rTraction;
         this.type = new ArrayList<Barre>();
     }
-    
-    public TypeBarre(){
+
+    public TypeBarre() {
         this(12, 20, 40, 500, 600);
     }
 
@@ -61,10 +61,10 @@ public class TypeBarre {
         }
         this.type.clear();
     }
-    
-    public static TypeBarre DemandeTypeBarre(){
+
+    public static TypeBarre DemandeTypeBarre() {
         System.out.println("Initialisation du type de barre que vous-voulez creer");
-        
+
         System.out.println("Quel est sont coût au mètre  ?");
         double coutM = Lire.d();
         System.out.println("Quel ets la longeur max ?");
@@ -74,7 +74,7 @@ public class TypeBarre {
         System.out.println("Quel est la force de traction max ?");
         double rTraction = Lire.d();
         System.out.println("Quel est la force de Compressin max ?");
-        double rComp = Lire.d(); 
+        double rComp = Lire.d();
         return new TypeBarre(coutM, lMin, lMax, rTraction, rComp);
     }
 
@@ -121,25 +121,25 @@ public class TypeBarre {
     void setCatalogueDeBarre(Treillis catalogueDeBarre) {
         this.catalogueDeBarre = catalogueDeBarre;
     }
-    
-    public String toString(){
+
+    public String toString() {
         String res = "";
-        res = "Type de barre "+ this.id +":\n"
-                + "     Coût au mètre : "+this.coutAuMetre+"\n"
-                + "     Longueur max : "+this.lMax+"\n"
-                + "     Longueur min : "+this.lMin+"\n"
-                + "     force de traction ax : "+this.rTraction+"\n"
-                + "     force de compression ax : "+this.rComp+"\n"; 
+        res = "Type de barre " + this.id + ":\n"
+                + "     Coût au mètre : " + this.coutAuMetre + "\n"
+                + "     Longueur max : " + this.lMax + "\n"
+                + "     Longueur min : " + this.lMin + "\n"
+                + "     force de traction ax : " + this.rTraction + "\n"
+                + "     force de compression ax : " + this.rComp + "\n";
         return res;
     }
     
     public void save(Writer w, Identificateur num) throws IOException{
         if(!num.objExist(this)){
         int id = num.getOrCreateId(this);
-        w.append("Type de Barre" +id+ ";" + this.coutAuMetre+ ";" +  this.lMax+ ";"
+        w.append("Type de Barre;" +id+ ";" + this.coutAuMetre+ ";" +  this.lMax+ ";"
                 + this.lMin + ";"+ this.rComp+ ";"+ this.rTraction + "\n");
         }
-        
+
     }
 }
-
+//TEST TES TES 
