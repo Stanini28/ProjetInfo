@@ -20,6 +20,7 @@ import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
@@ -32,7 +33,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import static javafx.scene.paint.Color.color;
+import static javafx.scene.paint.Color.color;
 import javafx.stage.Stage;
 
 /**
@@ -69,8 +74,10 @@ public class interfaceDessin extends BorderPane {
     private ColorPicker cpCouleur;
 
     private HBox entete;
-
+    private VBox AG;
+   
     private DessinCanvas zoneDessin;
+    
 
     public interfaceDessin(Treillis model) {
 
@@ -157,10 +164,17 @@ public class interfaceDessin extends BorderPane {
                 this.supprimer, this.zoneconstructible, this.cpCouleur, this.removeAll);
 
         this.entete.setStyle(" -fx-padding: 2;");
+        this.entete = new HBox(this.triangle_Terrain, this.choiceBoxN, this.catalogueBarre,
+               this.cpCouleur);
+        
+        this.AG= new VBox(this.zoneconstructible, this.Select,this.supprimer,this.remove);
+        this.setRight(this.AG);
+        this.AG.setStyle(" -fx-padding: 1;");
+        this.entete.setStyle(" -fx-padding: 1;");
         this.Select.setStyle("-fx-background-color: #00f8c3; -fx-padding: 10;");
         this.removeAll.setStyle("-fx-background-color: #67d5c1; -fx-padding: 10;");
         this.zoneconstructible.setStyle("-fx-background-color: #ffb12e; -fx-padding: 10;");
-        this.cpCouleur.setStyle("-fx-background-color: #c5dfff; -fx-padding: 10;");
+        this.cpCouleur.setStyle("-fx-background-color: #c5dfff ; -fx-padding: 10;");
         this.choiceBoxN.setStyle("-fx-background-color: #fbad84; -fx-padding: 10;");
         this.triangle_Terrain.setStyle("-fx-background-color: #6bd314; -fx-padding: 10;");
         this.supprimer.setStyle("-fx-background-color: #fe2705; -fx-padding: 10;");
@@ -171,6 +185,11 @@ public class interfaceDessin extends BorderPane {
         this.choiceB2.setStyle("-fx-background-color: #cfcff2; -fx-padding: 8;");
         this.choiceB3.setStyle("-fx-background-color: #e7e7f8; -fx-padding: 8;");
 
+        
+        this.Select.setBackground(Background.EMPTY);
+        
+        
+        
         this.setTop(this.entete);
 
         this.zoneDessin = new DessinCanvas(this);

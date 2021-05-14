@@ -161,8 +161,8 @@ public class Terrain {
     }
     
     public void save(Writer w, Identificateur num) throws IOException{
-        w.append("Terrain"+ this.xmax+ ";" + this.xmin +
-                ";" + this.ymax+ ";" + this.ymin +"\n");
+        w.append("Terrain;"+ this.xmin+ ";" + this.xmax +
+                ";" + this.ymin+ ";" + this.ymax +"\n");
        
         
     }

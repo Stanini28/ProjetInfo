@@ -184,6 +184,5 @@ public class SegmentTerrain {
             return p4.distancePoint(p);
         }
     }
-
 }
 //oooo
