@@ -34,6 +34,11 @@ public class AppuiDouble extends NoeudAppui {
         //segT.add(this);
          segT.getAppartient().add(this);
     }
+    public AppuiDouble(double alpha, SegmentTerrain segT, TriangleTerrain tt) {
+        super(alpha, segT, Color.CORAL, tt);
+        //segT.add(this);
+         segT.getAppartient().add(this);
+    }
     
     public AppuiDouble(Point noeud, SegmentTerrain segT, Color color) {
         super(noeud, segT, color);

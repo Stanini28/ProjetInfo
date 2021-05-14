@@ -850,12 +850,14 @@ public class Treillis {
         SegmentTerrain seg3 = new SegmentTerrain(pos3, pos1);
         SegmentTerrain seg4 = new SegmentTerrain(pos2, pos4);
         SegmentTerrain seg5 = new SegmentTerrain(pos4, pos1);
-        AppuiDouble nAD2 = new AppuiDouble(pos2, seg1);
+        TriangleTerrain tT1 = new TriangleTerrain(seg1, seg2, seg3);
+        System.out.println("seg1 appartient"+seg1.getFaitPartieDe());
+        TriangleTerrain tT2 = new TriangleTerrain(pos2, pos4, pos1);
+        t1.addTriangleTerrain(tT1);
+        AppuiDouble nAD2 = new AppuiDouble(0.5, seg1, seg1.getFaitPartieDe());
         AppuiSimple nAS3 = new AppuiSimple(pos3, seg2);
         AppuiSimple nAS1 = new AppuiSimple(0.9, seg3);
         Barre bAd = new Barre(nAD2, nAS3, 6, 7, 78, 567, 789);
-        TriangleTerrain tT1 = new TriangleTerrain(seg1, seg2, seg3);
-        TriangleTerrain tT2 = new TriangleTerrain(pos2, pos4, pos1);
         TypeBarre tB1 = new TypeBarre(2, 30, 55, 550, 500);
         TypeBarre tB2 = new TypeBarre();
 
@@ -883,7 +885,7 @@ public class Treillis {
 //        seg1.setFaitPartieDe(tT1);
 //        seg2.setFaitPartieDe(tT1);
 //        seg3.setFaitPartieDe(tT1);
-        t1.addTriangleTerrain(tT1);
+        
         res.addBarre(b1);
         res.addBarre(b2);
         res.addTerrain(t1);

@@ -164,11 +164,10 @@ public class interfaceDessin extends BorderPane {
                 this.supprimer, this.zoneconstructible, this.cpCouleur, this.removeAll);
 
         this.entete.setStyle(" -fx-padding: 2;");
-        this.entete = new HBox(this.triangle_Terrain, this.choiceBoxN, this.catalogueBarre,
-               this.cpCouleur);
+        this.entete = new HBox(this.zoneconstructible, this.triangle_Terrain, this.choiceBoxN, this.catalogueBarre);
         
-        this.AG= new VBox(this.zoneconstructible, this.Select,this.supprimer,this.removeAll);
-        this.setRight(this.AG);
+        this.AG= new VBox(this.Select,this.supprimer,this.removeAll, this.cpCouleur);
+        this.setLeft(this.AG);
         this.AG.setStyle(" -fx-padding: 1;");
         this.entete.setStyle(" -fx-padding: 1;");
         this.Select.setStyle("-fx-background-color: #00f8c3; -fx-padding: 10;");
