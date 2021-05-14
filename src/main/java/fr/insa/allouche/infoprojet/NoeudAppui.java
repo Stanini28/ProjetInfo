@@ -61,7 +61,6 @@ public abstract class NoeudAppui extends Noeud {
 //            System.out.println("liste noeud segT = "+segT.getAppartient().get(i));
 //        }
         this.calculAlpha();
-        for (int i = 0; i < 3; i++) {
             if (segT == tt.getSegTerrain1()){
                 this.j =1 ;
             }else if (segT == tt.getSegTerrain2()){
@@ -74,7 +73,6 @@ public abstract class NoeudAppui extends Noeud {
             this.k = (j+1) %3;
             System.out.println("j ="+this.j);
             System.out.println("k = "+this.k);
-        }
     }
     
 
