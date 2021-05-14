@@ -811,9 +811,11 @@ public class Treillis {
             for (int i = 0; i < this.base.getConstitue().size(); i++) {
                 this.base.getConstitue().get(i).save(bout, Num);
             }//AJOUT TRIANGLE TERRAIN+ SEGMENT TERRAIN
+            bout.append("FINTRIANGLES");
             for (int i = 0; i < this.catalogueBarre.size(); i++) {
                 this.catalogueBarre.get(i).save(bout, Num);
             }//AJOUT TYPE BARRE
+            bout.append("FINCATALOGUE");
             for (int i = 0; i < this.Adoub.size(); i++) {
                 this.Adoub.get(i).save(bout, Num);
             }//AJOUT APPUI DOUBLE
@@ -823,9 +825,11 @@ public class Treillis {
             for (int i = 0; i < this.Simp.size(); i++) {
                 this.Simp.get(i).save(bout, Num);
             }//AJOUT NOEUD SIMPLE
+            bout.append("FINNOEUDS");
             for (int i = 0; i < this.compose.size(); i++) {
                 this.compose.get(i).save(bout, Num);
             }//AJOUT BARRE
+            bout.append("FINBARRES");
 
         }
     }
