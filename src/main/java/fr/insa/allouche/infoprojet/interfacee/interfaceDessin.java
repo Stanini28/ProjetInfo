@@ -86,6 +86,7 @@ public class interfaceDessin extends BorderPane {
 
     private HBox entete;
     private VBox AG;
+    private VBox englobe;
    
     private DessinCanvas zoneDessin;
     private MainMenu menu;
@@ -172,7 +173,7 @@ public class interfaceDessin extends BorderPane {
 
         this.cpCouleur = new ColorPicker(Color.BLACK);
         this.menu = new MainMenu(this);
-        this.setRight(this.menu);
+
         
 
         this.entete = new HBox(this.triangle_Terrain, this.Select, this.choiceBoxN, this.catalogueBarre,
@@ -181,9 +182,12 @@ public class interfaceDessin extends BorderPane {
         this.entete.setStyle(" -fx-padding: 2;");
         this.entete = new HBox(this.zoneconstructible, this.triangle_Terrain, this.choiceBoxN, this.catalogueBarre);
         
+        this.englobe=new VBox(this.menu,this.entete);
+        this.setTop(this.englobe);
+        
         this.AG= new VBox(this.Select,this.removeAll, this.cpCouleur,this.supprimer);
         this.setLeft(this.AG);
-        this.setTop(this.entete);
+
         this.AG.setStyle(" -fx-padding: 1;");
         this.entete.setStyle(" -fx-padding: 1;");
         this.Select.setStyle("-fx-background-color: #0080FF; -fx-padding: 10;");
