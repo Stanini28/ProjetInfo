@@ -6,6 +6,7 @@
 package fr.insa.allouche.infoprojet.interfacee;
 
 import fr.insa.allouche.infoprojet.Treillis;
+import java.awt.Insets;
 import java.io.File;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -34,6 +36,11 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
+import javafx.scene.layout.BorderStrokeStyle;
+import javafx.scene.layout.BorderWidths;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import static javafx.scene.paint.Color.color;
@@ -86,22 +93,22 @@ public class interfaceDessin extends BorderPane {
         this.model = model;
         this.controleur = new Controleur(this);
 
-        this.Select = new ToggleButton("Select");
+        this.Select = new ToggleButton("Select",imageselect);
 
         this.Select.setOnAction((t) -> {
             this.controleur.boutonSelect(t);
         });
 
-        this.zoneconstructible = new ToggleButton("Zone constructible");
+        this.zoneconstructible = new ToggleButton("Zone constructible",imagezc);
         this.zoneconstructible.setOnAction((t) -> {
             this.controleur.boutonZoneConstructible(t);
         });
-        this.triangle_Terrain = new ToggleButton("Triangle Terrain");
+        this.triangle_Terrain = new ToggleButton("Triangle Terrain",imagetriangle);
         this.triangle_Terrain.setOnAction((t) -> {
             this.controleur.boutontriangle_Terrain(t);
         });
 
-        this.supprimer = new ToggleButton("Supprimer");
+        this.supprimer = new ToggleButton("Supprimer",imagesupprimer);
         this.supprimer.setOnAction((t) -> {
             this.controleur.bouttonSuprimer(t);
         });
@@ -184,12 +191,35 @@ public class interfaceDessin extends BorderPane {
         this.choiceB2.setStyle("-fx-background-color: #cfcff2; -fx-padding: 8;");
         this.choiceB3.setStyle("-fx-background-color: #e7e7f8; -fx-padding: 8;");
 
-        this.Select.setMaxHeight(Double.MAX_VALUE);
+        this.Select.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        this.catalogueBarre.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        this.cpCouleur.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        this.supprimer.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        this.triangle_Terrain.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        this.removeAll.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        this.zoneconstructible.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        this.choiceBoxN.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         
+        this.imageselect.setFitHeight(40);
+        this.imageselect.setFitWidth(40);
+        this.imagesupprimer.setFitHeight(40);
+        this.imagesupprimer.setFitWidth(40);
+        this.imagetriangle.setFitHeight(40);
+        this.imagetriangle.setFitWidth(40);
+        this.imagezc.setFitHeight(40);
+        this.imagezc.setFitWidth(40);
+        
+        this.AG.setAlignment(Pos.TOP_LEFT);
+        this.AG.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        this.entete.setAlignment(Pos.TOP_CENTER);
+        this.entete.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         
         this.Select.setBackground(Background.EMPTY);
         
-        
+        Border border1=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(6)));
+        this.entete.setBorder(border1);
+        Border border2=new Border(new BorderStroke(Color.ROYALBLUE,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(6)));
+        this.AG.setBorder(border2);
         
         this.setTop(this.entete);
 
@@ -308,6 +338,12 @@ public class interfaceDessin extends BorderPane {
         this.model = model;
     }
     
+    private ImageView imageselect = new ImageView(new Image("https://image.flaticon.com/icons/png/512/99/99162.png"));
+    private ImageView imagetriangle = new ImageView(new Image("https://image.shutterstock.com/image-vector/triangle-arrow-pyramid-line-art-260nw-739498723.jpg"));
+    private ImageView imagesupprimer = new ImageView(new Image("https://img2.freepng.fr/20180203/cje/kisspng-button-clip-art-delete-button-png-free-download-5a756de1e71360.0383827815176452819465.jpg"));
+    private ImageView imagezc = new ImageView(new Image("https://www.eurographics.ca/uploads/postercartel_product_option.imageEnlarge/1400-2004.jpg"));
+//    private ImageView imagebarre = new ImageView(new Image("https://media.castorama.fr/is/image/Castorama/barre-rideaux-bois-colours-rumba-ch-ne-35-mm-x-l-150-cm~3454971377659_02c?$MOB_PREV$&$width=618&$height=618"));
+       
     
     
     
