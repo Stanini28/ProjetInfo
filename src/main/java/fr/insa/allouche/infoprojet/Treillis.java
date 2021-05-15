@@ -914,7 +914,8 @@ public class Treillis {
     }
 
     public static void main(String[] args) {
-        ExempleSauvegarde();
+        //ExempleSauvegarde();
+        testLecture();
     }
 
     public static Treillis lecture(File fin) throws IOException {
@@ -932,24 +933,50 @@ public class Treillis {
                 if (finTriangle == false) {
                     if (bouts[0].equals("ZoneConstructible")) {
                         treillis.addTerrain(new Terrain(
-                                Double.parseDouble(bouts[1]),Double.parseDouble(bouts[2]),
-                                Double.parseDouble(bouts[3]),Double.parseDouble(bouts[4])));
+                                Double.parseDouble(bouts[1]), Double.parseDouble(bouts[2]),
+                                Double.parseDouble(bouts[3]), Double.parseDouble(bouts[4])));
                     } else if (bouts[0].equals("Triangle")) {
-                        
+                        Point[] pt = new Point[3];
+                        for (int i = 2; i < 5; i++) {
+                            pt[i-2]=adapterP(bouts[i]);
+                        }
+                        TriangleTerrain tt = new TriangleTerrain (pt[0], pt[1], pt[2]);
+                        treillis.addTriangleTerrain(tt);
+                        tt.setId(Integer.parseInt(bouts[1]));
                     }
                 } else if (finTriangle == true && finCatalogue == false) {
                     if (bouts[0].equals("TypeBarre")) {
+                        TypeBarre tb = new TypeBarre(Double.parseDouble(bouts[2]),
+                                Double.parseDouble(bouts[3]),Double.parseDouble(bouts[4]),
+                                Double.parseDouble(bouts[5]),Double.parseDouble(bouts[6]));
+                        treillis.addTypeBarre(tb);
+                        tb.setId(Integer.parseInt(bouts[1]));
                     }
                 } else if (finTriangle == true && finCatalogue == true && finNoeuds == false) {
                     if (bouts[0].equals("AppuiDouble")) {
-
+                        SegmentTerrain segt = (SegmentTerrain)treillis.getIdentite().getObj(Integer.parseInt(bouts[1]));
+                        AppuiDouble ad = new AppuiDouble(Double.parseDouble(bouts[4]),segt);
+                        treillis.addAppuiDouble(ad);
+                        ad.setId(Integer.parseInt(bouts[1]));
+                        //on utilise pas j est ce rellement nécessaire ?
                     } else if (bouts[0].equals("AppuiSimple")) {
-
+                        SegmentTerrain segt = (SegmentTerrain)treillis.getIdentite().getObj(Integer.parseInt(bouts[1]));
+                        AppuiSimple as = new AppuiSimple(Double.parseDouble(bouts[4]),segt);
+                        treillis.addAppuiSimple(as);
+                        as.setId(Integer.parseInt(bouts[1]));
+                        //on utilise pas j est ce rellement nécessaire ?
                     } else if (bouts[0].equals("NoeudSimple")) {
-
+                        NoeudSimple ns = new NoeudSimple(adapterP(bouts[2]));
+                        treillis.addNoeudSimple(ns);
+                        ns.setId(Integer.parseInt(bouts[1]));
                     }
                 } else if (finTriangle == true && finCatalogue == true && finNoeuds == true) {
                     if (bouts[0].equals("Barre")) {
+                        Barre b = new Barre((Noeud)treillis.getIdentite().getObj(Integer.parseInt(bouts[3])),
+                                (Noeud)treillis.getIdentite().getObj(Integer.parseInt(bouts[4])),
+                        (TypeBarre)treillis.getIdentite().getObj(Integer.parseInt(bouts[2])));
+                        treillis.addBarre(b);
+                        b.setId(Integer.parseInt(bouts[1]));
                     }
                 } else if (bouts[0].equals("FINTRIANGLES")) {
                     finTriangle = true;
@@ -963,4 +990,21 @@ public class Treillis {
             return treillis;
         }
     }
+    public static void testLecture() {
+        try {
+            Treillis lue = Treillis.lecture(new File("Test 1"));
+            System.out.println("treillis lue : " + lue);
+        } catch (IOException ex) {
+            throw new Error(ex);
+        }
+    }
+
+    public static Point adapterP(String bouts) {
+
+        String[] separation1 = bouts.split("(");
+        String[] separation2 = separation1[1].split(")");
+        String[] separation3 = separation2[0].split(",");
+        return new Point (Double.parseDouble(separation3[0]),Double.parseDouble(separation3[1]));
+    }
+    
 }

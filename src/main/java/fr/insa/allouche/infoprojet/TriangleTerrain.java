@@ -125,7 +125,7 @@ public class TriangleTerrain {
         
     }
     public void save(Writer w, Identificateur num) throws IOException {
-        if (!num.objExist(this)) {
+        if (num.objExist(this)) {
             System.out.println("iciiiiiiiiiii");
             this.SegTerrain1.save(w, num);
             this.SegTerrain2.save(w, num);
