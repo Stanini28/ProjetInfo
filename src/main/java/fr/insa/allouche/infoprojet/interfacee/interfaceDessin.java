@@ -173,6 +173,7 @@ public class interfaceDessin extends BorderPane {
         this.cpCouleur = new ColorPicker(Color.BLACK);
         this.menu = new MainMenu(this);
         this.setRight(this.menu);
+        
 
         this.entete = new HBox(this.triangle_Terrain, this.Select, this.choiceBoxN, this.catalogueBarre,
                 this.supprimer, this.zoneconstructible, this.cpCouleur, this.removeAll);
@@ -182,6 +183,7 @@ public class interfaceDessin extends BorderPane {
         
         this.AG= new VBox(this.Select,this.removeAll, this.cpCouleur,this.supprimer);
         this.setLeft(this.AG);
+        this.setTop(this.entete);
         this.AG.setStyle(" -fx-padding: 1;");
         this.entete.setStyle(" -fx-padding: 1;");
         this.Select.setStyle("-fx-background-color: #0080FF; -fx-padding: 10;");
@@ -223,15 +225,36 @@ public class interfaceDessin extends BorderPane {
         this.entete.setAlignment(Pos.CENTER_RIGHT);
         this.entete.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         
+        
         this.Select.setBackground(Background.EMPTY);
         
         Border border1=new Border(new BorderStroke(Color.GREY,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
         this.entete.setBorder(border1);
         Border border2=new Border(new BorderStroke(Color.GREY,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
         this.AG.setBorder(border2);
+        Border border3=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.Select.setBorder(border3);
+        Border border4=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.catalogueBarre.setBorder(border4);
+        Border border5=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.choiceBoxN.setBorder(border5);
+        Border border6=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.removeAll.setBorder(border6);
+        Border border7=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.triangle_Terrain.setBorder(border7);
+        Border border8=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.zoneconstructible.setBorder(border8);
+        Border border9=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.cpCouleur.setBorder(border9);
+        Border border10=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.supprimer.setBorder(border10);
+        Border border11=new Border(new BorderStroke(Color.STEELBLUE,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.menu.setBorder(border11);
+        this.entete.setStyle("-fx-background-color: #CEE3F6;");
+        this.AG.setStyle("-fx-background-color: #CEE3F6;");
+
         
         
-        this.setTop(this.entete);
 
         this.zoneDessin = new DessinCanvas(this);
         this.setCenter(this.zoneDessin);
