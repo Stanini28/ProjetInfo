@@ -84,6 +84,7 @@ public class interfaceDessin extends BorderPane {
     private VBox AG;
    
     private DessinCanvas zoneDessin;
+    private MainMenu menu;
     
 
     public interfaceDessin(Treillis model) {
@@ -225,6 +226,9 @@ public class interfaceDessin extends BorderPane {
 
         this.zoneDessin = new DessinCanvas(this);
         this.setCenter(this.zoneDessin);
+        
+        this.menu = new MainMenu(this);
+        this.setTop(this.menu);
 
         this.controleur.changeEtat(20);
         
@@ -338,11 +342,23 @@ public class interfaceDessin extends BorderPane {
         this.model = model;
     }
     
+    public void setCurFile(File curFile) {
+        this.curFile = curFile;
+    }
+    
+    public interfaceDessin(Stage inStage) {
+        this(inStage);
+    }
+    
     private ImageView imageselect = new ImageView(new Image("https://image.flaticon.com/icons/png/512/99/99162.png"));
     private ImageView imagetriangle = new ImageView(new Image("https://image.shutterstock.com/image-vector/triangle-arrow-pyramid-line-art-260nw-739498723.jpg"));
     private ImageView imagesupprimer = new ImageView(new Image("https://img2.freepng.fr/20180203/cje/kisspng-button-clip-art-delete-button-png-free-download-5a756de1e71360.0383827815176452819465.jpg"));
     private ImageView imagezc = new ImageView(new Image("https://www.eurographics.ca/uploads/postercartel_product_option.imageEnlarge/1400-2004.jpg"));
 //    private ImageView imagebarre = new ImageView(new Image("https://media.castorama.fr/is/image/Castorama/barre-rideaux-bois-colours-rumba-ch-ne-35-mm-x-l-150-cm~3454971377659_02c?$MOB_PREV$&$width=618&$height=618"));
+
+    public MainMenu getMenu() {
+        return menu;
+    }
        
     
     

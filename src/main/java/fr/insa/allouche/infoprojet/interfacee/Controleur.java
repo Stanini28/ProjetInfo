@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import javafx.event.ActionEvent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
@@ -28,6 +29,8 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 
 /**
  *
@@ -699,5 +702,86 @@ System.out.println(this.vue.getModel().toString());
             return true;
         }
     }
+    
+     private void realSave(File f) {
+        try {
+            this.vue.getModel().sauvegarde(f);
+            this.vue.setCurFile(f);
+            this.vue.getInStage().setTitle(f.getName());
+        } catch (IOException ex) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Problème durant la sauvegarde");
+            alert.setContentText(ex.getLocalizedMessage());
 
-}
+            alert.showAndWait();
+        } finally {
+            this.changeEtat(20);
+        }
+     }
+        
+        public void menuSave(ActionEvent t) {
+        if (this.vue.getCurFile() == null) {
+            this.menuSaveAs(t);
+        } else {
+            this.realSave(this.vue.getCurFile());
+        }
+    }
+
+    public void menuSaveAs(ActionEvent t) {
+        FileChooser chooser = new FileChooser();
+        File f = chooser.showSaveDialog(this.vue.getInStage());
+        if (f != null) {
+            this.realSave(f);
+        }
+    }
+    
+    public void menuOpen(ActionEvent t) {
+        FileChooser chooser = new FileChooser();
+        File f = chooser.showOpenDialog(this.vue.getInStage());
+        if (f != null) {
+            try {
+                Treillis lue = Treillis.lecture(f);
+                Stage nouveau = new Stage();
+                nouveau.setTitle(f.getName());
+                Scene sc = new Scene(new interfaceDessin(lue), 800, 600);
+                nouveau.setScene(sc);
+                nouveau.show();
+            } catch (Exception ex) {
+                Alert alert = new Alert(AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Problème durant la sauvegarde");
+                alert.setContentText(ex.getLocalizedMessage());
+
+                alert.showAndWait();
+            } finally {
+                this.changeEtat(20);
+            }
+        }
+    }
+     public void menuNouveau(ActionEvent t) {
+        Stage nouveau = new Stage();
+        nouveau.setTitle("Nouveau");
+        Scene sc = new Scene(new interfaceDessin(nouveau), 800, 600);
+        nouveau.setScene(sc);
+        nouveau.show();
+    }
+    
+     
+     public void menuApropos(ActionEvent t) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("A propos");
+        alert.setHeaderText(null);
+        alert.setContentText("Trop super ce micro-logiciel de dessin vectoriel 2D\n"
+                + "réalisé par François de Bertrand de Beuvron\n"
+                + "comme tutoriel pour un cours de POO\n"
+                + "à l'INSA de Strasbourg");
+
+        alert.showAndWait();
+    }
+     
+    }
+    
+    
+
+
