@@ -16,6 +16,8 @@ import fr.insa.allouche.infoprojet.Terrain;
 import fr.insa.allouche.infoprojet.Treillis;
 import fr.insa.allouche.infoprojet.TriangleTerrain;
 import fr.insa.allouche.infoprojet.TypeBarre;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 import javafx.event.ActionEvent;
@@ -307,7 +309,7 @@ public class Controleur {
                 // boutton appui double pressé
             } else if (choice.get() == btnAD) {
                 AppuiDouble ad = creationAD(clic);
-
+                System.out.println(ad.getappartient().getFaitPartieDe());
                 if (bonneLongeurB(ad.getPosition()) == false) {
                     this.vue.getModel().removeNoeud(ad);
                     if (this.noeudB[0].getLiee() == null) {
@@ -345,6 +347,11 @@ public class Controleur {
             this.vue.redrawAll();
             this.changeEtat(100);
         } else if (this.etat == 110) {
+            try {
+            this.vue.getModel().sauvegarde(new File("Test 1"));
+        } catch (IOException ex) {
+            throw new Error("Problème :" + ex.getMessage());
+        }
             Treillis model = this.vue.getModel();
             Point clic = new Point(t.getX(), t.getY());
             this.supression(model, clic);
@@ -360,8 +367,9 @@ public class Controleur {
 //            this.changeEtat(20);
 //
 //            System.out.println(this.vue.getModel().toString());
+        
         }
-
+System.out.println(this.vue.getModel().toString());
     }
 
     void boutonSelect(ActionEvent t
@@ -615,6 +623,8 @@ public class Controleur {
             if (this.vue.getModel().nZoneConstructible(ad.getPosition()) == true) {
                 this.vue.getModel().addAppuiDouble(ad);
                 segt.add(ad);
+                System.out.println("dans creation ad\n"+ad.getappartient().getFaitPartieDe());
+                System.out.println("");
                 return ad;
             } else {
                 segt.remove(ad);

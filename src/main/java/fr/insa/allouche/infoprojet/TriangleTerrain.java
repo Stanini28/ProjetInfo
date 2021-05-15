@@ -30,7 +30,7 @@ public class TriangleTerrain {
         //defini à quel Triangle terrain appartient les segment terrain
         SegTerrain1.setFaitPartieDe(this);
         SegTerrain2.setFaitPartieDe(this);
-        SegTerrain2.setFaitPartieDe(this);
+        SegTerrain3.setFaitPartieDe(this);
     }
 
     public TriangleTerrain(Point pt1, Point pt2, Point pt3) {
@@ -41,7 +41,7 @@ public class TriangleTerrain {
         //defini à quel Triangle terrain appartient les segment terrain
         SegTerrain1.setFaitPartieDe(this);
         SegTerrain2.setFaitPartieDe(this);
-        SegTerrain2.setFaitPartieDe(this);
+        SegTerrain3.setFaitPartieDe(this);
     }
     
     public int getId() {
@@ -126,6 +126,7 @@ public class TriangleTerrain {
     }
     public void save(Writer w, Identificateur num) throws IOException {
         if (!num.objExist(this)) {
+            System.out.println("iciiiiiiiiiii");
             this.SegTerrain1.save(w, num);
             this.SegTerrain2.save(w, num);
             this.SegTerrain3.save(w, num);

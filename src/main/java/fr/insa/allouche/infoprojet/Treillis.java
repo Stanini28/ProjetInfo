@@ -810,6 +810,7 @@ public class Treillis {
             this.base.save(bout, Num);
             for (int i = 0; i < this.base.getConstitue().size(); i++) {
                 this.base.getConstitue().get(i).save(bout, Num);
+//                System.out.println("je suis renter"+this.base.getConstitue().get(i));
             }//AJOUT TRIANGLE TERRAIN+ SEGMENT TERRAIN
             bout.append("FINTRIANGLES\n");
             for (int i = 0; i < this.catalogueBarre.size(); i++) {
@@ -817,9 +818,11 @@ public class Treillis {
             }//AJOUT TYPE BARRE
             bout.append("FINCATALOGUE\n");
             for (int i = 0; i < this.Adoub.size(); i++) {
+                System.out.println(this.Adoub.get(i).getappartient().getFaitPartieDe());
                 this.Adoub.get(i).save(bout, Num);
             }//AJOUT APPUI DOUBLE
             for (int i = 0; i < this.Asimp.size(); i++) {
+                System.out.println(this.Asimp.get(i).getappartient().getFaitPartieDe());
                 this.Asimp.get(i).save(bout, Num);
             }//AJOUT APPUI SIMPLE
             for (int i = 0; i < this.Simp.size(); i++) {

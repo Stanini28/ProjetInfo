@@ -135,8 +135,7 @@ public class TypeBarre {
     
     public void save(Writer w, Identificateur num) throws IOException{
         if(!num.objExist(this)){
-        int id = num.getOrCreateId(this);
-        w.append("Type de Barre;" +id+ ";" + this.coutAuMetre+ ";" +  this.lMin+ ";"
+        w.append("Type de Barre;" +this.id+ ";" + this.coutAuMetre+ ";" +  this.lMin+ ";"
                 + this.lMax + ";"+ this.rTraction+ ";"+ this.rComp + "\n");
         }
 
