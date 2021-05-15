@@ -806,7 +806,7 @@ public class Treillis {
     public void sauvegarde(File F) throws IOException {
         Identificateur Num = this.identite;
 
-        try (BufferedWriter bout = new BufferedWriter(new FileWriter(F))) {
+        try ( BufferedWriter bout = new BufferedWriter(new FileWriter(F))) {
             this.base.save(bout, Num);
             for (int i = 0; i < this.base.getConstitue().size(); i++) {
                 this.base.getConstitue().get(i).save(bout, Num);
@@ -858,7 +858,7 @@ public class Treillis {
         SegmentTerrain seg4 = new SegmentTerrain(pos2, pos4);
         SegmentTerrain seg5 = new SegmentTerrain(pos4, pos1);
         TriangleTerrain tT1 = new TriangleTerrain(seg1, seg2, seg3);
-        System.out.println("seg1 appartient"+seg1.getFaitPartieDe());
+        System.out.println("seg1 appartient" + seg1.getFaitPartieDe());
         TriangleTerrain tT2 = new TriangleTerrain(pos2, pos4, pos1);
         t1.addTriangleTerrain(tT1);
         AppuiDouble nAD2 = new AppuiDouble(0.5, seg1, seg1.getFaitPartieDe());
@@ -892,7 +892,6 @@ public class Treillis {
 //        seg1.setFaitPartieDe(tT1);
 //        seg2.setFaitPartieDe(tT1);
 //        seg3.setFaitPartieDe(tT1);
-        
         res.addBarre(b1);
         res.addBarre(b2);
         res.addTerrain(t1);
@@ -919,30 +918,49 @@ public class Treillis {
     }
 
     public static Treillis lecture(File fin) throws IOException {
-        Treillis dernier = null;
+        Treillis treillis = null;
+        boolean finTriangle = false;
+        boolean finCatalogue = false;
+        boolean finNoeuds = false;
+        boolean finBarres = false;
+
         try ( BufferedReader bin = new BufferedReader(new FileReader(fin))) {
             String line;
             while ((line = bin.readLine()) != null && line.length() != 0) {
                 String[] bouts = line.split(";");
-                if (bouts[0].equals("AppuiDouble")) {
 
-                }else if (bouts[0].equals("AppuiSimple")) {
-                    
-                }else if (bouts[0].equals("NoeudSimple")) {
-                    
-                }else if (bouts[0].equals("TypeBarre")) {
-                    
-                }else if (bouts[0].equals("Barre")) {
-                    
-                }else if (bouts[0].equals("NoeudAppuiDouble")) {
-                    
-                }else if (bouts[0].equals("Terrain")) {
-                    
-                }else if (bouts[0].equals("Triangle")) {
-                    
+                if (finTriangle == false) {
+                    if (bouts[0].equals("ZoneConstructible")) {
+                        treillis.addTerrain(new Terrain(
+                                Double.parseDouble(bouts[1]),Double.parseDouble(bouts[2]),
+                                Double.parseDouble(bouts[3]),Double.parseDouble(bouts[4])));
+                    } else if (bouts[0].equals("Triangle")) {
+                        
+                    }
+                } else if (finTriangle == true && finCatalogue == false) {
+                    if (bouts[0].equals("TypeBarre")) {
+                    }
+                } else if (finTriangle == true && finCatalogue == true && finNoeuds == false) {
+                    if (bouts[0].equals("AppuiDouble")) {
+
+                    } else if (bouts[0].equals("AppuiSimple")) {
+
+                    } else if (bouts[0].equals("NoeudSimple")) {
+
+                    }
+                } else if (finTriangle == true && finCatalogue == true && finNoeuds == true) {
+                    if (bouts[0].equals("Barre")) {
+                    }
+                } else if (bouts[0].equals("FINTRIANGLES")) {
+                    finTriangle = true;
+                } else if (bouts[0].equals("FINCATALOGUE")) {
+                    finCatalogue = true;
+                } else if (bouts[0].equals("FINNOEUDS")) {
+                    finNoeuds = true;
                 }
+
             }
+            return treillis;
         }
-        return dernier;
     }
 }
