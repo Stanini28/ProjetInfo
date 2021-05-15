@@ -48,9 +48,10 @@ public abstract class NoeudAppui extends Noeud {
 //        for (int i = 0; i < segT.getAppartient().size(); i++) {
 //            System.out.println("liste noeud segT = "+segT.getAppartient().get(i));
 //        }
-        
+
         this.calculAlpha();
     }
+
     public NoeudAppui(double alpha, SegmentTerrain segT, Color color, TriangleTerrain tt) {
         super(calculP(alpha, segT), color);
         System.out.println("calculP(alpha, segT" + calculP(alpha, segT));
@@ -61,20 +62,19 @@ public abstract class NoeudAppui extends Noeud {
 //            System.out.println("liste noeud segT = "+segT.getAppartient().get(i));
 //        }
         this.calculAlpha();
-            if (segT == tt.getSegTerrain1()){
-                this.j =1 ;
-            }else if (segT == tt.getSegTerrain2()){
-                this.j =2 ;
-            } else if (segT == tt.getSegTerrain3()){
-                this.j =3 ;
-            } else {
-                System.out.println("le segment terrain n'a pas trouver quel segment il est");
-            }
-            this.k = (j+1) %3;
-            System.out.println("j ="+this.j);
-            System.out.println("k = "+this.k);
+        if (segT == tt.getSegTerrain1()) {
+            this.j = 1;
+        } else if (segT == tt.getSegTerrain2()) {
+            this.j = 2;
+        } else if (segT == tt.getSegTerrain3()) {
+            this.j = 3;
+        } else {
+            System.out.println("le segment terrain n'a pas trouver quel segment il est");
+        }
+        this.k = (j + 1) % 3;
+        System.out.println("j =" + this.j);
+        System.out.println("k = " + this.k);
     }
-    
 
 //    public NoeudAppui(SegmentTerrain segT, Color color){
 //        new AppuiSimple(0, segT, color);
