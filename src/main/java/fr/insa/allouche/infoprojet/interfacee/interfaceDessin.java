@@ -184,6 +184,8 @@ public class interfaceDessin extends BorderPane {
         this.choiceB2.setStyle("-fx-background-color: #cfcff2; -fx-padding: 8;");
         this.choiceB3.setStyle("-fx-background-color: #e7e7f8; -fx-padding: 8;");
 
+        this.Select.setMaxHeight(Double.MAX_VALUE);
+        
         
         this.Select.setBackground(Background.EMPTY);
         
@@ -305,5 +307,8 @@ public class interfaceDessin extends BorderPane {
     public void setModel(Treillis model) {
         this.model = model;
     }
+    
+    
+    
     
 }
