@@ -36,6 +36,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SplitMenuButton;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.BorderStrokeStyle;
@@ -174,23 +178,24 @@ public class interfaceDessin extends BorderPane {
         this.entete.setStyle(" -fx-padding: 2;");
         this.entete = new HBox(this.zoneconstructible, this.triangle_Terrain, this.choiceBoxN, this.catalogueBarre);
         
-        this.AG= new VBox(this.Select,this.supprimer,this.removeAll, this.cpCouleur);
+        this.AG= new VBox(this.Select,this.removeAll, this.cpCouleur,this.supprimer);
         this.setLeft(this.AG);
         this.AG.setStyle(" -fx-padding: 1;");
         this.entete.setStyle(" -fx-padding: 1;");
-        this.Select.setStyle("-fx-background-color: #00f8c3; -fx-padding: 10;");
-        this.removeAll.setStyle("-fx-background-color: #67d5c1; -fx-padding: 10;");
-        this.zoneconstructible.setStyle("-fx-background-color: #ffb12e; -fx-padding: 10;");
-        this.cpCouleur.setStyle("-fx-background-color: #c5dfff ; -fx-padding: 10;");
-        this.choiceBoxN.setStyle("-fx-background-color: #fbad84; -fx-padding: 10;");
-        this.triangle_Terrain.setStyle("-fx-background-color: #6bd314; -fx-padding: 10;");
-        this.supprimer.setStyle("-fx-background-color: #fe2705; -fx-padding: 10;");
+        this.Select.setStyle("-fx-background-color: #0080FF; -fx-padding: 10;");
+        this.removeAll.setStyle("-fx-background-color: #2E9AFE; -fx-padding: 10;");
+        this.zoneconstructible.setStyle("-fx-background-color: #084B8A; -fx-padding: 10;");
+        this.cpCouleur.setStyle("-fx-background-color: #58ACFA ; -fx-padding: 10;");
+        this.choiceBoxN.setStyle("-fx-background-color: #0174DF; -fx-padding: 10;");
+        this.triangle_Terrain.setStyle("-fx-background-color: #045FB4; -fx-padding: 10;");
+        this.supprimer.setStyle("-fx-background-color: #DF0101; -fx-padding: 10;");
         this.choiceN1.setStyle("-fx-background-color: #e7a9a7; -fx-padding: 8;");
         this.choiceN2.setStyle("-fx-background-color: #f1cccb; -fx-padding: 8;");
         this.choiceN3.setStyle("-fx-background-color: #f6e0df; -fx-padding: 8;");
         this.choiceB1.setStyle("-fx-background-color: #b5b6eb; -fx-padding: 8;");
         this.choiceB2.setStyle("-fx-background-color: #cfcff2; -fx-padding: 8;");
         this.choiceB3.setStyle("-fx-background-color: #e7e7f8; -fx-padding: 8;");
+        this.catalogueBarre.setStyle("-fx-background-color: #0080FF; -fx-padding: 8;");
 
         this.Select.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         this.catalogueBarre.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -200,6 +205,7 @@ public class interfaceDessin extends BorderPane {
         this.removeAll.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         this.zoneconstructible.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         this.choiceBoxN.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        
         
         this.imageselect.setFitHeight(40);
         this.imageselect.setFitWidth(40);
@@ -212,15 +218,36 @@ public class interfaceDessin extends BorderPane {
         
         this.AG.setAlignment(Pos.TOP_LEFT);
         this.AG.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-        this.entete.setAlignment(Pos.TOP_CENTER);
+        this.entete.setAlignment(Pos.CENTER_RIGHT);
         this.entete.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         
         this.Select.setBackground(Background.EMPTY);
         
-        Border border1=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(6)));
+        Border border1=new Border(new BorderStroke(Color.GREY,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
         this.entete.setBorder(border1);
-        Border border2=new Border(new BorderStroke(Color.ROYALBLUE,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(6)));
+        Border border2=new Border(new BorderStroke(Color.GREY,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
         this.AG.setBorder(border2);
+        
+        Border border3=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.Select.setBorder(border3);
+        Border border4=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.catalogueBarre.setBorder(border4);
+        Border border5=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.choiceBoxN.setBorder(border5);
+        Border border6=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.removeAll.setBorder(border6);
+        Border border7=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.triangle_Terrain.setBorder(border7);
+        Border border8=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.zoneconstructible.setBorder(border8);
+        Border border9=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.cpCouleur.setBorder(border9);
+        Border border10=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.supprimer.setBorder(border10);
+        
+       
+       this.entete.setStyle("-fx-background-color: #CEE3F6;");
+       this.AG.setStyle("-fx-background-color: #CEE3F6;");
         
         this.setTop(this.entete);
 
@@ -354,13 +381,8 @@ public class interfaceDessin extends BorderPane {
     private ImageView imagetriangle = new ImageView(new Image("https://image.shutterstock.com/image-vector/triangle-arrow-pyramid-line-art-260nw-739498723.jpg"));
     private ImageView imagesupprimer = new ImageView(new Image("https://img2.freepng.fr/20180203/cje/kisspng-button-clip-art-delete-button-png-free-download-5a756de1e71360.0383827815176452819465.jpg"));
     private ImageView imagezc = new ImageView(new Image("https://www.eurographics.ca/uploads/postercartel_product_option.imageEnlarge/1400-2004.jpg"));
-//    private ImageView imagebarre = new ImageView(new Image("https://media.castorama.fr/is/image/Castorama/barre-rideaux-bois-colours-rumba-ch-ne-35-mm-x-l-150-cm~3454971377659_02c?$MOB_PREV$&$width=618&$height=618"));
+    
+    
 
-    public MainMenu getMenu() {
-        return menu;
-    }
-       
-    
-    
-    
+
 }
