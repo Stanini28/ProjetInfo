@@ -13,7 +13,7 @@ import javafx.scene.control.MenuItem;
  *
  * @author stanislasallouche
  */
-public class MainMenu {
+public class MainMenu extends MenuBar{
 
     private interfaceDessin main;
 
