@@ -762,7 +762,7 @@ System.out.println(this.vue.getModel().toString());
      public void menuNouveau(ActionEvent t) {
         Stage nouveau = new Stage();
         nouveau.setTitle("Nouveau");
-        Scene sc = new Scene(new interfaceDessin(nouveau), 800, 600);
+        Scene sc = new Scene(new interfaceDessin(new Treillis()), 800, 600);
         nouveau.setScene(sc);
         nouveau.show();
     }

@@ -171,6 +171,8 @@ public class interfaceDessin extends BorderPane {
         });
 
         this.cpCouleur = new ColorPicker(Color.BLACK);
+        this.menu = new MainMenu(this);
+        this.setRight(this.menu);
 
         this.entete = new HBox(this.triangle_Terrain, this.Select, this.choiceBoxN, this.catalogueBarre,
                 this.supprimer, this.zoneconstructible, this.cpCouleur, this.removeAll);
@@ -228,34 +230,13 @@ public class interfaceDessin extends BorderPane {
         Border border2=new Border(new BorderStroke(Color.GREY,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
         this.AG.setBorder(border2);
         
-        Border border3=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
-        this.Select.setBorder(border3);
-        Border border4=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
-        this.catalogueBarre.setBorder(border4);
-        Border border5=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
-        this.choiceBoxN.setBorder(border5);
-        Border border6=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
-        this.removeAll.setBorder(border6);
-        Border border7=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
-        this.triangle_Terrain.setBorder(border7);
-        Border border8=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
-        this.zoneconstructible.setBorder(border8);
-        Border border9=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
-        this.cpCouleur.setBorder(border9);
-        Border border10=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
-        this.supprimer.setBorder(border10);
-        
-       
-       this.entete.setStyle("-fx-background-color: #CEE3F6;");
-       this.AG.setStyle("-fx-background-color: #CEE3F6;");
         
         this.setTop(this.entete);
 
         this.zoneDessin = new DessinCanvas(this);
         this.setCenter(this.zoneDessin);
         
-        this.menu = new MainMenu(this);
-        this.setTop(this.menu);
+        
 
         this.controleur.changeEtat(20);
         
@@ -373,9 +354,6 @@ public class interfaceDessin extends BorderPane {
         this.curFile = curFile;
     }
     
-    public interfaceDessin(Stage inStage) {
-        this(inStage);
-    }
     
     private ImageView imageselect = new ImageView(new Image("https://image.flaticon.com/icons/png/512/99/99162.png"));
     private ImageView imagetriangle = new ImageView(new Image("https://image.shutterstock.com/image-vector/triangle-arrow-pyramid-line-art-260nw-739498723.jpg"));
