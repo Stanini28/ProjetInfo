@@ -47,7 +47,7 @@ public class Point {
 
     public String toString() {
         String res = "";
-        res = "[" + this.PX + " ," + this.PY + "]";
+        res = "(" + this.PX + " ," + this.PY + ")";
         return res;
     }
 
