@@ -68,6 +68,7 @@ public class Point {
         }
 
     }
+    
 
     public double distancePoint(Point p) {
         double dx = this.PX - p.PX;

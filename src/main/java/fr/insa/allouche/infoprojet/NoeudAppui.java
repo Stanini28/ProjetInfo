@@ -99,4 +99,9 @@ public abstract class NoeudAppui extends Noeud {
         return p;
     }
 
+    public int getJ() {
+        return j;
+    }
+
+    
 }

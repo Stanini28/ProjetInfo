@@ -130,8 +130,8 @@ public class TriangleTerrain {
             this.SegTerrain2.save(w, num);
             this.SegTerrain3.save(w, num);
             w.append("TriangleTerrain;" + this.id + ";" +
-                    this.SegTerrain1.getId() + ";" + this.SegTerrain2.getId() +
-                    ";" + this.SegTerrain3.getId()+"\n");
+                    (this.SegTerrain1.getDebut().getPX()+","+this.SegTerrain1.getDebut().getPY()) + ";" + (this.SegTerrain2.getDebut().getPX()+","+this.SegTerrain2.getDebut().getPY()) +
+                    ";" + (this.SegTerrain3.getDebut().getPX()+","+this.SegTerrain3.getDebut().getPY())+"\n");
         }
     }
 }
