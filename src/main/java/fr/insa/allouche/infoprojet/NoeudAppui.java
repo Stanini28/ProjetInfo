@@ -63,11 +63,11 @@ public abstract class NoeudAppui extends Noeud {
 //        }
         this.calculAlpha();
         if (segT == tt.getSegTerrain1()) {
-            this.j = 1;
+            this.j = 0;
         } else if (segT == tt.getSegTerrain2()) {
-            this.j = 2;
+            this.j = 1;
         } else if (segT == tt.getSegTerrain3()) {
-            this.j = 3;
+            this.j = 2;
         } else {
             System.out.println("le segment terrain n'a pas trouver quel segment il est");
         }

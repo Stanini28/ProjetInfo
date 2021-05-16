@@ -77,9 +77,9 @@ public class Identificateur<Object> {
     }
     
     public void associe(int id,Object obj) {
-        if (this.idExist(id)) {
-            throw new Error("identificateur existant");
-        }
+//        if (this.idExist(id)) {
+//            throw new Error("identificateur existant");
+//        }
         this.idVersObjet.put(id, obj);
         this.ObjetVersId.put(obj, id);
     }

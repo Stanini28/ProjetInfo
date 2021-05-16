@@ -78,7 +78,7 @@ public class AppuiDouble extends NoeudAppui {
     
     public void save(Writer w, Identificateur num) throws IOException {
         if (!num.objExist(this)) {
-            w.append("NoeudAppuiDouble;" + this.getId()+";"+ this.getappartient().getFaitPartieDe().getId()+ ";"+ this.getJ()+";"+ this.getAlpha()+";"+ this.saveColor(this.getColor()) + ";" + this.forceY 
+            w.append("AppuiDouble;" + this.getId()+";"+ this.getappartient().getFaitPartieDe().getId()+ ";"+ this.getJ()+";"+ this.getAlpha()+";"+ this.saveColor(this.getColor()) + ";" + this.forceY 
                      +"\n");
         }
     }
