@@ -351,10 +351,10 @@ public class Controleur {
             this.changeEtat(100);
         } else if (this.etat == 110) {
             try {
-            this.vue.getModel().sauvegarde(new File("Test 1"));
-        } catch (IOException ex) {
-            throw new Error("Problème :" + ex.getMessage());
-        }
+                this.vue.getModel().sauvegarde(new File("Test 1"));
+            } catch (IOException ex) {
+                throw new Error("Problème :" + ex.getMessage());
+            }
             Treillis model = this.vue.getModel();
             Point clic = new Point(t.getX(), t.getY());
             this.supression(model, clic);
@@ -370,9 +370,12 @@ public class Controleur {
 //            this.changeEtat(20);
 //
 //            System.out.println(this.vue.getModel().toString());
-        
+
+        } else if (this.etat == 130){
+            //plus qu'a faire ta méthode je m'occuperé d'afficher dans une fenètre pop ou sinon tien le lien pour en faire c'est pas compliqué ! http://remy-manu.no-ip.biz/Java/Tutoriels/JavaFX/PDF/ihm1_fx_10_man.pdf
+            this.changeEtat(39);
         }
-System.out.println(this.vue.getModel().toString());
+        System.out.println(this.vue.getModel().toString());
     }
 
     void boutonSelect(ActionEvent t
@@ -426,6 +429,10 @@ System.out.println(this.vue.getModel().toString());
 
     void bouttonRemoveAll(ActionEvent t) {
         this.changeEtat(120);
+    }
+
+    void bouttonCalcul(ActionEvent t) {
+        this.changeEtat(130);
     }
 
     public void selction(Treillis model, Point clic) {
@@ -626,7 +633,7 @@ System.out.println(this.vue.getModel().toString());
             if (this.vue.getModel().nZoneConstructible(ad.getPosition()) == true) {
                 this.vue.getModel().addAppuiDouble(ad);
                 segt.add(ad);
-                System.out.println("dans creation ad\n"+ad.getappartient().getFaitPartieDe());
+                System.out.println("dans creation ad\n" + ad.getappartient().getFaitPartieDe());
                 System.out.println("");
                 return ad;
             } else {
@@ -702,8 +709,8 @@ System.out.println(this.vue.getModel().toString());
             return true;
         }
     }
-    
-     private void realSave(File f) {
+
+    private void realSave(File f) {
         try {
             this.vue.getModel().sauvegarde(f);
             this.vue.setCurFile(f);
@@ -718,9 +725,9 @@ System.out.println(this.vue.getModel().toString());
         } finally {
             this.changeEtat(20);
         }
-     }
-        
-        public void menuSave(ActionEvent t) {
+    }
+
+    public void menuSave(ActionEvent t) {
         if (this.vue.getCurFile() == null) {
             this.menuSaveAs(t);
         } else {
@@ -735,7 +742,7 @@ System.out.println(this.vue.getModel().toString());
             this.realSave(f);
         }
     }
-    
+
     public void menuOpen(ActionEvent t) {
         FileChooser chooser = new FileChooser();
         File f = chooser.showOpenDialog(this.vue.getInStage());
@@ -759,16 +766,16 @@ System.out.println(this.vue.getModel().toString());
             }
         }
     }
-     public void menuNouveau(ActionEvent t) {
+
+    public void menuNouveau(ActionEvent t) {
         Stage nouveau = new Stage();
         nouveau.setTitle("Nouveau");
         Scene sc = new Scene(new interfaceDessin(new Treillis()), 800, 600);
         nouveau.setScene(sc);
         nouveau.show();
     }
-    
-     
-     public void menuApropos(ActionEvent t) {
+
+    public void menuApropos(ActionEvent t) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("A propos");
         alert.setHeaderText(null);
@@ -779,9 +786,5 @@ System.out.println(this.vue.getModel().toString());
 
         alert.showAndWait();
     }
-     
-    }
-    
-    
 
-
+}

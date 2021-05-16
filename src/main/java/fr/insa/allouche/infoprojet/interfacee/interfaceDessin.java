@@ -120,6 +120,9 @@ public class interfaceDessin extends BorderPane {
         });
 
         this.calcul = new Button("Calcul");
+        this.calcul.setOnAction((t) -> {
+            this.controleur.bouttonCalcul(t);
+        });
 
         this.removeAll = new Button("Remove All");
         this.removeAll.setOnAction((t) -> {
@@ -185,7 +188,7 @@ public class interfaceDessin extends BorderPane {
         this.englobe=new VBox(this.menu,this.entete);
         this.setTop(this.englobe);
         
-        this.AG= new VBox(this.Select,this.removeAll, this.cpCouleur,this.supprimer);
+        this.AG= new VBox(this.Select,this.removeAll, this.cpCouleur,this.supprimer, this.calcul);
         this.setLeft(this.AG);
 
         this.AG.setStyle(" -fx-padding: 1;");
