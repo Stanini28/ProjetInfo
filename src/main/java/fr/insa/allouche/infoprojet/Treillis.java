@@ -944,7 +944,7 @@ public class Treillis {
                     TriangleTerrain tt = new TriangleTerrain(pt[0], pt[1], pt[2]);
                     treillis.addTriangleTerrain(tt);
                     tt.setId(Integer.parseInt(bouts[1]));
-                    treillis.identite.associe(tt.getId(), tt);
+                    treillis.identite.associeNewOld(tt.getId(), tt);
                     System.out.println(treillis);
                 } //                } else if (finTriangle == true && finCatalogue == false) {
                 else if (bouts[0].equals("TypeBarre")) {
@@ -953,7 +953,7 @@ public class Treillis {
                             Double.parseDouble(bouts[5]), Double.parseDouble(bouts[6]));
                     treillis.addTypeBarre(tb);
                     tb.setId(Integer.parseInt(bouts[1]));
-                    treillis.identite.associe(tb.getId(), tb);
+                    treillis.identite.associeNewOld(tb.getId(), tb);
                     System.out.println(treillis);
                 } //                } else if (finTriangle == true && finCatalogue == true && finNoeuds == false) {
                 else if (bouts[0].equals("AppuiDouble")) {
@@ -970,7 +970,7 @@ public class Treillis {
                     AppuiDouble ad = new AppuiDouble(Double.parseDouble(bouts[4]), segt);
                     treillis.addAppuiDouble(ad);
                     ad.setId(Integer.parseInt(bouts[1]));
-                    treillis.identite.associe(ad.getId(), ad);
+                    treillis.identite.associeNewOld(ad.getId(), ad);
                     System.out.println(treillis);
                     //on utilise pas j est ce rellement nécessaire ?
                 } else if (bouts[0].equals("AppuiSimple")) {
@@ -986,23 +986,24 @@ public class Treillis {
                     AppuiSimple as = new AppuiSimple(Double.parseDouble(bouts[4]), segt);
                     treillis.addAppuiSimple(as);
                     as.setId(Integer.parseInt(bouts[1]));
-                    treillis.identite.associe(as.getId(), as);
+                    treillis.identite.associeNewOld(as.getId(), as);
                     System.out.println(treillis);
                     //on utilise pas j est ce rellement nécessaire ?
                 } else if (bouts[0].equals("NoeudSimple")) {
                     NoeudSimple ns = new NoeudSimple(adapterP(bouts[2]));
                     treillis.addNoeudSimple(ns);
                     ns.setId(Integer.parseInt(bouts[1]));
-                    treillis.identite.associe(ns.getId(), ns);
+                    treillis.identite.associeNewOld(ns.getId(), ns);
                     System.out.println(treillis);
                 } //                } else if (finTriangle == true && finCatalogue == true && finNoeuds == true) {
                 else if (bouts[0].equals("Barre")) {
+                    System.out.println("type barre "+treillis.getIdentite().getObj(Integer.parseInt(bouts[2])));
                     Barre b = new Barre((Noeud) treillis.getIdentite().getObj(Integer.parseInt(bouts[3])),
                             (Noeud) treillis.getIdentite().getObj(Integer.parseInt(bouts[4])),
                             (TypeBarre) treillis.getIdentite().getObj(Integer.parseInt(bouts[2])));
                     treillis.addBarre(b);
                     b.setId(Integer.parseInt(bouts[1]));
-                    treillis.identite.associe(b.getId(), b);
+                    treillis.identite.associeNewOld(b.getId(), b);
                     System.out.println(treillis);
                 }
 //                } else if (bouts[0].equals("FINTRIANGLES")) {

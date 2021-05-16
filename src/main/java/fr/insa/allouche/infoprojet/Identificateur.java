@@ -71,17 +71,34 @@ public class Identificateur<Object> {
         }
         return this.idVersObjet.get(id);
     }
+    public void setObj(int id, Object newobj) {
+        if (! this.idExist(id)) {
+            throw new Error("identificateur non existant");
+        }
+        this.idVersObjet.get(id);
+    }
     
     public boolean idExist(int id) {
         return this.idVersObjet.containsKey(id);
     }
     
     public void associe(int id,Object obj) {
-//        if (this.idExist(id)) {
-//            throw new Error("identificateur existant");
-//        }
+        if (this.idExist(id)) {
+            throw new Error("identificateur existant");
+        }
         this.idVersObjet.put(id, obj);
         this.ObjetVersId.put(obj, id);
     }
+    public void associeNewOld(int id,Object obj) {
+        
+        if (this.idExist(id)) {
+        Object o = this.getObj(id);
+        this.idVersObjet.replace(id, o, obj);
+        this.ObjetVersId.replace(obj, id);
+        } else {
+            associe(id,obj);
+        }
+    }
+    
    
 }
