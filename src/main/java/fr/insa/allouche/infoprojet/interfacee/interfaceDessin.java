@@ -127,7 +127,7 @@ public class interfaceDessin extends BorderPane {
             this.controleur.bouttonSuprimer(t);
         });
 
-        this.calcul = new Button("Calcul");
+        this.calcul = new Button("Calcul",imagecal);
         this.calcul.setOnAction((t) -> {
             this.controleur.bouttonCalcul(t);
         });
@@ -196,7 +196,7 @@ public class interfaceDessin extends BorderPane {
         this.englobe=new VBox(this.menu,this.entete);
         this.setTop(this.englobe);
         
-        this.AG= new VBox(this.Select,this.removeAll, this.cpCouleur,this.supprimer, this.calcul);
+        this.AG= new VBox(this.Select,this.removeAll, this.cpCouleur,this.calcul, this.supprimer);
         this.setLeft(this.AG);
 
         this.AG.setStyle(" -fx-padding: 1;");
@@ -215,6 +215,7 @@ public class interfaceDessin extends BorderPane {
         this.choiceB2.setStyle("-fx-background-color: #cfcff2; -fx-padding: 8;");
         this.choiceB3.setStyle("-fx-background-color: #e7e7f8; -fx-padding: 8;");
         this.catalogueBarre.setStyle("-fx-background-color: #0080FF; -fx-padding: 8;");
+        this.calcul.setStyle("-fx-background-color: #295C92; -fx-padding: 8;");
 
         this.Select.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         this.catalogueBarre.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -224,23 +225,27 @@ public class interfaceDessin extends BorderPane {
         this.removeAll.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         this.zoneconstructible.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         this.choiceBoxN.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        this.calcul.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         
         
-        this.imageselect.setFitHeight(40);
-        this.imageselect.setFitWidth(40);
-        this.imagesupprimer.setFitHeight(40);
-        this.imagesupprimer.setFitWidth(40);
-        this.imagetriangle.setFitHeight(40);
-        this.imagetriangle.setFitWidth(40);
-        this.imagezc.setFitHeight(40);
-        this.imagezc.setFitWidth(40);
+        this.imageselect.setFitHeight(50);
+        this.imageselect.setFitWidth(50);
+        this.imagesupprimer.setFitHeight(50);
+        this.imagesupprimer.setFitWidth(50);
+        this.imagetriangle.setFitHeight(50);
+        this.imagetriangle.setFitWidth(50);
+        this.imagezc.setFitHeight(50);
+        this.imagezc.setFitWidth(50);
+        this.imagecal.setFitHeight(50);
+        this.imagecal.setFitWidth(50);
+        
         
         this.AG.setAlignment(Pos.TOP_LEFT);
         this.AG.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         this.entete.setAlignment(Pos.CENTER_RIGHT);
         this.entete.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         
-        
+       
         this.Select.setBackground(Background.EMPTY);
         
         Border border1=new Border(new BorderStroke(Color.GREY,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
@@ -265,20 +270,21 @@ public class interfaceDessin extends BorderPane {
         this.supprimer.setBorder(border10);
         Border border11=new Border(new BorderStroke(Color.STEELBLUE,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
         this.menu.setBorder(border11);
+        Border border12=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.calcul.setBorder(border12);
+        
         this.entete.setStyle("-fx-background-color: #CEE3F6;");
         this.AG.setStyle("-fx-background-color: #CEE3F6;");
+        
 
         
         
             this.Select.setOnMouseMoved(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent t) {
-                    while(t.isStillSincePress()){
+                    
                     interfaceDessin.this.Select.setStyle("-fx-background-color: #E3F5F0;");
-                    }
-//                    {
-//                         interfaceDessin.this.Select.setStyle("-fx-background-color: #0080FF;");
-//                    }
+                    
                     }
             });
            
@@ -319,6 +325,12 @@ public class interfaceDessin extends BorderPane {
                 @Override
                 public void handle(MouseEvent t) {
                     interfaceDessin.this.cpCouleur.setStyle("-fx-background-color: #E3F5F0;");
+                }
+            });
+            this.calcul.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent t) {
+                    interfaceDessin.this.calcul.setStyle("-fx-background-color: #E3F5F0;");
                 }
             });
             
@@ -448,9 +460,9 @@ public class interfaceDessin extends BorderPane {
     
     private ImageView imageselect = new ImageView(new Image("https://image.flaticon.com/icons/png/512/99/99162.png"));
     private ImageView imagetriangle = new ImageView(new Image("https://image.shutterstock.com/image-vector/triangle-arrow-pyramid-line-art-260nw-739498723.jpg"));
-    private ImageView imagesupprimer = new ImageView(new Image("https://img2.freepng.fr/20180203/cje/kisspng-button-clip-art-delete-button-png-free-download-5a756de1e71360.0383827815176452819465.jpg"));
+    private ImageView imagesupprimer = new ImageView(new Image("https://img.icons8.com/plasticine/2x/filled-trash.png"));
     private ImageView imagezc = new ImageView(new Image("https://www.eurographics.ca/uploads/postercartel_product_option.imageEnlarge/1400-2004.jpg"));
-    
+    private ImageView imagecal = new ImageView(new Image("https://static4.depositphotos.com/1000423/472/i/950/depositphotos_4723550-stock-photo-3d-man-with-calculator.jpg"));
 
 }
 
