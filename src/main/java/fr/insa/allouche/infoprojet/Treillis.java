@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import javafx.scene.media.MediaView;
 
 public class Treillis {
 
@@ -954,6 +957,7 @@ public class Treillis {
                     treillis.addTypeBarre(tb);
                     tb.setId(Integer.parseInt(bouts[1]));
                     treillis.identite.associeNewOld(tb.getId(), tb);
+                    System.out.println("type barreeeee"+treillis.identite.getObj(12));
                     System.out.println(treillis);
                 } //                } else if (finTriangle == true && finCatalogue == true && finNoeuds == false) {
                 else if (bouts[0].equals("AppuiDouble")) {
@@ -997,14 +1001,32 @@ public class Treillis {
                     System.out.println(treillis);
                 } //                } else if (finTriangle == true && finCatalogue == true && finNoeuds == true) {
                 else if (bouts[0].equals("Barre")) {
-                    System.out.println("type barre "+treillis.getIdentite().getObj(Integer.parseInt(bouts[2])));
-                    Barre b = new Barre((Noeud) treillis.getIdentite().getObj(Integer.parseInt(bouts[3])),
-                            (Noeud) treillis.getIdentite().getObj(Integer.parseInt(bouts[4])),
-                            (TypeBarre) treillis.getIdentite().getObj(Integer.parseInt(bouts[2])));
+                    System.out.println("type barre "+Integer.parseInt(bouts[2])+" "+treillis.getIdentite().getObj(Integer.parseInt(bouts[2])));
+                    int id = Integer.parseInt(bouts[1]);
+                    int numTypeBarre = Integer.parseInt(bouts[2]);
+                    TypeBarre tb = (TypeBarre) treillis.getIdentite().getObj(numTypeBarre);
+                    int idNoeudDebut = Integer.parseInt(bouts[3]);
+                    int idNoeudFin = Integer.parseInt(bouts[4]);
+                    Barre b = new Barre((Noeud) treillis.getIdentite().getObj(idNoeudDebut),
+                            (Noeud) treillis.getIdentite().getObj(idNoeudFin),
+                            (TypeBarre) treillis.getIdentite().getObj(numTypeBarre));
                     treillis.addBarre(b);
                     b.setId(Integer.parseInt(bouts[1]));
                     treillis.identite.associeNewOld(b.getId(), b);
                     System.out.println(treillis);
+//                    if (treillis.getIdentite().getObj(idNoeudDebut) instanceof NoeudSimple){
+//                        NoeudSimple ns = new NoeudSimple();
+//                        ns = (NoeudSimple)treillis.getIdentite().getObj(idNoeudDebut);
+//                    }
+//                    if (treillis.getIdentite().getObj(idNoeudDebut) instanceof NoeudSimple){
+//                        NoeudSimple ns = new NoeudSimple();
+//                        ns = (NoeudSimple)treillis.getIdentite().getObj(idNoeudDebut);
+//                    }
+//                    if (treillis.getIdentite().getObj(idNoeudDebut) instanceof NoeudSimple){
+//                        NoeudSimple ns = new NoeudSimple();
+//                        ns = (NoeudSimple)treillis.getIdentite().getObj(idNoeudDebut);
+//                    }
+                    
                 }
 //                } else if (bouts[0].equals("FINTRIANGLES")) {
 //                    finTriangle = true;
@@ -1031,7 +1053,7 @@ public class Treillis {
 
         String pt = bouts.substring(1,bouts.length()-1);
         String point []= pt.split(",");
-        return new Point(Double.parseDouble(point[0]), Double.parseDouble(point[1]));
+        Point res = new Point(Double.parseDouble(point[0]), Double.parseDouble(point[1]));
+        return res;
     }
-
 }

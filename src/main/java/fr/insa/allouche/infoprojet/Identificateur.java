@@ -69,6 +69,7 @@ public class Identificateur<Object> {
         if (! this.idExist(id)) {
             throw new Error("identificateur non existant");
         }
+        System.out.println("idVersObjet"+this.idVersObjet.get(id)+"\n");
         return this.idVersObjet.get(id);
     }
     public void setObj(int id, Object newobj) {
@@ -93,6 +94,7 @@ public class Identificateur<Object> {
         
         if (this.idExist(id)) {
         Object o = this.getObj(id);
+            System.out.println("objet get "+o);
         this.idVersObjet.replace(id, o, obj);
         this.ObjetVersId.replace(obj, id);
         } else {
