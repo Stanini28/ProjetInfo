@@ -6,6 +6,8 @@
 package fr.insa.allouche.infoprojet.interfacee;
 
 import fr.insa.allouche.infoprojet.Treillis;
+import static java.awt.Color.green;
+import static java.awt.Color.red;
 import java.awt.Insets;
 import java.io.File;
 import javafx.scene.image.Image;
@@ -34,7 +36,11 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.SplitMenuButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -47,6 +53,8 @@ import javafx.scene.layout.BorderWidths;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
+import static javafx.scene.paint.Color.BLUE;
 import static javafx.scene.paint.Color.color;
 import static javafx.scene.paint.Color.color;
 import javafx.stage.Stage;
@@ -257,7 +265,49 @@ public class interfaceDessin extends BorderPane {
         this.entete.setStyle("-fx-background-color: #CEE3F6;");
         this.AG.setStyle("-fx-background-color: #CEE3F6;");
 
-        
+        this.Select.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override 
+            public void handle(MouseEvent t) {
+                interfaceDessin.this.Select.setStyle("-fx-background-color: #E3F5F0;");
+            }
+        });
+        this.catalogueBarre.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override 
+            public void handle(MouseEvent t) {
+                interfaceDessin.this.catalogueBarre.setStyle("-fx-background-color: #E3F5F0;");
+            }
+        });
+        this.supprimer.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override 
+            public void handle(MouseEvent t) {
+                interfaceDessin.this.supprimer.setStyle("-fx-background-color: #E3F5F0;");
+            }
+        });
+        this.zoneconstructible.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override 
+            public void handle(MouseEvent t) {
+                interfaceDessin.this.zoneconstructible.setStyle("-fx-background-color: #E3F5F0;");
+            }
+        });
+        this.triangle_Terrain.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override 
+            public void handle(MouseEvent t) {
+                interfaceDessin.this.triangle_Terrain.setStyle("-fx-background-color: #E3F5F0;");
+            }
+        });
+        this.choiceBoxN.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override 
+            public void handle(MouseEvent t) {
+                interfaceDessin.this.choiceBoxN.setStyle("-fx-background-color: #E3F5F0;");
+            }
+        });
+        this.cpCouleur.setOnMousePressed(new EventHandler<MouseEvent>() {
+            @Override 
+            public void handle(MouseEvent t) {
+                interfaceDessin.this.cpCouleur.setStyle("-fx-background-color: #E3F5F0;");
+            }
+        });
+       
         
 
         this.zoneDessin = new DessinCanvas(this);
@@ -387,7 +437,6 @@ public class interfaceDessin extends BorderPane {
     private ImageView imagesupprimer = new ImageView(new Image("https://img2.freepng.fr/20180203/cje/kisspng-button-clip-art-delete-button-png-free-download-5a756de1e71360.0383827815176452819465.jpg"));
     private ImageView imagezc = new ImageView(new Image("https://www.eurographics.ca/uploads/postercartel_product_option.imageEnlarge/1400-2004.jpg"));
     
-    
-
 
 }
+
