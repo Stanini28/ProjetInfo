@@ -268,59 +268,70 @@ public class interfaceDessin extends BorderPane {
         this.entete.setStyle("-fx-background-color: #CEE3F6;");
         this.AG.setStyle("-fx-background-color: #CEE3F6;");
 
-        this.Select.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override 
-            public void handle(MouseEvent t) {
-                interfaceDessin.this.Select.setStyle("-fx-background-color: #E3F5F0;");
-            }
-        });
-        this.catalogueBarre.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override 
-            public void handle(MouseEvent t) {
-                interfaceDessin.this.catalogueBarre.setStyle("-fx-background-color: #E3F5F0;");
-            }
-        });
-        this.supprimer.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override 
-            public void handle(MouseEvent t) {
-                interfaceDessin.this.supprimer.setStyle("-fx-background-color: #E3F5F0;");
-            }
-        });
-        this.zoneconstructible.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override 
-            public void handle(MouseEvent t) {
-                interfaceDessin.this.zoneconstructible.setStyle("-fx-background-color: #E3F5F0;");
-            }
-        });
-        this.triangle_Terrain.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override 
-            public void handle(MouseEvent t) {
-                interfaceDessin.this.triangle_Terrain.setStyle("-fx-background-color: #E3F5F0;");
-            }
-        });
-        this.choiceBoxN.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override 
-            public void handle(MouseEvent t) {
-                interfaceDessin.this.choiceBoxN.setStyle("-fx-background-color: #E3F5F0;");
-            }
-        });
-        this.cpCouleur.setOnMousePressed(new EventHandler<MouseEvent>() {
-            @Override 
-            public void handle(MouseEvent t) {
-                interfaceDessin.this.cpCouleur.setStyle("-fx-background-color: #E3F5F0;");
-            }
-        });
-       
-        
-
-        this.zoneDessin = new DessinCanvas(this);
-        this.setCenter(this.zoneDessin);
         
         
-
-        this.controleur.changeEtat(20);
+            this.Select.setOnMouseMoved(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent t) {
+                    while(t.isStillSincePress()){
+                    interfaceDessin.this.Select.setStyle("-fx-background-color: #E3F5F0;");
+                    }
+//                    {
+//                         interfaceDessin.this.Select.setStyle("-fx-background-color: #0080FF;");
+//                    }
+                    }
+            });
+           
+            
         
-    }
+            
+            this.catalogueBarre.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent t) {
+                    interfaceDessin.this.catalogueBarre.setStyle("-fx-background-color: #E3F5F0;");
+                }
+            });
+            this.supprimer.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent t) {
+                    interfaceDessin.this.supprimer.setStyle("-fx-background-color: #E3F5F0;");
+                }
+            });
+            this.zoneconstructible.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent t) {
+                    interfaceDessin.this.zoneconstructible.setStyle("-fx-background-color: #E3F5F0;");
+                }
+            });
+            this.triangle_Terrain.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent t) {
+                    interfaceDessin.this.triangle_Terrain.setStyle("-fx-background-color: #E3F5F0;");
+                }
+            });
+            this.choiceBoxN.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent t) {
+                    interfaceDessin.this.choiceBoxN.setStyle("-fx-background-color: #E3F5F0;");
+                }
+            });
+            this.cpCouleur.setOnMousePressed(new EventHandler<MouseEvent>() {
+                @Override
+                public void handle(MouseEvent t) {
+                    interfaceDessin.this.cpCouleur.setStyle("-fx-background-color: #E3F5F0;");
+                }
+            });
+            
+            
+            
+            this.zoneDessin = new DessinCanvas(this);
+            this.setCenter(this.zoneDessin);
+            
+            
+            
+            this.controleur.changeEtat(20);
+//        } else {
+        }
 
     public void redrawAll() {
         this.zoneDessin.redrawAll();
