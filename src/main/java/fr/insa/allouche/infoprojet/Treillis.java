@@ -18,9 +18,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.media.Media;
-import javafx.scene.media.MediaPlayer;
-import javafx.scene.media.MediaView;
 
 public class Treillis {
 
