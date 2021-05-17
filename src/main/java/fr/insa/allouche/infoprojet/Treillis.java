@@ -155,7 +155,7 @@ public class Treillis {
             this.Asimp.add(noeud);
             Reaction_Rx rx = new Reaction_Rx(noeud);
             this.rx.add(rx);
-            rx.setIdRx(this.identite.getOrCreateId(rx));
+//            rx.setIdRx(this.identite.getOrCreateId(rx));
         }
     }
 
@@ -170,10 +170,10 @@ public class Treillis {
             this.Adoub.add(noeud);
             Reaction_Rx rx = new Reaction_Rx(noeud);
             this.rx.add(rx);
-            rx.setIdRx(this.identite.getOrCreateId(rx));
+//            rx.setIdRx(this.identite.getOrCreateId(rx));
             Reaction_Ry ry = new Reaction_Ry(noeud);
             this.ry.add(ry);
-            ry.setIdRy(this.identite.getOrCreateId(ry));
+//            ry.setIdRy(this.identite.getOrCreateId(ry));
         }
     }
 
@@ -1004,6 +1004,10 @@ public class Treillis {
                     TypeBarre tb = (TypeBarre) treillis.getIdentite().getObj(numTypeBarre);
                     int idNoeudDebut = Integer.parseInt(bouts[3]);
                     int idNoeudFin = Integer.parseInt(bouts[4]);
+                    String noeud = treillis.getIdentite().getObj(idNoeudDebut).toString();
+                    String[] noeudSplit = noeud.split(",");
+                    for (int i = 0; i < noeudSplit.length; i++) {
+                    }
                     Barre b = new Barre((Noeud) treillis.getIdentite().getObj(idNoeudDebut),
                             (Noeud) treillis.getIdentite().getObj(idNoeudFin),
                             (TypeBarre) treillis.getIdentite().getObj(numTypeBarre));
