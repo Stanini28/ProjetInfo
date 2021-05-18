@@ -83,6 +83,7 @@ public class interfaceDessin extends BorderPane {
     private MenuItem choiceB1;
     private MenuItem choiceB2;
     private MenuItem choiceB3;
+    private MenuItem choiceB4;
     private SplitMenuButton choiceBoxN;
     private MenuItem choiceN1;
     private MenuItem choiceN2;
@@ -168,7 +169,8 @@ public class interfaceDessin extends BorderPane {
         this.choiceB1 = new MenuItem("Barre type 1");
         this.choiceB2 = new MenuItem("Barre type 2");
         this.choiceB3 = new MenuItem("Barre type 3");
-        this.catalogueBarre.getItems().addAll(this.choiceB1, this.choiceB2, this.choiceB3);
+        this.choiceB4 = new MenuItem("info_type_barre");
+        this.catalogueBarre.getItems().addAll(this.choiceB1, this.choiceB2, this.choiceB3, this.choiceB4);
         this.choiceB1.setOnAction((t) -> {
             this.catalogueBarre.setText("Barre type 1");
             this.controleur.buttonBarre1();
@@ -180,6 +182,10 @@ public class interfaceDessin extends BorderPane {
         this.choiceB3.setOnAction((t) -> {
             this.catalogueBarre.setText("Barre type 3");
             this.controleur.buttonBarre3(t);
+        });
+        this.choiceB4.setOnAction((t) -> {
+            this.catalogueBarre.setText("info_type_barre");
+            this.controleur.buttonBarre4(t);
         });
 
         this.cpCouleur = new ColorPicker(Color.BLACK);

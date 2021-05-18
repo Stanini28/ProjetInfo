@@ -38,7 +38,10 @@ import javafx.stage.Stage;
  */
 public class Controleur {
 
-    private double[] type1 = {20, 40, 200, 700, 800};
+    //private double[] type1 = {20, 40, 200, 700, 800};
+    private TypeBarre type1 = new TypeBarre (20, 10, 200, 900, 700);
+    private TypeBarre type2 = new TypeBarre (20, 10, 300, 500, 500);
+    private TypeBarre type3 = new TypeBarre (20, 10, 400, 1000, 1000);
     private Point[] pointzc = new Point[4];
     private Point[] pointTT = new Point[3];
     private Point[] pointB = new Point[2];
@@ -168,180 +171,49 @@ public class Controleur {
             this.changeEtat(60);
         } else if (this.etat == 70) {
             Treillis model = this.vue.getModel();
-            Alert dialogC = new Alert(AlertType.CONFIRMATION);
-            dialogC.setTitle("A confirmation choix type barre");
-            dialogC.setHeaderText(null);
-            dialogC.setContentText("Le type de barre selectioné et :" + this.type1.toString());
-            Optional<ButtonType> answer = dialogC.showAndWait();
-            if (answer.get() == ButtonType.OK) {
-                Alert dBox = new Alert(AlertType.CONFIRMATION);
-                dBox.setTitle("choix du type de noeud");
-                dBox.setHeaderText("Ma barre !");
-                dBox.setContentText("Choisissez le type de noeud débutant votre "
-                        + "barre ou si vouvoulez creer votre barre à partir de "
-                        + "noeud déjà existant");
-                ButtonType btnNS = new ButtonType("Noeud Simple");
-                ButtonType btnAS = new ButtonType("Appui Simple");
-                ButtonType btnAD = new ButtonType("Appui Double");
-                ButtonType btoldn = new ButtonType("Noeud déjà existant");
-                ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-                dBox.getButtonTypes().setAll(btnNS, btnAS, btnAD, btoldn, btnCancel);
-                Optional<ButtonType> choice = dBox.showAndWait();
-
-                double px = t.getX();
-                double py = t.getY();
-                Point clic = new Point(px, py);
-                // boutton noeud simple pressé
-                if (choice.get() == btnNS) {
-                    //condition pour savoir si le noeud simple est bien dans la zonne constructible
-                    if (this.vue.getModel().nZoneConstructible(clic) == true) {
-                        NoeudSimple ns = new NoeudSimple(clic);
-                        this.noeudB[0] = ns;
-                        this.vue.getModel().addNoeudSimple(ns);
-                        this.changeEtat(71);
-                    } else {
-                        Alert dialogW = new Alert(AlertType.WARNING);
-                        dialogW.setTitle("A warning dialog-box");
-                        dialogW.setHeaderText(null);  // No header
-                        dialogW.setContentText("Caution : Vous ne pouvez pas dessinez votre"
-                                + " treillis en dehors de la zone constructible "
-                                + "\nSelectionez une nouvelle position !");
-                        dialogW.showAndWait();
-                        this.changeEtat(70);
-                    }
-                    // boutton appui simple pressé
-                } else if (choice.get() == btnAS) {
-                    AppuiSimple as = creationAS(clic);
-                    //condition pour savoir si le appui simple à pu être crée
-                    if (as != null) {
-                        System.out.println("as != null");
-                        //this.noeudASB[0] = as;
-                        this.noeudB[0] = as;
-                        this.changeEtat(71);
-                    } else {
-                        System.out.println("as = null");
-                        this.changeEtat(70);
-                    }
-                    // boutton appui double pressé
-                } else if (choice.get() == btnAD) {
-                    AppuiDouble ad = creationAD(clic);
-                    //condition pour savoir si le appui double à pu être crée
-                    if (ad != null) {
-                        // this.noeudADB[0] = ad;
-                        this.noeudB[0] = ad;
-                        this.changeEtat(71);
-                    } else {
-                        this.changeEtat(70);
-                    }
-                    // boutton noeud déja existant pressé
-                } else if (choice.get() == btoldn) {
-                    this.noeudB[0] = this.vue.getModel().plusProcheN(new Point(t.getX(), t.getY()));
-                    this.changeEtat(71);
-                    // boutton cancel pressé
-                } else {
-                    this.changeEtat(70);
-                }
-            } else {
-                this.changeEtat(70);
-            }
+            Point clic = new Point(t.getX(), t.getY());
+            this.typeBarre1(clic, 70);
+            this.vue.redrawAll();
         } else if (this.etat == 71) {
+            Point clic = new Point(t.getX(), t.getY());
+            this.typeBarre2(clic, this.type1, Color.LIMEGREEN, 71);
+            this.vue.redrawAll();
+        } else if (this.etat == 80) {
             Treillis model = this.vue.getModel();
             Point clic = new Point(t.getX(), t.getY());
-
-            Alert dBox = new Alert(AlertType.CONFIRMATION);
-            dBox.setTitle("choix du type de noeud");
-            dBox.setHeaderText("Ma barre !");
-            dBox.setContentText("Choisissez le type de noeud débutant votre "
-                    + "barre ou si vouvoulez creer votre barre à partir de "
-                    + "noeud déjà existant");
-            ButtonType btnNS = new ButtonType("Noeud Simple");
-            ButtonType btnAS = new ButtonType("Appui Simple");
-            ButtonType btnAD = new ButtonType("Appui Double");
-            ButtonType btoldn = new ButtonType("Noeud déjà existant");
-            ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
-            dBox.getButtonTypes().setAll(btnNS, btnAS, btnAD, btoldn, btnCancel);
-            Optional<ButtonType> choice = dBox.showAndWait();
-
-            double px = t.getX();
-            double py = t.getY();
-            if (choice.get() == btnNS) {
-                if (bonneLongeurB(clic) == false) {
-                    if (this.noeudB[0].getLiee() == null) {
-                        this.vue.getModel().removeNoeud(this.noeudB[0]);
-                    }
-                    this.changeEtat(71);
-                } else {
-                    if (this.vue.getModel().nZoneConstructible(clic) == true) {
-                        this.noeudB[1] = new NoeudSimple(clic);
-                        this.vue.getModel().addBarre(new Barre(this.noeudB[0], this.noeudB[1]), 20, 40, 200, 700, 800, Color.BLUE);
-                        this.vue.getModel().addNoeudSimple(new NoeudSimple(this.noeudB[1].getPosition()));
-                        this.changeEtat(70);
-                    } else {
-                        Alert dialogW = new Alert(AlertType.WARNING);
-                        dialogW.setTitle("A warning dialog-box");
-                        dialogW.setHeaderText(null);  // No header
-                        dialogW.setContentText("Caution : Vous ne pouvez pas dessinez votre"
-                                + " treillis en dehors de la zone constructible "
-                                + "\nSelectionez une nouvelle position !");
-                        dialogW.showAndWait();
-                        this.changeEtat(71);
-                    }
-                }
-            } else if (choice.get() == btnAS) {
-                AppuiSimple as = creationAS(clic);
-
-                if (bonneLongeurB(as.getPosition()) == false) {
-                    this.vue.getModel().removeNoeud(as);
-                    if (this.noeudB[0].getLiee() == null) {
-                        this.vue.getModel().removeNoeud(this.noeudB[0]);
-                    }
-                    this.changeEtat(71);
-                } else {
-                    //condition pour savoir si le appui simple à pu être crée
-                    if (as != null) {
-                        System.out.println("as != null");
-                        this.noeudASB[1] = as;
-                        // model.addBarre(new Barre(this.noeudASB[0], this.noeudASB[1], 50, 70, 78, 99, 800));
-                        model.addBarre(new Barre(this.noeudB[0], this.noeudASB[1]), 20, 40, 200, 700, 800, Color.BLUE);
-                        this.changeEtat(70);
-                    } else {
-                        System.out.println("as != null");
-                        this.changeEtat(71);
-                    }
-                }
-                // boutton appui double pressé
-            } else if (choice.get() == btnAD) {
-                AppuiDouble ad = creationAD(clic);
-                System.out.println(ad.getappartient().getFaitPartieDe());
-                if (bonneLongeurB(ad.getPosition()) == false) {
-                    this.vue.getModel().removeNoeud(ad);
-                    if (this.noeudB[0].getLiee() == null) {
-                        this.vue.getModel().removeNoeud(this.noeudB[0]);
-                    }
-                    this.changeEtat(71);
-                } else {
-                    //condition pour savoir si le appui double à pu être crée
-                    if (ad != null) {
-                        this.noeudADB[1] = ad;
-                        //model.addBarre(new Barre(this.noeudADB[0], this.noeudADB[1], 50, 70, 78, 99, 800));
-                        model.addBarre(new Barre(this.noeudB[0], this.noeudADB[1]), 20, 40, 200, 700, 800, Color.BLUE);
-                        this.changeEtat(70);
-                    } else {
-                        this.changeEtat(71);
-                    }
-                }
-                // boutton noeud déja existant pressé
-            } else if (choice.get() == btoldn) {
-                this.noeudB[1] = model.plusProcheN(new Point(t.getX(), t.getY()));
-                if (bonneLongeurB(this.noeudB[1].getPosition()) == false) {
-                    this.changeEtat(71);
-                } else {
-                    model.addBarre(new Barre(this.noeudB[0], this.noeudB[1]), 20, 40, 200, 700, 800, Color.BLUE);
-                    this.changeEtat(70);
-                }
-            } else {
-                this.changeEtat(70);
-            }
+            this.typeBarre1(clic, 80);
+            this.vue.redrawAll();
+        } else if (this.etat == 81) {
+            Point clic = new Point(t.getX(), t.getY());
+            this.typeBarre2(clic, this.type2, Color.GREEN, 81);
+            this.vue.redrawAll();
+        } else if (this.etat == 90) {
+            Treillis model = this.vue.getModel();
+            Point clic = new Point(t.getX(), t.getY());
+            this.typeBarre1(clic, 90);
+            this.vue.redrawAll();
+        } else if (this.etat == 91) {
+            Point clic = new Point(t.getX(), t.getY());
+            this.typeBarre2(clic, this.type3, Color.BLUE, 91);
+            this.vue.redrawAll();
+        } else if (this.etat == 95) {
+            Alert dialogC1 = new Alert(AlertType.CONFIRMATION);
+            dialogC1.setTitle("A confirmation choix type barre");
+            dialogC1.setHeaderText(null);
+            dialogC1.setContentText("Le type de barre 1 est :" + this.type1.toString());
+            Optional<ButtonType> answer1 = dialogC1.showAndWait();
+            
+            Alert dialogC2 = new Alert(AlertType.CONFIRMATION);
+            dialogC2.setTitle("A confirmation choix type barre");
+            dialogC2.setHeaderText(null);
+            dialogC2.setContentText("Le type de barre 2 est :" + this.type2.toString());
+            Optional<ButtonType> answer2 = dialogC2.showAndWait();
+            
+            Alert dialogC3 = new Alert(AlertType.CONFIRMATION);
+            dialogC3.setTitle("A confirmation choix type barre");
+            dialogC3.setHeaderText(null);
+            dialogC3.setContentText("Le type de barre 3 est :" + this.type3.toString());
+            Optional<ButtonType> answer3 = dialogC3.showAndWait();
             this.vue.redrawAll();
         } else if (this.etat == 100) {
             Treillis model = this.vue.getModel();
@@ -371,7 +243,7 @@ public class Controleur {
 //
 //            System.out.println(this.vue.getModel().toString());
 
-        } else if (this.etat == 130){
+        } else if (this.etat == 130) {
             //plus qu'a faire ta méthode je m'occuperé d'afficher dans une fenètre pop ou sinon tien le lien pour en faire c'est pas compliqué ! http://remy-manu.no-ip.biz/Java/Tutoriels/JavaFX/PDF/ihm1_fx_10_man.pdf
             this.changeEtat(39);
         }
@@ -420,6 +292,10 @@ public class Controleur {
     void buttonBarre3(ActionEvent t
     ) {
         this.changeEtat(90);
+    }
+
+    void buttonBarre4(ActionEvent t) {
+        this.changeEtat(95);
     }
 
     void bouttonSuprimer(ActionEvent t
@@ -687,26 +563,189 @@ public class Controleur {
         }
     }
 
-    public boolean bonneLongeurB(Point clic) {
+    public boolean bonneLongeurB(Point clic, TypeBarre type) {
         double longeure = Barre.longueur(this.noeudB[0].getPosition(), clic);
-        if (longeure < this.type1[1]
-                || longeure > this.type1[2]) {
+        if (longeure < type.getlMin()
+                || longeure > type.getlMax()) {
             Alert dialogW = new Alert(AlertType.WARNING);
             dialogW.setTitle("A warning dialog-box");
             dialogW.setHeaderText(null);  // No header
-            if (longeure < this.type1[1]) {
+            if (longeure < type.getlMin()) {
                 dialogW.setContentText("Caution : La barre est trop petite, elle mesure " + longeure
-                        + "\n Alors que la longeure min pour votre type de barre est " + this.type1[1] + " !\n"
+                        + "\n Alors que la longeure min pour votre type de barre est " + type.getlMin() + " !\n"
                         + "Veuillez cliquer à nouveau sur la zone dessin pour definir un nouveau noeud de fin de barre");
             } else {
                 dialogW.setContentText("Caution : La barre est trop grande, elle mesure " + longeure
-                        + "\n Alors que la longeure max pour votre type de barre est " + this.type1[2] + " !\n"
+                        + "\n Alors que la longeure max pour votre type de barre est " + type.getlMax() + " !\n"
                         + "Veuillez cliquer à nouveau sur la zone dessin pour definir un nouveau noeud de fin de barre");
             }
             dialogW.showAndWait();
             return false;
         } else {
             return true;
+        }
+    }
+
+    public void typeBarre1(Point clic, int etat) {
+        Alert dBox = new Alert(AlertType.CONFIRMATION);
+        dBox.setTitle("choix du type de noeud");
+        dBox.setHeaderText("Ma barre !");
+        dBox.setContentText("Choisissez le type de noeud débutant votre "
+                + "barre ou si vouvoulez creer votre barre à partir de "
+                + "noeud déjà existant");
+        ButtonType btnNS = new ButtonType("Noeud Simple");
+        ButtonType btnAS = new ButtonType("Appui Simple");
+        ButtonType btnAD = new ButtonType("Appui Double");
+        ButtonType btoldn = new ButtonType("Noeud déjà existant");
+        ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+        dBox.getButtonTypes().setAll(btnNS, btnAS, btnAD, btoldn, btnCancel);
+        Optional<ButtonType> choice = dBox.showAndWait();
+
+        // boutton noeud simple pressé
+        if (choice.get() == btnNS) {
+            //condition pour savoir si le noeud simple est bien dans la zonne constructible
+            if (this.vue.getModel().nZoneConstructible(clic) == true) {
+                NoeudSimple ns = new NoeudSimple(clic);
+                this.noeudB[0] = ns;
+                this.vue.getModel().addNoeudSimple(ns);
+                this.changeEtat(etat + 1);
+            } else {
+                Alert dialogW = new Alert(AlertType.WARNING);
+                dialogW.setTitle("A warning dialog-box");
+                dialogW.setHeaderText(null);  // No header
+                dialogW.setContentText("Caution : Vous ne pouvez pas dessinez votre"
+                        + " treillis en dehors de la zone constructible "
+                        + "\nSelectionez une nouvelle position !");
+                dialogW.showAndWait();
+                this.changeEtat(etat);
+            }
+            // boutton appui simple pressé
+        } else if (choice.get() == btnAS) {
+            AppuiSimple as = creationAS(clic);
+            //condition pour savoir si le appui simple à pu être crée
+            if (as != null) {
+                System.out.println("as != null");
+                //this.noeudASB[0] = as;
+                this.noeudB[0] = as;
+                this.changeEtat(etat + 1);
+            } else {
+                System.out.println("as = null");
+                this.changeEtat(etat);
+            }
+            // boutton appui double pressé
+        } else if (choice.get() == btnAD) {
+            AppuiDouble ad = creationAD(clic);
+            //condition pour savoir si le appui double à pu être crée
+            if (ad != null) {
+                // this.noeudADB[0] = ad;
+                this.noeudB[0] = ad;
+                this.changeEtat(etat + 1);
+            } else {
+                this.changeEtat(etat);
+            }
+            // boutton noeud déja existant pressé
+        } else if (choice.get() == btoldn) {
+            this.noeudB[0] = this.vue.getModel().plusProcheN(clic);
+            this.changeEtat(etat + 1);
+            // boutton cancel pressé
+        } else {
+            this.changeEtat(etat);
+        }
+    }
+
+    public void typeBarre2(Point clic, TypeBarre type, Color color, int etat) {
+        Treillis model = this.vue.getModel();
+        Alert dBox = new Alert(AlertType.CONFIRMATION);
+        dBox.setTitle("choix du type de noeud");
+        dBox.setHeaderText("Ma barre !");
+        dBox.setContentText("Choisissez le type de noeud débutant votre "
+                + "barre ou si vouvoulez creer votre barre à partir de "
+                + "noeud déjà existant");
+        ButtonType btnNS = new ButtonType("Noeud Simple");
+        ButtonType btnAS = new ButtonType("Appui Simple");
+        ButtonType btnAD = new ButtonType("Appui Double");
+        ButtonType btoldn = new ButtonType("Noeud déjà existant");
+        ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+        dBox.getButtonTypes().setAll(btnNS, btnAS, btnAD, btoldn, btnCancel);
+        Optional<ButtonType> choice = dBox.showAndWait();
+
+        if (choice.get() == btnNS) {
+            if (bonneLongeurB(clic, type) == false) {
+                if (this.noeudB[0].getLiee() == null) {
+                    this.vue.getModel().removeNoeud(this.noeudB[0]);
+                }
+                this.changeEtat(etat);
+            } else {
+                if (this.vue.getModel().nZoneConstructible(clic) == true) {
+                    this.noeudB[1] = new NoeudSimple(clic);
+                    this.vue.getModel().addBarre(new Barre(this.noeudB[0], this.noeudB[1], color), type, color);
+                    this.vue.getModel().addNoeudSimple(new NoeudSimple(this.noeudB[1].getPosition()));
+                    this.changeEtat(etat - 1);
+                } else {
+                    Alert dialogW = new Alert(AlertType.WARNING);
+                    dialogW.setTitle("A warning dialog-box");
+                    dialogW.setHeaderText(null);  // No header
+                    dialogW.setContentText("Caution : Vous ne pouvez pas dessinez votre"
+                            + " treillis en dehors de la zone constructible "
+                            + "\nSelectionez une nouvelle position !");
+                    dialogW.showAndWait();
+                    this.changeEtat(etat);
+                }
+            }
+        } else if (choice.get() == btnAS) {
+            AppuiSimple as = creationAS(clic);
+
+            if (bonneLongeurB(as.getPosition(), type) == false) {
+                this.vue.getModel().removeNoeud(as);
+                if (this.noeudB[0].getLiee() == null) {
+                    this.vue.getModel().removeNoeud(this.noeudB[0]);
+                }
+                this.changeEtat(etat);
+            } else {
+                //condition pour savoir si le appui simple à pu être crée
+                if (as != null) {
+                    System.out.println("as != null");
+                    this.noeudASB[1] = as;
+                    // model.addBarre(new Barre(this.noeudASB[0], this.noeudASB[1], 50, 70, 78, 99, 800));
+                    model.addBarre(new Barre(this.noeudB[0], this.noeudASB[1], color), type, color);
+                    this.changeEtat(etat - 1);
+                } else {
+                    System.out.println("as != null");
+                    this.changeEtat(etat);
+                }
+            }
+            // boutton appui double pressé
+        } else if (choice.get() == btnAD) {
+            AppuiDouble ad = creationAD(clic);
+            System.out.println(ad.getappartient().getFaitPartieDe());
+            if (bonneLongeurB(ad.getPosition(), type) == false) {
+                this.vue.getModel().removeNoeud(ad);
+                if (this.noeudB[0].getLiee() == null) {
+                    this.vue.getModel().removeNoeud(this.noeudB[0]);
+                }
+                this.changeEtat(etat);
+            } else {
+                //condition pour savoir si le appui double à pu être crée
+                if (ad != null) {
+                    this.noeudADB[1] = ad;
+                    //model.addBarre(new Barre(this.noeudADB[0], this.noeudADB[1], 50, 70, 78, 99, 800));
+                    model.addBarre(new Barre(this.noeudB[0], this.noeudADB[1], color), type, color);
+                    this.changeEtat(etat - 1);
+                } else {
+                    this.changeEtat(etat);
+                }
+            }
+            // boutton noeud déja existant pressé
+        } else if (choice.get() == btoldn) {
+            this.noeudB[1] = model.plusProcheN(clic);
+            if (bonneLongeurB(this.noeudB[1].getPosition(), type) == false) {
+                this.changeEtat(etat);
+            } else {
+                model.addBarre(new Barre(this.noeudB[0], this.noeudB[1], color), type, color);
+                this.changeEtat(etat - 1);
+            }
+        } else {
+            this.changeEtat(etat - 1);
         }
     }
 
@@ -723,7 +762,7 @@ public class Controleur {
 
             alert.showAndWait();
         } finally {
-            this.changeEtat(20);
+            this.changeEtat(39);
         }
     }
 
@@ -762,7 +801,7 @@ public class Controleur {
 
                 alert.showAndWait();
             } finally {
-                this.changeEtat(20);
+                this.changeEtat(39);
             }
         }
     }

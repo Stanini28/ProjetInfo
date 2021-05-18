@@ -97,6 +97,35 @@ public class Treillis {
             System.out.println(" barre ajouté au trellis");
         }
     }
+    
+    public void addBarre(Barre barre, TypeBarre type, Color color) {
+        if (barre.getCompose() != this) {
+            if (barre.getCompose() != null) {
+                throw new Error("La Barre appartient déjà au treillis");
+            }
+            this.compose.add(barre);
+            barre.setCompose(this);
+            barre.setId(this.identite.getOrCreateId(compose));
+            // pk -1 ?
+            int n = 0;
+            for (int i = 0; i < this.catalogueBarre.size(); i++) {
+                if (type.getCoutAuMetre() == this.catalogueBarre.get(i).getCoutAuMetre()
+                        && type.getlMax() == this.catalogueBarre.get(i).getlMax()
+                        && type.getlMin() == this.catalogueBarre.get(i).getlMin()
+                        && type.getrComp() == this.catalogueBarre.get(i).getrComp()
+                        && type.getrTraction()== this.catalogueBarre.get(i).getrTraction()) {
+                    n++;
+                    barre.setType(this.catalogueBarre.get(i));
+                    this.catalogueBarre.get(i).addTBarre(barre);
+                }
+            }
+            if (n == 0) {
+                barre.setType(new TypeBarre(type.getCoutAuMetre(), type.getlMin(), type.getlMax(), type.getrTraction(), type.getrComp()));
+                this.addTypeBarre(barre.getType());
+            }
+
+        }
+    }
 
     public void addBarre(Barre barre, double coutAuMetre, double lMin,
             double lMax, double rTraction, double rComp, Color color) {

@@ -78,7 +78,10 @@ public class Barre {
     public Barre(Noeud debut, Noeud fin, TypeBarre tb) {
         this(debut, fin, tb.getCoutAuMetre(), tb.getlMin(), tb.getlMax(), tb.getrTraction(), tb.getrComp(), Color.BLUE);
     }
-
+    public Barre(Noeud debut, Noeud fin, TypeBarre tb, Color couleur) {
+        this(debut, fin, tb.getCoutAuMetre(), tb.getlMin(), tb.getlMax(), tb.getrTraction(), tb.getrComp(), couleur);
+    }
+    
     public Barre() {
         this.debut = new NoeudSimple();
         this.fin = new NoeudSimple();
