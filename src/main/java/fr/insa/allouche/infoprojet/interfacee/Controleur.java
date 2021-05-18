@@ -16,6 +16,7 @@ import fr.insa.allouche.infoprojet.Terrain;
 import fr.insa.allouche.infoprojet.Treillis;
 import fr.insa.allouche.infoprojet.TriangleTerrain;
 import fr.insa.allouche.infoprojet.TypeBarre;
+import static fr.insa.allouche.infoprojet.calculMatrice.Calcul.Regroup;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -372,6 +373,22 @@ public class Controleur {
 //            System.out.println(this.vue.getModel().toString());
 
         } else if (this.etat == 130){
+            Treillis model = this.vue.getModel();
+            String S = Regroup(model);
+            Alert dialogW = new Alert(AlertType.INFORMATION);
+            
+            dialogW.setTitle("Isostatisme du Treillis");
+                if(S == "Les types de barres sont bons!"){
+                    dialogW.setHeaderText(null);
+                    dialogW.setContentText("Le Treillis est isostatique et les types des barres sont les bons.");
+                    dialogW.showAndWait();
+                }else{
+                    dialogW.setHeaderText(null);
+                    dialogW.setContentText("Le Treillis n'est pas isostatique car" +S);
+                    dialogW.showAndWait();
+                }
+                
+            
             //plus qu'a faire ta méthode je m'occuperé d'afficher dans une fenètre pop ou sinon tien le lien pour en faire c'est pas compliqué ! http://remy-manu.no-ip.biz/Java/Tutoriels/JavaFX/PDF/ihm1_fx_10_man.pdf
             this.changeEtat(39);
         }
