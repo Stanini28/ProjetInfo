@@ -343,15 +343,15 @@ public class Controleur {
         Barre barre = model.plusProcheB(clic);
         String res = model.lePlusProche();
         if (res.equals("N")) {
-            noeud.setColor(Color.GREEN);
+            noeud.setColorSelect(Color.VIOLET);
             System.out.println("noeud" + noeud.getColor());
         }
         if (res.equals("B")) {
-            barre.setColor(Color.GREEN);
+            barre.setColor(Color.VIOLET);
             System.out.println("barre " + barre.getColor());
         }
         if (res.equals("S")) {
-            segt.setColor(Color.GREEN);
+            segt.setColor(Color.VIOLET);
             
             System.out.println("seg " + segt.getColor());
         }
@@ -367,11 +367,11 @@ public class Controleur {
             Optional<ButtonType> choice = dBox.showAndWait();
             if (choice.get() == btnN) {
                 System.out.println("noued " + noeud.getColor());
-                noeud.setColor(Color.GREEN);
+                noeud.setColorSelect(Color.VIOLET);
             }
             if (choice.get() == btnS) {
                 System.out.println("segt " + segt.getColor());
-                segt.setColor(Color.GREEN);
+                segt.setColor(Color.VIOLET);
             }
         }
         if (res.equals("BS")) {
@@ -386,11 +386,11 @@ public class Controleur {
             Optional<ButtonType> choice = dBox.showAndWait();
             if (choice.get() == btnB) {
                 System.out.println("Barre " + barre.getColor());
-                barre.setColor(Color.GREEN);
+                barre.setColor(Color.VIOLET);
             }
             if (choice.get() == btnS) {
                 System.out.println("segt " + segt.getColor());
-                segt.setColor(Color.GREEN);
+                segt.setColor(Color.VIOLET);
             }
         }
         if (res.equals("BN")) {
@@ -405,11 +405,11 @@ public class Controleur {
             Optional<ButtonType> choice = dBox.showAndWait();
             if (choice.get() == btnB) {
                 System.out.println("Barre " + barre.getColor());
-                barre.setColor(Color.GREEN);
+                barre.setColor(Color.VIOLET);
             }
             if (choice.get() == btnN) {
                 System.out.println("noued " + segt.getColor());
-                noeud.setColor(Color.GREEN);
+                noeud.setColorSelect(Color.VIOLET);
             }
         }
         

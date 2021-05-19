@@ -77,10 +77,10 @@ public class DessinCanvas extends Pane {
             model.getCompose().get(i).dessineSelect(context);
         }
         for (int i = 0; i < model.getContient().size(); i++) {
-            model.getContient().get(i).dessine(context);
+            model.getContient().get(i).dessineSelect(context);
         }
         if (model.getBase() != null) {
-            model.getBase().dessine(context);
+            model.getBase().dessineSelect(context);
         }
     }
 }

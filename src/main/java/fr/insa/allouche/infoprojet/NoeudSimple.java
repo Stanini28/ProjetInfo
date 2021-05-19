@@ -49,7 +49,11 @@ public class NoeudSimple extends Noeud {
         context.setFill(this.getColor());
         context.fillOval(this.position.getPX() - RAYON_NOEUD,
                 this.position.getPY() - RAYON_NOEUD, 2 * RAYON_NOEUD, 2 * RAYON_NOEUD);
-
+    }
+    public void dessineSelect(GraphicsContext context) {
+        context.setFill(this.getColorSelect());
+        context.fillOval(this.position.getPX() - RAYON_NOEUD,
+                this.position.getPY() - RAYON_NOEUD, 2 * RAYON_NOEUD, 2 * RAYON_NOEUD);
     }
     
     public void save(Writer w, Identificateur num) throws IOException {

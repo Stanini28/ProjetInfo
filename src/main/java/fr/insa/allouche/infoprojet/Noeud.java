@@ -22,6 +22,7 @@ public abstract class Noeud {
     public List<Barre> liee;
     public double forceY;
     private Color color;
+    private Color colorSelect;
    
     //public Set<Barre> extremites;
     public Noeud(Point position, Color color) {
@@ -92,6 +93,14 @@ public abstract class Noeud {
     public void setColor(Color color) {
         this.color = color;
     }
+
+    public Color getColorSelect() {
+        return colorSelect;
+    }
+
+    public void setColorSelect(Color colorSelect) {
+        this.colorSelect = colorSelect;
+    }
     
     
 
@@ -160,6 +169,8 @@ public abstract class Noeud {
     }
     
     public abstract void dessine(GraphicsContext context);
+    public abstract void dessineSelect(GraphicsContext context);
+    
     public double distancePoint(Point p) {
         double dx = this.position.getPX() - p.getPX();
         double dy = this.position.getPY() - p.getPY();

@@ -20,6 +20,7 @@ public class SegmentTerrain {
     //Est defini dans la classe TriangleTerrain, lorqu'un Triangle terrain est créé
     private TriangleTerrain faitPartieDe;
     private Color color;
+    private Color colorSelect;
     private int id;
 
     public SegmentTerrain(Point posDbt, Point posFin) {
@@ -148,6 +149,13 @@ public class SegmentTerrain {
 
     public void dessine(GraphicsContext context) {
         context.setStroke(this.color);
+        context.setLineWidth(1);
+        context.strokeLine(this.debut.getPX(), this.debut.getPY(),
+                this.fin.getPX(), this.fin.getPY());
+    }
+    
+    public void dessineSelect(GraphicsContext context) {
+        context.setStroke(this.colorSelect);
         context.setLineWidth(1);
         context.strokeLine(this.debut.getPX(), this.debut.getPY(),
                 this.fin.getPX(), this.fin.getPY());

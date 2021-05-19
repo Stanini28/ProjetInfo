@@ -159,6 +159,18 @@ public class Terrain {
         context.strokeLine(xmax, ymax, xmax, ymin);
         context.strokeLine(xmax, ymin, xmin, ymin);
     }
+    public void dessineSelect(GraphicsContext context) {
+       
+        for (int i = 0; i < this.constitue.size(); i++) {
+            this.constitue.get(i).dessineSelect(context);
+        }
+        context.setStroke(Color.BROWN);
+        context.setLineWidth(1);
+        context.strokeLine(xmin, ymin, xmin, ymax);
+        context.strokeLine(xmin, ymax, xmax, ymax);
+        context.strokeLine(xmax, ymax, xmax, ymin);
+        context.strokeLine(xmax, ymin, xmin, ymin);
+    }
     
     public void save(Writer w, Identificateur num) throws IOException{
         w.append("ZoneConstructible;"+ this.xmin+ ";" + this.xmax +

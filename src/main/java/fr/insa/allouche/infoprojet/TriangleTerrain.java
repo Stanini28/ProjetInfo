@@ -8,6 +8,7 @@ package fr.insa.allouche.infoprojet;
 import java.io.IOException;
 import java.io.Writer;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class TriangleTerrain {
 
@@ -16,6 +17,7 @@ public class TriangleTerrain {
     private SegmentTerrain SegTerrain2;
     private SegmentTerrain SegTerrain3;
     private Terrain constitue;
+    private Color color;
 
     //reprendre
     public TriangleTerrain(SegmentTerrain SegTerrain1, SegmentTerrain SegTerrain2,
@@ -121,9 +123,16 @@ public class TriangleTerrain {
         //context.setStroke(this.color);
         this.SegTerrain1.dessine(context);
         this.SegTerrain2.dessine(context);
-        this.SegTerrain3.dessine(context);
-        
+        this.SegTerrain3.dessine(context);  
     }
+    
+    public void dessineSelect(GraphicsContext context) {
+        //context.setStroke(this.color);
+        this.SegTerrain1.dessineSelect(context);
+        this.SegTerrain2.dessineSelect(context);
+        this.SegTerrain3.dessineSelect(context);  
+    }
+    
     public void save(Writer w, Identificateur num) throws IOException {
         if (num.objExist(this)) {
             this.SegTerrain1.save(w, num);
