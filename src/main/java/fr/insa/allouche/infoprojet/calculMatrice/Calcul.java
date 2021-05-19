@@ -208,6 +208,15 @@ public class Calcul {
     }
 
     public static String Regroup(Treillis T) {
+        for (int i=0;i <T.getAdoub().size();i++){
+            T.getAdoub().get(i).getRx().setIdRx(T.getIdentite().getOrCreateId(T.getAdoub().get(i).getRx()));
+            T.getAdoub().get(i).getRy().setIdRy(T.getIdentite().getOrCreateId(T.getAdoub().get(i).getRy()));
+        }
+        
+        for (int i=0;i<T.getAsimp().size();i++){
+            T.getAsimp().get(i).getRx().setIdRx(T.getIdentite().getOrCreateId(T.getAdoub().get(i).getRx()));
+        }
+        
         Matrice M = Calcul(T);
         Matrice N = Création(M);
         Matrice A = Lien(M);
