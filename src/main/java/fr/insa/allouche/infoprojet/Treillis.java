@@ -120,7 +120,7 @@ public class Treillis {
                 }
             }
             if (n == 0) {
-                barre.setType(new TypeBarre(type.getCoutAuMetre(), type.getlMin(), type.getlMax(), type.getrTraction(), type.getrComp()));
+                barre.setType(new TypeBarre(type.getCoutAuMetre(), type.getlMin(), type.getlMax(), type.getrTraction(), type.getrComp(), color));
                 this.addTypeBarre(barre.getType());
             }
 

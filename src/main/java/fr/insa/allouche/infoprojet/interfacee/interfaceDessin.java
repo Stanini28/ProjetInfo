@@ -189,9 +189,10 @@ public class interfaceDessin extends BorderPane {
         });
 
         this.cpCouleur = new ColorPicker(Color.BLACK);
+        this.cpCouleur.setOnAction((t) -> {
+            this.controleur.bouttonCouleur(cpCouleur.getValue());
+        });
         this.menu = new MainMenu(this);
-
-        
 
         this.entete = new HBox(this.triangle_Terrain, this.Select, this.choiceBoxN, this.catalogueBarre,
                 this.supprimer, this.zoneconstructible, this.cpCouleur, this.removeAll);
@@ -353,6 +354,9 @@ public class interfaceDessin extends BorderPane {
 
     public void redrawAll() {
         this.zoneDessin.redrawAll();
+    }
+    public void redrawAllSelect() {
+        this.zoneDessin.redrawAllSelect();
     }
 
     public Controleur getControleur() {

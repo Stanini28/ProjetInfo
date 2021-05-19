@@ -10,6 +10,7 @@ import java.util.List;
 import fr.insa.allouche.infoprojet.outils.Lire;
 import java.io.IOException;
 import java.io.Writer;
+import javafx.scene.paint.Color;
 
 public class TypeBarre {
 
@@ -21,6 +22,7 @@ public class TypeBarre {
     private double rComp;
     private List<Barre> type;
     private Treillis catalogueDeBarre;
+    private Color couleur;
 
     public TypeBarre(double coutAuMetre, double lMin,
             double lMax, double rTraction, double rComp) {
@@ -31,6 +33,17 @@ public class TypeBarre {
         this.rComp = rComp;
         this.rTraction = rTraction;
         this.type = new ArrayList<Barre>();
+    }
+    public TypeBarre(double coutAuMetre, double lMin,
+            double lMax, double rTraction, double rComp, Color couleur) {
+
+        this.coutAuMetre = coutAuMetre;
+        this.lMax = lMax;
+        this.lMin = lMin;
+        this.rComp = rComp;
+        this.rTraction = rTraction;
+        this.type = new ArrayList<Barre>();
+        this.couleur = couleur;
     }
 
     public TypeBarre() {
@@ -121,6 +134,15 @@ public class TypeBarre {
     void setCatalogueDeBarre(Treillis catalogueDeBarre) {
         this.catalogueDeBarre = catalogueDeBarre;
     }
+
+    public Color getCouleur() {
+        return couleur;
+    }
+
+    public void setCouleur(Color couleur) {
+        this.couleur = couleur;
+    }
+    
 
     public String toString() {
         String res = "";

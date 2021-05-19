@@ -40,9 +40,9 @@ import javafx.stage.Stage;
 public class Controleur {
 
     //private double[] type1 = {20, 40, 200, 700, 800};
-    private TypeBarre type1 = new TypeBarre (20, 10, 200, 900, 700);
-    private TypeBarre type2 = new TypeBarre (20, 10, 300, 500, 500);
-    private TypeBarre type3 = new TypeBarre (20, 10, 400, 1000, 1000);
+    private TypeBarre type1 = new TypeBarre(20, 10, 200, 900, 700, Color.LIMEGREEN);
+    private TypeBarre type2 = new TypeBarre(20, 10, 300, 500, 500, Color.GREEN);
+    private TypeBarre type3 = new TypeBarre(20, 10, 400, 1000, 1000, Color.GREY);
     private Point[] pointzc = new Point[4];
     private Point[] pointTT = new Point[3];
     private Point[] pointB = new Point[2];
@@ -50,13 +50,14 @@ public class Controleur {
     private AppuiDouble[] noeudADB = new AppuiDouble[2];
     private AppuiSimple[] noeudASB = new AppuiSimple[2];
     private interfaceDessin vue;
-
+    private Color couleur;
+    
     private int etat;
-
+    
     public Controleur(interfaceDessin vue) {
         this.vue = vue;
     }
-
+    
     public void changeEtat(int etat) {
         if (etat == 20 || etat == 21 || etat == 22 || etat == 23) {
             this.vue.getRemove().setDisable(true);
@@ -84,7 +85,7 @@ public class Controleur {
         }
         this.etat = etat;
     }
-
+    
     void clicDansZoneDessin(MouseEvent t) {
         if (this.etat == 20) {
             double px = t.getX();
@@ -167,7 +168,7 @@ public class Controleur {
             Treillis model = this.vue.getModel();
             Point clic = new Point(t.getX(), t.getY());
             creationAD(clic);
-
+            
             this.vue.redrawAll();
             this.changeEtat(60);
         } else if (this.etat == 70) {
@@ -195,7 +196,7 @@ public class Controleur {
             this.vue.redrawAll();
         } else if (this.etat == 91) {
             Point clic = new Point(t.getX(), t.getY());
-            this.typeBarre2(clic, this.type3, Color.BLUE, 91);
+            this.typeBarre2(clic, this.type3, Color.GREY, 91);
             this.vue.redrawAll();
         } else if (this.etat == 95) {
             Alert dialogC1 = new Alert(AlertType.CONFIRMATION);
@@ -220,7 +221,7 @@ public class Controleur {
             Treillis model = this.vue.getModel();
             Point clic = new Point(t.getX(), t.getY());
             this.selction(model, clic);
-            this.vue.redrawAll();
+            this.vue.redrawAllSelect();
             this.changeEtat(100);
         } else if (this.etat == 110) {
             try {
@@ -244,90 +245,98 @@ public class Controleur {
 //
 //            System.out.println(this.vue.getModel().toString());
 
-        } else if (this.etat == 130){
+        } else if (this.etat == 130) {
             Treillis model = this.vue.getModel();
             String S = Regroup(model);
             Alert dialogW = new Alert(AlertType.INFORMATION);
             
             dialogW.setTitle("Isostatisme du Treillis");
-                if(S == "Les types de barres sont bons!"){
-                    dialogW.setHeaderText(null);
-                    dialogW.setContentText("Le Treillis est isostatique et les types des barres sont les bons.");
-                    dialogW.showAndWait();
-                }else{
-                    dialogW.setHeaderText(null);
-                    dialogW.setContentText("Le Treillis n'est pas isostatique car" +S);
-                    dialogW.showAndWait();
-                }
-                
-            
+            if (S == "Les types de barres sont bons!") {
+                dialogW.setHeaderText(null);
+                dialogW.setContentText("Le Treillis est isostatique et les types des barres sont les bons.");
+                dialogW.showAndWait();
+            } else {
+                dialogW.setHeaderText(null);
+                dialogW.setContentText("Le Treillis n'est pas isostatique car" + S);
+                dialogW.showAndWait();
+            }
+
             //plus qu'a faire ta méthode je m'occuperé d'afficher dans une fenètre pop ou sinon tien le lien pour en faire c'est pas compliqué ! http://remy-manu.no-ip.biz/Java/Tutoriels/JavaFX/PDF/ihm1_fx_10_man.pdf
             this.changeEtat(39);
+        } else if (this.etat ==135){
+            Point clic = new Point(t.getX(), t.getY());
+            this.changeCouleur(this.vue.getModel(), clic);
+            this.vue.redrawAll();
         }
         System.out.println(this.vue.getModel().toString());
     }
-
+    
     void boutonSelect(ActionEvent t
     ) {
         this.changeEtat(100);
     }
-
+    
     void boutonZoneConstructible(ActionEvent t
     ) {
         this.changeEtat(20);
     }
-
+    
     void boutontriangle_Terrain(ActionEvent t
     ) {
         this.changeEtat(30);
     }
-
+    
     void splitMenuButtonNS(ActionEvent t
     ) {
         this.changeEtat(40);
     }
-
+    
     void splitMenuButtonAS(ActionEvent t
     ) {
         this.changeEtat(50);
     }
-
+    
     void splitMenuButtonAD(ActionEvent t
     ) {
         this.changeEtat(60);
     }
-
+    
     void buttonBarre1() {
         this.changeEtat(70);
     }
-
+    
     void buttonBarre2(ActionEvent t
     ) {
         this.changeEtat(80);
     }
-
+    
     void buttonBarre3(ActionEvent t
     ) {
         this.changeEtat(90);
     }
-
+    
     void buttonBarre4(ActionEvent t) {
         this.changeEtat(95);
     }
-
+    
     void bouttonSuprimer(ActionEvent t
     ) {
         this.changeEtat(110);
     }
-
+    
     void bouttonRemoveAll(ActionEvent t) {
         this.changeEtat(120);
     }
-
+    
     void bouttonCalcul(ActionEvent t) {
         this.changeEtat(130);
     }
 
+    void bouttonCouleur(Color couleur) {
+        this.changeEtat(135);
+        this.couleur = couleur;
+    }
+    
     public void selction(Treillis model, Point clic) {
         SegmentTerrain segt = model.plusProcheST(clic);
         Noeud noeud = model.plusProcheN(clic);
@@ -343,7 +352,7 @@ public class Controleur {
         }
         if (res.equals("S")) {
             segt.setColor(Color.GREEN);
-
+            
             System.out.println("seg " + segt.getColor());
         }
         if (res.equals("NS")) {
@@ -403,9 +412,89 @@ public class Controleur {
                 noeud.setColor(Color.GREEN);
             }
         }
-
+        
     }
-
+    public void changeCouleur(Treillis model, Point clic) {
+        SegmentTerrain segt = model.plusProcheST(clic);
+        Noeud noeud = model.plusProcheN(clic);
+        Barre barre = model.plusProcheB(clic);
+        String res = model.lePlusProche();
+        if (res.equals("N")) {
+            noeud.setColor(couleur);
+            System.out.println("noeud" + noeud.getColor());
+        }
+        if (res.equals("B")) {
+            barre.setColor(couleur);
+            barre.getType().setCouleur(couleur);
+            System.out.println("barre " + barre.getColor());
+        }
+        if (res.equals("S")) {
+            segt.setColor(couleur);
+            
+            System.out.println("seg " + segt.getColor());
+        }
+        if (res.equals("NS")) {
+            Alert dBox = new Alert(AlertType.CONFIRMATION);
+            dBox.setTitle("choix du type de la selection");
+            dBox.setHeaderText("Noeud ou Segment Terrain ???");
+            dBox.setContentText("Voulez vous séléctinez le noeud ou le segment terrain");
+            ButtonType btnN = new ButtonType("Noeud");
+            ButtonType btnS = new ButtonType("Sgment Terrain");
+            ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+            dBox.getButtonTypes().setAll(btnN, btnS, btnCancel);
+            Optional<ButtonType> choice = dBox.showAndWait();
+            if (choice.get() == btnN) {
+                System.out.println("noued " + noeud.getColor());
+                noeud.setColor(couleur);
+            }
+            if (choice.get() == btnS) {
+                System.out.println("segt " + segt.getColor());
+                segt.setColor(couleur);
+            }
+        }
+        if (res.equals("BS")) {
+            Alert dBox = new Alert(AlertType.CONFIRMATION);
+            dBox.setTitle("choix du type de la selection");
+            dBox.setHeaderText("Barre ou Segment Terrain ???");
+            dBox.setContentText("Voulez vous séléctinez la barre ou le segment terrain");
+            ButtonType btnB = new ButtonType("Barre");
+            ButtonType btnS = new ButtonType("Sgment Terrain");
+            ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+            dBox.getButtonTypes().setAll(btnB, btnS, btnCancel);
+            Optional<ButtonType> choice = dBox.showAndWait();
+            if (choice.get() == btnB) {
+                System.out.println("Barre " + barre.getColor());
+                barre.setColor(couleur);
+                barre.getType().setCouleur(couleur);
+            }
+            if (choice.get() == btnS) {
+                System.out.println("segt " + segt.getColor());
+                segt.setColor(couleur);
+            }
+        }
+        if (res.equals("BN")) {
+            Alert dBox = new Alert(AlertType.CONFIRMATION);
+            dBox.setTitle("choix du type de la selection");
+            dBox.setHeaderText("Barre ou Noeud ???");
+            dBox.setContentText("Voulez vous séléctinez la barre ou le noeud");
+            ButtonType btnB = new ButtonType("Barre");
+            ButtonType btnN = new ButtonType("Noeud");
+            ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
+            dBox.getButtonTypes().setAll(btnB, btnN, btnCancel);
+            Optional<ButtonType> choice = dBox.showAndWait();
+            if (choice.get() == btnB) {
+                System.out.println("Barre " + barre.getColor());
+                barre.setColor(couleur);
+                barre.getType().setCouleur(couleur);
+            }
+            if (choice.get() == btnN) {
+                System.out.println("noued " + segt.getColor());
+                noeud.setColor(couleur);
+            }
+        }
+        
+    }
+    
     public void supression(Treillis model, Point clic) {
         SegmentTerrain segt = model.plusProcheST(clic);
         Noeud noeud = model.plusProcheN(clic);
@@ -505,11 +594,11 @@ public class Controleur {
             }
         }
     }
-
+    
     public AppuiDouble creationAD(Point clic) {
-
+        
         SegmentTerrain segt = this.vue.getModel().plusProcheST(clic);
-
+        
         TextInputDialog inDialog = new TextInputDialog("Guest");
         inDialog.setTitle("A Text-Input Dialog");
         inDialog.setHeaderText("Le segment sélectioné mesure :"
@@ -544,7 +633,7 @@ public class Controleur {
             return null;
         }
     }
-
+    
     public AppuiSimple creationAS(Point clic) {
         SegmentTerrain segt = this.vue.getModel().plusProcheST(clic);
         TextInputDialog inDialog = new TextInputDialog("Guest");
@@ -579,7 +668,7 @@ public class Controleur {
             return null;
         }
     }
-
+    
     public boolean bonneLongeurB(Point clic, TypeBarre type) {
         double longeure = Barre.longueur(this.noeudB[0].getPosition(), clic);
         if (longeure < type.getlMin()
@@ -602,7 +691,7 @@ public class Controleur {
             return true;
         }
     }
-
+    
     public void typeBarre1(Point clic, int etat) {
         Alert dBox = new Alert(AlertType.CONFIRMATION);
         dBox.setTitle("choix du type de noeud");
@@ -669,7 +758,7 @@ public class Controleur {
             this.changeEtat(etat);
         }
     }
-
+    
     public void typeBarre2(Point clic, TypeBarre type, Color color, int etat) {
         Treillis model = this.vue.getModel();
         Alert dBox = new Alert(AlertType.CONFIRMATION);
@@ -685,7 +774,7 @@ public class Controleur {
         ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
         dBox.getButtonTypes().setAll(btnNS, btnAS, btnAD, btoldn, btnCancel);
         Optional<ButtonType> choice = dBox.showAndWait();
-
+        
         if (choice.get() == btnNS) {
             if (bonneLongeurB(clic, type) == false) {
                 if (this.noeudB[0].getLiee() == null) {
@@ -711,7 +800,7 @@ public class Controleur {
             }
         } else if (choice.get() == btnAS) {
             AppuiSimple as = creationAS(clic);
-
+            
             if (bonneLongeurB(as.getPosition(), type) == false) {
                 this.vue.getModel().removeNoeud(as);
                 if (this.noeudB[0].getLiee() == null) {
@@ -765,7 +854,7 @@ public class Controleur {
             this.changeEtat(etat - 1);
         }
     }
-
+    
     private void realSave(File f) {
         try {
             this.vue.getModel().sauvegarde(f);
@@ -776,13 +865,13 @@ public class Controleur {
             alert.setTitle("Erreur");
             alert.setHeaderText("Problème durant la sauvegarde");
             alert.setContentText(ex.getLocalizedMessage());
-
+            
             alert.showAndWait();
         } finally {
             this.changeEtat(39);
         }
     }
-
+    
     public void menuSave(ActionEvent t) {
         if (this.vue.getCurFile() == null) {
             this.menuSaveAs(t);
@@ -790,7 +879,7 @@ public class Controleur {
             this.realSave(this.vue.getCurFile());
         }
     }
-
+    
     public void menuSaveAs(ActionEvent t) {
         FileChooser chooser = new FileChooser();
         File f = chooser.showSaveDialog(this.vue.getInStage());
@@ -798,7 +887,7 @@ public class Controleur {
             this.realSave(f);
         }
     }
-
+    
     public void menuOpen(ActionEvent t) {
         FileChooser chooser = new FileChooser();
         File f = chooser.showOpenDialog(this.vue.getInStage());
@@ -815,14 +904,14 @@ public class Controleur {
                 alert.setTitle("Erreur");
                 alert.setHeaderText("Problème durant la sauvegarde");
                 alert.setContentText(ex.getLocalizedMessage());
-
+                
                 alert.showAndWait();
             } finally {
                 this.changeEtat(39);
             }
         }
     }
-
+    
     public void menuNouveau(ActionEvent t) {
         Stage nouveau = new Stage();
         nouveau.setTitle("Nouveau");
@@ -830,7 +919,7 @@ public class Controleur {
         nouveau.setScene(sc);
         nouveau.show();
     }
-
+    
     public void menuApropos(ActionEvent t) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("A propos");
@@ -839,8 +928,8 @@ public class Controleur {
                 + "réalisé par François de Bertrand de Beuvron\n"
                 + "comme tutoriel pour un cours de POO\n"
                 + "à l'INSA de Strasbourg");
-
+        
         alert.showAndWait();
     }
-
+    
 }

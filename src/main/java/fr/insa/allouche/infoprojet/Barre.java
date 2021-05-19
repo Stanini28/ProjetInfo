@@ -169,6 +169,12 @@ public class Barre {
 
     public void dessine(GraphicsContext context) {
         context.setLineWidth(4);
+        context.setStroke(this.getType().getCouleur());
+        context.strokeLine(this.debut.position.getPX(), this.debut.position.getPY(),
+                this.fin.position.getPX(), this.fin.position.getPY());
+    }
+    public void dessineSelect(GraphicsContext context) {
+        context.setLineWidth(4);
         context.setStroke(this.color);
         context.strokeLine(this.debut.position.getPX(), this.debut.position.getPY(),
                 this.fin.position.getPX(), this.fin.position.getPY());
