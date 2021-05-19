@@ -208,13 +208,12 @@ public class Calcul {
     }
 
     public static String Regroup(Treillis T) {
-        for (int i=0;i <T.getAdoub().size();i++){
-            T.getAdoub().get(i).getRx().setIdRx(T.getIdentite().getOrCreateId(T.getAdoub().get(i).getRx()));
-            T.getAdoub().get(i).getRy().setIdRy(T.getIdentite().getOrCreateId(T.getAdoub().get(i).getRy()));
+        for (int i=0 ;i < T.getRx().size();i++){
+            T.getRx().get(i).setIdRx(T.getIdentite().getOrCreateId(T.getRx().get(i)));
         }
         
-        for (int i=0;i<T.getAsimp().size();i++){
-            T.getAsimp().get(i).getRx().setIdRx(T.getIdentite().getOrCreateId(T.getAdoub().get(i).getRx()));
+        for (int i=0;i<T.getRy().size();i++){
+            T.getRy().get(i).setIdRy(T.getIdentite().getOrCreateId(T.getRy().get(i)));
         }
         
         Matrice M = Calcul(T);
@@ -271,12 +270,12 @@ public class Calcul {
         TriangleTerrain tT1 = new TriangleTerrain(seg1, seg2, seg3);
         AppuiDouble AD1 = new AppuiDouble(pos10, seg1);
         AppuiSimple AS1 = new AppuiSimple(pos11, seg1);
-        Barre b1 = new Barre(nS1, AD1);
-        Barre b2 = new Barre(nS1, AS1);
-        Barre b3 = new Barre(AD1, AS1);
-        Reaction_Rx ADX = new Reaction_Rx(AD1);
-        Reaction_Ry ADY = new Reaction_Ry(AD1);
-        Reaction_Rx ASX = new Reaction_Rx(AS1);
+        Barre b1 = new Barre(nS1, AD1, 20, 20, 70, 900, 900 );
+        Barre b2 = new Barre(nS1, AS1,  20, 20, 70, 900, 900 );
+        Barre b3 = new Barre(AD1, AS1,  20, 20, 70, 900, 900 );
+//        Reaction_Rx ADX = new Reaction_Rx(AD1);
+//        Reaction_Ry ADY = new Reaction_Ry(AD1);
+//        Reaction_Rx ASX = new Reaction_Rx(AS1);
 
         res.addTerrain(t1);
         t1.addTriangleTerrain(tT1);
@@ -286,27 +285,35 @@ public class Calcul {
         res.addBarre(b1);
         res.addBarre(b2);
         res.addBarre(b3);
-        res.getRx().add(ASX);
-        res.getRx().add(ADX);
-        res.getRy().add(ADY);
+//        res.getRx().add(ASX);
+//        res.getRx().add(ADX);
+//        res.getRy().add(ADY);
 
-        tT1.setId(0);
-        seg1.setId(1);
-        seg2.setId(2);
-        seg3.setId(3);
-        AD1.setId(4);
-        AS1.setId(5);
-        nS1.setId(6);
-        b1.setId(7);
-        b2.setId(8);
-        b3.setId(9);
-        ADX.setIdRx(10);
-        ADY.setIdRy(11);
-        ASX.setIdRx(12);
+//        tT1.setId(0);
+//        seg1.setId(1);
+//        seg2.setId(2);
+//        seg3.setId(3);
+//        AD1.setId(4);
+//        AS1.setId(5);
+//        nS1.setId(6);
+//        b1.setId(7);
+//        b2.setId(8);
+//        b3.setId(9);
+//        ADX.setIdRx(10);
+//        ADY.setIdRy(11);
+//        ASX.setIdRx(12);
         AD1.forceY = 0;
         AS1.forceY = 0;
         nS1.forceY = 1000;
 
+        for (int i=0 ;i < res.getRx().size();i++){
+            res.getRx().get(i).setIdRx(res.getIdentite().getOrCreateId(res.getRx().get(i)));
+        }
+        
+        for (int i=0;i<res.getRy().size();i++){
+            res.getRy().get(i).setIdRy(res.getIdentite().getOrCreateId(res.getRy().get(i)));
+        }
+        
         Matrice M = Calcul(res);
         Matrice N = Création(M);
         Matrice A = Lien(M);
