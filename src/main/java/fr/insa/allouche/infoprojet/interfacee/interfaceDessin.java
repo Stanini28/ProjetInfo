@@ -221,6 +221,7 @@ public class interfaceDessin extends BorderPane {
         this.choiceB1.setStyle("-fx-background-color: #b5b6eb; -fx-padding: 8;");
         this.choiceB2.setStyle("-fx-background-color: #cfcff2; -fx-padding: 8;");
         this.choiceB3.setStyle("-fx-background-color: #e7e7f8; -fx-padding: 8;");
+        this.choiceB4.setStyle("-fx-background-color: #e7e7f8; -fx-padding: 8;");
         this.catalogueBarre.setStyle("-fx-background-color: #0080FF; -fx-padding: 8;");
         this.calcul.setStyle("-fx-background-color: #295C92; -fx-padding: 8;");
 
