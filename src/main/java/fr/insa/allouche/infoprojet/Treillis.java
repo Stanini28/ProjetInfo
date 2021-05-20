@@ -78,26 +78,35 @@ public class Treillis {
                 tb.DemandeTypeBarre();
                 this.addTypeBarre(tb);
                 this.compose.get(p - 1).setType(tb);
-//            } else {
-//                int n = 0;
-//                for (int i = 0; i < this.catalogueBarre.size(); i++) {
-//                    if (barre.getType().getCoutAuMetre() == this.catalogueBarre.get(i).getCoutAuMetre()
-//                            && barre.getType().getlMax() == this.catalogueBarre.get(i).getlMax()
-//                            && barre.getType().getlMin() == this.catalogueBarre.get(i).getlMin()
-//                            && barre.getType().getrComp() == this.catalogueBarre.get(i).getrComp()
-//                            && barre.getType().getrTraction() == this.catalogueBarre.get(i).getrTraction()) {
-//                        n++;
-//                    }
-//                }
-//                if (n == 0) {
-//                    this.addTypeBarre(this.compose.get(p-1).getType());
-//                }
             }
 
             System.out.println(" barre ajouté au trellis");
         }
     }
-    
+
+    public void addBarreIdExiste(Barre barre) {
+        System.out.println("ajout barre au trellis");
+        if (barre.getCompose() != this) {
+            if (barre.getCompose() != null) {
+                throw new Error("La Barre appartient déjà au treillis");
+            }
+            this.compose.add(barre);
+            barre.setCompose(this);
+            int p = this.compose.size();
+            // pk -1 ?
+            if (this.compose.get(p - 1).getType() == null) {
+                System.out.println("ici");
+                TypeBarre tb = new TypeBarre();
+                tb.DemandeTypeBarre();
+                this.addTypeBarre(tb);
+                this.compose.get(p - 1).setType(tb);
+//            
+            }
+
+            System.out.println(" barre ajouté au trellis");
+        }
+    }
+
     public void addBarre(Barre barre, TypeBarre type, Color color) {
         if (barre.getCompose() != this) {
             if (barre.getCompose() != null) {
@@ -113,7 +122,7 @@ public class Treillis {
                         && type.getlMax() == this.catalogueBarre.get(i).getlMax()
                         && type.getlMin() == this.catalogueBarre.get(i).getlMin()
                         && type.getrComp() == this.catalogueBarre.get(i).getrComp()
-                        && type.getrTraction()== this.catalogueBarre.get(i).getrTraction()) {
+                        && type.getrTraction() == this.catalogueBarre.get(i).getrTraction()) {
                     n++;
                     barre.setType(this.catalogueBarre.get(i));
                     this.catalogueBarre.get(i).addTBarre(barre);
@@ -218,6 +227,48 @@ public class Treillis {
         }
     }
 
+    public void addAppuiSimpleIdExtist(AppuiSimple noeud) {
+        if (noeud.getContient() != this) {
+            if (noeud.getContient() != null) {
+                throw new Error("Le Noeud appartient déjà au treillis");
+            }
+            this.contient.add(noeud);
+            noeud.setContient(this);
+            this.Asimp.add(noeud);
+            Reaction_Rx rx = new Reaction_Rx(noeud);
+            this.rx.add(rx);
+//            rx.setIdRx(this.identite.getOrCreateId(rx));
+        }
+    }
+
+    public void addAppuiDoubleIdExtist(AppuiDouble noeud) {
+        if (noeud.getContient() != this) {
+            if (noeud.getContient() != null) {
+                throw new Error("Le Noeud appartient déjà au treillis");
+            }
+            this.contient.add(noeud);
+            noeud.setContient(this);
+            this.Adoub.add(noeud);
+            Reaction_Rx rx = new Reaction_Rx(noeud);
+            this.rx.add(rx);
+//            rx.setIdRx(this.identite.getOrCreateId(rx));
+            Reaction_Ry ry = new Reaction_Ry(noeud);
+            this.ry.add(ry);
+//            ry.setIdRy(this.identite.getOrCreateId(ry));
+        }
+    }
+
+    public void addNoeudSimpleIdExtist(NoeudSimple noeud) {
+        if (noeud.getContient() != this) {
+            if (noeud.getContient() != null) {
+                throw new Error("Le Noeud appartient déjà au treillis");
+            }
+            this.contient.add(noeud);
+            noeud.setContient(this);
+            this.Simp.add(noeud);
+        }
+    }
+
     public void removeNoeud(Noeud noeud) {
         if (noeud.getContient() != this) {
             throw new Error("Le Noeud n'appartient pas au treillis");
@@ -246,6 +297,16 @@ public class Treillis {
         }
     }
 
+    public void addTypeBarreIdExist(TypeBarre Tbarre) {
+        if (Tbarre.getCatalogueDeBarre() != this) {
+            if (Tbarre.getCatalogueDeBarre() != null) {
+                throw new Error("Le type de barre appartient déjà au treillis");
+            }
+            this.catalogueBarre.add(Tbarre);
+            Tbarre.setCatalogueDeBarre(this);
+        }
+    }
+
     public void removeTypeBarre(TypeBarre Tbarre) {
         if (Tbarre.getCatalogueDeBarre() != this) {
             throw new Error("Le type de barre n'appartient pas au treillis");
@@ -269,12 +330,12 @@ public class Treillis {
             }
             this.base = t;
             t.setBase(this);
-            for (int i = 0; i < t.getConstitue().size(); i++) {
-                t.getConstitue().get(i).setId(this.identite.getOrCreateId(base.getConstitue().get(i)));
-                t.getConstitue().get(i).getSegTerrain1().setId(this.identite.getOrCreateId(base.getConstitue().get(i).getSegTerrain1()));
-                t.getConstitue().get(i).getSegTerrain2().setId(this.identite.getOrCreateId(base.getConstitue().get(i).getSegTerrain2()));
-                t.getConstitue().get(i).getSegTerrain3().setId(this.identite.getOrCreateId(base.getConstitue().get(i).getSegTerrain3()));
-            }
+//            for (int i = 0; i < t.getConstitue().size(); i++) {
+//                t.getConstitue().get(i).setId(this.identite.getOrCreateId(base.getConstitue().get(i)));
+//                t.getConstitue().get(i).getSegTerrain1().setId(this.identite.getOrCreateId(base.getConstitue().get(i).getSegTerrain1()));
+//                t.getConstitue().get(i).getSegTerrain2().setId(this.identite.getOrCreateId(base.getConstitue().get(i).getSegTerrain2()));
+//                t.getConstitue().get(i).getSegTerrain3().setId(this.identite.getOrCreateId(base.getConstitue().get(i).getSegTerrain3()));
+//            }
         }
     }
 
@@ -290,6 +351,19 @@ public class Treillis {
             tt.getSegTerrain2().setId(this.identite.getOrCreateId(tt.getSegTerrain2()));
             tt.getSegTerrain3().setId(this.identite.getOrCreateId(tt.getSegTerrain3()));
             System.out.println("id s1= " + tt.getId());
+        }
+    }
+
+    public void addTriangleTerrainIdExist(TriangleTerrain tt) {
+        if (tt.getConstitue() != this.getBase()) {
+            if (tt.getConstitue() != null) {
+                throw new Error("Le Terrain appartient déjà à un autre Treillis");
+            }
+            this.base.addTriangleTerrain(tt);
+            this.addTerrain(this.base);
+//            tt.getSegTerrain1().setId(this.identite.getOrCreateId(tt.getSegTerrain1()));
+//            tt.getSegTerrain2().setId(this.identite.getOrCreateId(tt.getSegTerrain2()));
+//            tt.getSegTerrain3().setId(this.identite.getOrCreateId(tt.getSegTerrain3()));
         }
     }
 
@@ -854,8 +928,10 @@ public class Treillis {
                 System.out.println(this.Asimp.get(i).getappartient().getFaitPartieDe());
                 this.Asimp.get(i).save(bout, Num);
             }//AJOUT APPUI SIMPLE
+            System.out.println("this.Simp.size()" + this.Simp.size());
             for (int i = 0; i < this.Simp.size(); i++) {
                 this.Simp.get(i).save(bout, Num);
+                System.out.println("this.Simp.get(i)" + this.Simp.get(i));
             }//AJOUT NOEUD SIMPLE
             bout.append("FINNOEUDS\n");
             for (int i = 0; i < this.compose.size(); i++) {
@@ -971,68 +1047,70 @@ public class Treillis {
                         pt[i - 2] = adapterP(bouts[i]);
                     }
                     TriangleTerrain tt = new TriangleTerrain(pt[0], pt[1], pt[2]);
-                    treillis.addTriangleTerrain(tt);
-                    tt.setId(Integer.parseInt(bouts[1]));
-                    treillis.identite.associeNewOld(tt.getId(), tt);
+                    tt.setId((Integer.parseInt(bouts[1])));
+                    treillis.identite.associe(Integer.parseInt(bouts[1]), tt);
+                    treillis.addTriangleTerrainIdExist(tt);
                     System.out.println(treillis);
                 } //                } else if (finTriangle == true && finCatalogue == false) {
                 else if (bouts[0].equals("TypeBarre")) {
                     TypeBarre tb = new TypeBarre(Double.parseDouble(bouts[2]),
                             Double.parseDouble(bouts[3]), Double.parseDouble(bouts[4]),
                             Double.parseDouble(bouts[5]), Double.parseDouble(bouts[6]));
+                    System.out.println("id type barre "+Integer.parseInt(bouts[1]));
+                    tb.setId((Integer.parseInt(bouts[1])));
+                    treillis.identite.associe(Integer.parseInt(bouts[1]), tb);
                     treillis.addTypeBarre(tb);
-                    tb.setId(Integer.parseInt(bouts[1]));
-                    treillis.identite.associeNewOld(tb.getId(), tb);
-                    System.out.println("type barreeeee"+treillis.identite.getObj(12));
                     System.out.println(treillis);
                 } //                } else if (finTriangle == true && finCatalogue == true && finNoeuds == false) {
                 else if (bouts[0].equals("AppuiDouble")) {
-                    System.out.println("bout1 "+bouts[1]);
+                    System.out.println("bout1 " + bouts[2]);
                     TriangleTerrain tt = (TriangleTerrain) treillis.getIdentite().getObj(Integer.parseInt(bouts[2]));
                     SegmentTerrain segt;
-                    if (Integer.parseInt(bouts[3]) == 0){
+                    if (Integer.parseInt(bouts[3]) == 0) {
                         segt = tt.getSegTerrain1();
-                    }else if (Integer.parseInt(bouts[3]) == 1){
+                    } else if (Integer.parseInt(bouts[3]) == 1) {
                         segt = tt.getSegTerrain2();
-                    }else {
+                    } else {
                         segt = tt.getSegTerrain3();
                     }
                     AppuiDouble ad = new AppuiDouble(Double.parseDouble(bouts[4]), segt);
-                    treillis.addAppuiDouble(ad);
-                    ad.setId(Integer.parseInt(bouts[1]));
-                    treillis.identite.associeNewOld(ad.getId(), ad);
+                    ad.setId((Integer.parseInt(bouts[1])));
+                    treillis.identite.associe(Integer.parseInt(bouts[1]), ad);
+                    treillis.addAppuiDoubleIdExtist(ad);
                     System.out.println(treillis);
                     //on utilise pas j est ce rellement nécessaire ?
                 } else if (bouts[0].equals("AppuiSimple")) {
                     TriangleTerrain tt = (TriangleTerrain) treillis.getIdentite().getObj(Integer.parseInt(bouts[2]));
                     SegmentTerrain segt;
-                    if (Integer.parseInt(bouts[3]) == 0){
+                    if (Integer.parseInt(bouts[3]) == 0) {
                         segt = tt.getSegTerrain1();
-                    }else if (Integer.parseInt(bouts[3]) == 1){
+                    } else if (Integer.parseInt(bouts[3]) == 1) {
                         segt = tt.getSegTerrain2();
-                    }else {
+                    } else {
                         segt = tt.getSegTerrain3();
                     }
                     AppuiSimple as = new AppuiSimple(Double.parseDouble(bouts[4]), segt);
-                    treillis.addAppuiSimple(as);
-                    as.setId(Integer.parseInt(bouts[1]));
-                    treillis.identite.associeNewOld(as.getId(), as);
+                    as.setId((Integer.parseInt(bouts[1])));
+                    treillis.identite.associe(Integer.parseInt(bouts[1]), as);
+                    treillis.addAppuiSimpleIdExtist(as);
                     System.out.println(treillis);
                     //on utilise pas j est ce rellement nécessaire ?
                 } else if (bouts[0].equals("NoeudSimple")) {
                     NoeudSimple ns = new NoeudSimple(adapterP(bouts[2]));
-                    treillis.addNoeudSimple(ns);
                     ns.setId(Integer.parseInt(bouts[1]));
-                    treillis.identite.associeNewOld(ns.getId(), ns);
+                    treillis.identite.associe(ns.getId(), ns);
+                    treillis.addNoeudSimpleIdExtist(ns);
                     System.out.println(treillis);
                 } //                } else if (finTriangle == true && finCatalogue == true && finNoeuds == true) {
                 else if (bouts[0].equals("Barre")) {
-                    System.out.println("type barre "+Integer.parseInt(bouts[2])+" "+treillis.getIdentite().getObj(Integer.parseInt(bouts[2])));
+                    System.out.println("type barre " + Integer.parseInt(bouts[2]) + " " + treillis.getIdentite().getObj(Integer.parseInt(bouts[2])));
                     int id = Integer.parseInt(bouts[1]);
                     int numTypeBarre = Integer.parseInt(bouts[2]);
+                    System.out.println("type barre id " + numTypeBarre + " : " + treillis.getIdentite().getObj(numTypeBarre));
                     TypeBarre tb = (TypeBarre) treillis.getIdentite().getObj(numTypeBarre);
                     int idNoeudDebut = Integer.parseInt(bouts[3]);
                     int idNoeudFin = Integer.parseInt(bouts[4]);
+                    System.out.println("trouve pour id " + idNoeudDebut + " : " + treillis.getIdentite().getObj(idNoeudDebut));
                     String noeud = treillis.getIdentite().getObj(idNoeudDebut).toString();
                     String[] noeudSplit = noeud.split(",");
                     for (int i = 0; i < noeudSplit.length; i++) {
@@ -1040,9 +1118,9 @@ public class Treillis {
                     Barre b = new Barre((Noeud) treillis.getIdentite().getObj(idNoeudDebut),
                             (Noeud) treillis.getIdentite().getObj(idNoeudFin),
                             (TypeBarre) treillis.getIdentite().getObj(numTypeBarre));
-                    treillis.addBarre(b);
-                    b.setId(Integer.parseInt(bouts[1]));
-                    treillis.identite.associeNewOld(b.getId(), b);
+                    b.setId((Integer.parseInt(bouts[1])));
+                    treillis.identite.associe(Integer.parseInt(bouts[1]), b);
+                    treillis.addBarreIdExiste(b);
                     System.out.println(treillis);
 //                    if (treillis.getIdentite().getObj(idNoeudDebut) instanceof NoeudSimple){
 //                        NoeudSimple ns = new NoeudSimple();
@@ -1056,7 +1134,7 @@ public class Treillis {
 //                        NoeudSimple ns = new NoeudSimple();
 //                        ns = (NoeudSimple)treillis.getIdentite().getObj(idNoeudDebut);
 //                    }
-                    
+
                 }
 //                } else if (bouts[0].equals("FINTRIANGLES")) {
 //                    finTriangle = true;
@@ -1081,8 +1159,8 @@ public class Treillis {
 
     public static Point adapterP(String bouts) {
 
-        String pt = bouts.substring(1,bouts.length()-1);
-        String point []= pt.split(",");
+        String pt = bouts.substring(1, bouts.length() - 1);
+        String point[] = pt.split(",");
         Point res = new Point(Double.parseDouble(point[0]), Double.parseDouble(point[1]));
         return res;
     }

@@ -90,17 +90,7 @@ public class Identificateur<Object> {
         this.idVersObjet.put(id, obj);
         this.ObjetVersId.put(obj, id);
     }
-    public void associeNewOld(int id,Object obj) {
-        
-        if (this.idExist(id)) {
-        Object o = this.getObj(id);
-            System.out.println("objet get "+o);
-        this.idVersObjet.replace(id, o, obj);
-        this.ObjetVersId.replace(obj, id);
-        } else {
-            associe(id,obj);
-        }
-    }
+    
     
    
 }
