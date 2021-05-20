@@ -31,10 +31,17 @@ public class ResSup {
     }
 
     public Matrice getSet() {
-        if (this.solUnique == false) {
-            throw new Error("pas de solution");
-        }
+//        if (this.solUnique == false) {
+//            throw new Error("pas de solution");
+//        }
         return this.sol;
+    }
+    public boolean verifSolUnique() {
+        boolean res =true;
+        if (this.solUnique == false) {
+            res = false;
+        }
+        return res;
     }
 
     public static ResSup pasDeSol() {

@@ -1047,19 +1047,20 @@ public class Treillis {
                         pt[i - 2] = adapterP(bouts[i]);
                     }
                     TriangleTerrain tt = new TriangleTerrain(pt[0], pt[1], pt[2]);
+                    treillis.addTriangleTerrainIdExist(tt);
                     tt.setId((Integer.parseInt(bouts[1])));
                     treillis.identite.associe(Integer.parseInt(bouts[1]), tt);
-                    treillis.addTriangleTerrainIdExist(tt);
                     System.out.println(treillis);
                 } //                } else if (finTriangle == true && finCatalogue == false) {
                 else if (bouts[0].equals("TypeBarre")) {
                     TypeBarre tb = new TypeBarre(Double.parseDouble(bouts[2]),
                             Double.parseDouble(bouts[3]), Double.parseDouble(bouts[4]),
                             Double.parseDouble(bouts[5]), Double.parseDouble(bouts[6]));
-                    System.out.println("id type barre "+Integer.parseInt(bouts[1]));
-                    tb.setId((Integer.parseInt(bouts[1])));
+                    
+                    treillis.addTypeBarreIdExist(tb);
+                    tb.setId(Integer.parseInt(bouts[1]));
                     treillis.identite.associe(Integer.parseInt(bouts[1]), tb);
-                    treillis.addTypeBarre(tb);
+                    System.out.println("id type de barre : "+treillis.getCatalogueBarre().get(0).getId());
                     System.out.println(treillis);
                 } //                } else if (finTriangle == true && finCatalogue == true && finNoeuds == false) {
                 else if (bouts[0].equals("AppuiDouble")) {
@@ -1074,9 +1075,9 @@ public class Treillis {
                         segt = tt.getSegTerrain3();
                     }
                     AppuiDouble ad = new AppuiDouble(Double.parseDouble(bouts[4]), segt);
+                    treillis.addAppuiDoubleIdExtist(ad);
                     ad.setId((Integer.parseInt(bouts[1])));
                     treillis.identite.associe(Integer.parseInt(bouts[1]), ad);
-                    treillis.addAppuiDoubleIdExtist(ad);
                     System.out.println(treillis);
                     //on utilise pas j est ce rellement nécessaire ?
                 } else if (bouts[0].equals("AppuiSimple")) {
@@ -1090,16 +1091,16 @@ public class Treillis {
                         segt = tt.getSegTerrain3();
                     }
                     AppuiSimple as = new AppuiSimple(Double.parseDouble(bouts[4]), segt);
+                    treillis.addAppuiSimpleIdExtist(as);
                     as.setId((Integer.parseInt(bouts[1])));
                     treillis.identite.associe(Integer.parseInt(bouts[1]), as);
-                    treillis.addAppuiSimpleIdExtist(as);
                     System.out.println(treillis);
                     //on utilise pas j est ce rellement nécessaire ?
                 } else if (bouts[0].equals("NoeudSimple")) {
                     NoeudSimple ns = new NoeudSimple(adapterP(bouts[2]));
+                    treillis.addNoeudSimpleIdExtist(ns);
                     ns.setId(Integer.parseInt(bouts[1]));
                     treillis.identite.associe(ns.getId(), ns);
-                    treillis.addNoeudSimpleIdExtist(ns);
                     System.out.println(treillis);
                 } //                } else if (finTriangle == true && finCatalogue == true && finNoeuds == true) {
                 else if (bouts[0].equals("Barre")) {
@@ -1118,9 +1119,9 @@ public class Treillis {
                     Barre b = new Barre((Noeud) treillis.getIdentite().getObj(idNoeudDebut),
                             (Noeud) treillis.getIdentite().getObj(idNoeudFin),
                             (TypeBarre) treillis.getIdentite().getObj(numTypeBarre));
+                    treillis.addBarreIdExiste(b);
                     b.setId((Integer.parseInt(bouts[1])));
                     treillis.identite.associe(Integer.parseInt(bouts[1]), b);
-                    treillis.addBarreIdExiste(b);
                     System.out.println(treillis);
 //                    if (treillis.getIdentite().getObj(idNoeudDebut) instanceof NoeudSimple){
 //                        NoeudSimple ns = new NoeudSimple();

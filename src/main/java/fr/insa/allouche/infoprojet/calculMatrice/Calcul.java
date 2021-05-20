@@ -224,6 +224,9 @@ public class Calcul {
         ResSup Z = H.resolution(Membre2);
         Matrice K = Z.getSet().concatCol(A);
         String s="";
+        if (Z.verifSolUnique() == false){
+            s = "Le treillis n'est pas isostatique";
+        }
 
         for (int i = 0; i < K.getNbrLig(); i++) {
             double m = K.coeffs[i][1];
