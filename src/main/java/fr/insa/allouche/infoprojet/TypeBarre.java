@@ -156,10 +156,10 @@ public class TypeBarre {
     }
     
     public void save(Writer w, Identificateur num) throws IOException{
-        if(!num.objExist(this)){
+        //if(num.objExist(this)){
         w.append("TypeBarre;" +this.id+ ";" + this.coutAuMetre+ ";" +  this.lMin+ ";"
                 + this.lMax + ";"+ this.rTraction+ ";"+ this.rComp + "\n");
-        }
+       // }
 
     }
 }

@@ -165,7 +165,7 @@ public class Calcul {
         return K;
     }
 
-    public static String Regroup(Treillis T) {
+    public static String regroup(Treillis T) {
         for (int i = 0; i < T.getRx().size(); i++) {
             T.getRx().get(i).setIdRx(T.getIdentite().getOrCreateId(T.getRx().get(i)));
         }
@@ -289,7 +289,7 @@ public class Calcul {
         ResSup Z = H.resolution(Membre2);
         Matrice K = Z.getSet().concatCol(A);
 
-        System.out.println(Regroup(res));
+        System.out.println(regroup(res));
 
     }
 }

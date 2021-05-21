@@ -16,7 +16,8 @@ import fr.insa.allouche.infoprojet.Terrain;
 import fr.insa.allouche.infoprojet.Treillis;
 import fr.insa.allouche.infoprojet.TriangleTerrain;
 import fr.insa.allouche.infoprojet.TypeBarre;
-import static fr.insa.allouche.infoprojet.calculMatrice.Calcul.Regroup;
+import fr.insa.allouche.infoprojet.calculMatrice.Calcul;
+import static fr.insa.allouche.infoprojet.calculMatrice.Calcul.regroup;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -124,11 +125,10 @@ public class Controleur {
             double px = t.getX();
             double py = t.getY();
             this.pointTT[2] = new Point(px, py);
-            Treillis model = this.vue.getModel();
             TriangleTerrain tT = new TriangleTerrain(pointTT[0], pointTT[1], pointTT[2]);
             // this.vue.getModel().getBase().addTriangleTerrain(tT);
             this.vue.getModel().addTriangleTerrain(tT);
-            System.out.println("tt :" + this.vue.getModel().getBase().toString());
+            System.out.println("identifiant Triangle Terrain : "+tT.getId());
             this.vue.redrawAll();
             this.changeEtat(39);
         } else if (this.etat == 40) {
@@ -149,8 +149,8 @@ public class Controleur {
             this.vue.redrawAll();
             this.changeEtat(40);
         } else if (this.etat == 50) {
-            Treillis model = this.vue.getModel();
-            System.out.println("model :" + model);
+//            Treillis model = this.vue.getModel();
+//            System.out.println("model :" + model);
 //            Alert dialog = new Alert(AlertType.INFORMATION);
 //            dialog.setTitle("An information dialog-box");
 //            dialog.setHeaderText("An information dialogwithheader");
@@ -165,7 +165,6 @@ public class Controleur {
 //            double distanceEC = segt.distancePoint(clic);
 //            double distance90 = segt.distancePoint(clic);
         } else if (this.etat == 60) {
-            Treillis model = this.vue.getModel();
             Point clic = new Point(t.getX(), t.getY());
             creationAD(clic);
             
@@ -247,19 +246,24 @@ public class Controleur {
 
         } else if (this.etat == 130) {
             Treillis model = this.vue.getModel();
-            String S = Regroup(model);
-            Alert dialogW = new Alert(AlertType.INFORMATION);
-            
-            dialogW.setTitle("Isostatisme du Treillis");
-            if (S == "Les types de barres sont bons!") {
-                dialogW.setHeaderText(null);
-                dialogW.setContentText("Le Treillis est isostatique et les types des barres sont les bons.");
-                dialogW.showAndWait();
-            } else {
-                dialogW.setHeaderText(null);
-                dialogW.setContentText("Le Treillis n'est pas isostatique car" + S);
-                dialogW.showAndWait();
+            Calcul.regroup(model);
+            for (int i = 0; i < model.getIdentite().getIdVersObjet().size(); i++) {
+            System.out.println(model.getIdentite().getIdVersObjet().get(i));    
             }
+            
+//            String S = Regroup(model);
+//            Alert dialogW = new Alert(AlertType.INFORMATION);
+//            
+//            dialogW.setTitle("Isostatisme du Treillis");
+//            if (S == "Les types de barres sont bons!") {
+//                dialogW.setHeaderText(null);
+//                dialogW.setContentText("Le Treillis est isostatique et les types des barres sont les bons.");
+//                dialogW.showAndWait();
+//            } else {
+//                dialogW.setHeaderText(null);
+//                dialogW.setContentText("Le Treillis n'est pas isostatique car" + S);
+//                dialogW.showAndWait();
+//            }
 
             //plus qu'a faire ta méthode je m'occuperé d'afficher dans une fenètre pop ou sinon tien le lien pour en faire c'est pas compliqué ! http://remy-manu.no-ip.biz/Java/Tutoriels/JavaFX/PDF/ihm1_fx_10_man.pdf
             this.changeEtat(39);
