@@ -89,6 +89,14 @@ public class Identificateur<Object> {
         this.idVersObjet.put(id, obj);
         this.ObjetVersId.put(obj, id);
     }
+
+    public Map<Integer, Object> getIdVersObjet() {
+        return idVersObjet;
+    }
+
+    public Map<Object, Integer> getObjetVersId() {
+        return ObjetVersId;
+    }
     
     
    
