@@ -102,6 +102,10 @@ public class interfaceDessin extends BorderPane {
     
 
     public interfaceDessin(Treillis model) {
+        this(model,20);
+    }
+    
+    public interfaceDessin(Treillis model, int etat ) {
 
         this.inStage = inStage;
         // this.curFile = fromFile;
@@ -234,6 +238,7 @@ public class interfaceDessin extends BorderPane {
         this.zoneconstructible.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         this.choiceBoxN.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         this.calcul.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        this.controleur.changeEtat(etat);
         
         
         this.imageselect.setFitHeight(50);
@@ -349,7 +354,6 @@ public class interfaceDessin extends BorderPane {
             
             
             
-            this.controleur.changeEtat(20);
 //        } else {
         }
 

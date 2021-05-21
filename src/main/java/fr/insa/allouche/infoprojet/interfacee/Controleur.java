@@ -896,9 +896,10 @@ public class Controleur {
                 Treillis lue = Treillis.lecture(f);
                 Stage nouveau = new Stage();
                 nouveau.setTitle(f.getName());
-                Scene sc = new Scene(new interfaceDessin(lue), 800, 600);
+                Scene sc = new Scene(new interfaceDessin(lue,39), 800, 600);
                 nouveau.setScene(sc);
                 nouveau.show();
+                
             } catch (Exception ex) {
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Erreur");

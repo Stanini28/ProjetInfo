@@ -46,7 +46,7 @@ public class Calcul {
 
     public static Matrice Calcul(Treillis T) {
 
-        Matrice Total = new Matrice(2 * T.getContient().size(), T.getIdentite().getObjetVersId().size());
+        Matrice Total = new Matrice(2 * T.getContient().size(), T.getIdentite().getObjetVersId().size()+1);
         Matrice Membre2 = new Matrice(2 * T.getContient().size(), 1);
         double epsilon_pivot = 0.00000001;
 
