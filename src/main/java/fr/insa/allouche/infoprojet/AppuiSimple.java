@@ -29,6 +29,11 @@ public class AppuiSimple extends NoeudAppui {
         //segT.add(this);
         segT.getAppartient().add(this);
     }
+    public AppuiSimple(double alpha, SegmentTerrain segT, TriangleTerrain tt) {
+        super(alpha, segT, Color.CHOCOLATE, tt);
+        //segT.add(this);
+        segT.getAppartient().add(this);
+    }
     
     public AppuiSimple(SegmentTerrain segT){
         super(0, segT, Color.CHOCOLATE);

@@ -76,10 +76,12 @@ public abstract class NoeudAppui extends Noeud {
         System.out.println("k = " + this.k);
     }
 
+    
 //    public NoeudAppui(SegmentTerrain segT, Color color){
 //        new AppuiSimple(0, segT, color);
 //    }
 //    
+
     public void calculAlpha() {
         double px = this.getPosition().getPX();
         double py = this.getPosition().getPY();
@@ -103,5 +105,4 @@ public abstract class NoeudAppui extends Noeud {
         return j;
     }
 
-    
 }

@@ -1019,8 +1019,8 @@ public class Treillis {
     }
 
     public static void main(String[] args) {
-        //ExempleSauvegarde();
-        testLecture();
+        ExempleSauvegarde();
+        //testLecture();
     }
 
     public static Treillis lecture(File fin) throws IOException {
@@ -1074,7 +1074,7 @@ public class Treillis {
                     } else {
                         segt = tt.getSegTerrain3();
                     }
-                    AppuiDouble ad = new AppuiDouble(Double.parseDouble(bouts[4]), segt);
+                    AppuiDouble ad = new AppuiDouble(Double.parseDouble(bouts[4]), segt, tt);
                     treillis.addAppuiDoubleIdExtist(ad);
                     ad.setId((Integer.parseInt(bouts[1])));
                     treillis.identite.associe(Integer.parseInt(bouts[1]), ad);
@@ -1090,7 +1090,7 @@ public class Treillis {
                     } else {
                         segt = tt.getSegTerrain3();
                     }
-                    AppuiSimple as = new AppuiSimple(Double.parseDouble(bouts[4]), segt);
+                    AppuiSimple as = new AppuiSimple(Double.parseDouble(bouts[4]), segt, tt);
                     treillis.addAppuiSimpleIdExtist(as);
                     as.setId((Integer.parseInt(bouts[1])));
                     treillis.identite.associe(Integer.parseInt(bouts[1]), as);
@@ -1104,14 +1104,11 @@ public class Treillis {
                     System.out.println(treillis);
                 } //                } else if (finTriangle == true && finCatalogue == true && finNoeuds == true) {
                 else if (bouts[0].equals("Barre")) {
-                    System.out.println("type barre " + Integer.parseInt(bouts[2]) + " " + treillis.getIdentite().getObj(Integer.parseInt(bouts[2])));
                     int id = Integer.parseInt(bouts[1]);
                     int numTypeBarre = Integer.parseInt(bouts[2]);
-                    System.out.println("type barre id " + numTypeBarre + " : " + treillis.getIdentite().getObj(numTypeBarre));
                     TypeBarre tb = (TypeBarre) treillis.getIdentite().getObj(numTypeBarre);
                     int idNoeudDebut = Integer.parseInt(bouts[3]);
                     int idNoeudFin = Integer.parseInt(bouts[4]);
-                    System.out.println("trouve pour id " + idNoeudDebut + " : " + treillis.getIdentite().getObj(idNoeudDebut));
                     String noeud = treillis.getIdentite().getObj(idNoeudDebut).toString();
                     String[] noeudSplit = noeud.split(",");
                     for (int i = 0; i < noeudSplit.length; i++) {

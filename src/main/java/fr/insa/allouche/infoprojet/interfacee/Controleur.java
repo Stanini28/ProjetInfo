@@ -611,7 +611,7 @@ public class Controleur {
         //---Getresponsevalue (traditionalway)
         if (textIn.isPresent()) {
             double distance = Double.parseDouble(textIn.get());
-            AppuiDouble ad = new AppuiDouble(distance, segt);
+            AppuiDouble ad = new AppuiDouble(distance, segt, segt.getFaitPartieDe());
             if (this.vue.getModel().nZoneConstructible(ad.getPosition()) == true) {
                 this.vue.getModel().addAppuiDouble(ad);
                 segt.add(ad);
@@ -648,7 +648,7 @@ public class Controleur {
         //---Getresponsevalue (traditionalway)
         if (textIn.isPresent()) {
             double distance = Double.parseDouble(textIn.get());
-            AppuiSimple as = new AppuiSimple(distance, segt);
+            AppuiSimple as = new AppuiSimple(distance, segt, segt.getFaitPartieDe());
             if (this.vue.getModel().nZoneConstructible(as.getPosition()) == true) {
                 this.vue.getModel().addAppuiSimple(as);
                 //segt.add(as);
@@ -785,7 +785,7 @@ public class Controleur {
                 if (this.vue.getModel().nZoneConstructible(clic) == true) {
                     this.noeudB[1] = new NoeudSimple(clic);
                     this.vue.getModel().addBarre(new Barre(this.noeudB[0], this.noeudB[1], color), type, color);
-                    this.vue.getModel().addNoeudSimple(new NoeudSimple(this.noeudB[1].getPosition()));
+                    this.vue.getModel().addNoeudSimple((NoeudSimple) this.noeudB[1]);
                     this.changeEtat(etat - 1);
                 } else {
                     Alert dialogW = new Alert(AlertType.WARNING);
