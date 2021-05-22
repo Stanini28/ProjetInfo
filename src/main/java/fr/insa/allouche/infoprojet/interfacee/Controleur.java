@@ -40,9 +40,9 @@ import javafx.stage.Stage;
 public class Controleur {
 
     //private double[] type1 = {20, 40, 200, 700, 800};
-    private TypeBarre type1 = new TypeBarre(20, 10, 200, 900, 700, Color.LIMEGREEN);
-    private TypeBarre type2 = new TypeBarre(20, 10, 300, 500, 500, Color.GREEN);
-    private TypeBarre type3 = new TypeBarre(20, 10, 400, 1000, 1000, Color.GREY);
+    private TypeBarre type1 = new TypeBarre(20, 10, 200, 900, -700, Color.LIMEGREEN);
+    private TypeBarre type2 = new TypeBarre(20, 10, 300, 500, -500, Color.GREEN);
+    private TypeBarre type3 = new TypeBarre(20, 10, 400, 10000, -10000, Color.GREY);
     private Point[] pointzc = new Point[4];
     private Point[] pointTT = new Point[3];
     private Point[] pointB = new Point[2];

@@ -196,7 +196,7 @@ public class Calcul {
                     if (T.getCompose().get(k).getType().getrComp() < Math.abs(K.coeffs[i][0])
                             || T.getCompose().get(k).getType().getrTraction() < K.coeffs[i][0]) {
                         if (K.coeffs[i][0] <= 0) {
-                            if (T.getCompose().get(k).getType().getrComp() < Math.abs(K.coeffs[i][0])) {
+                            if (Math.abs(T.getCompose().get(k).getType().getrComp()) < Math.abs(K.coeffs[i][0])) {
                                 s = s + "\n - la barre n°" + T.getCompose().get(k).getId() + " a une trop forte compression.\n";
                             }
                         } else {
