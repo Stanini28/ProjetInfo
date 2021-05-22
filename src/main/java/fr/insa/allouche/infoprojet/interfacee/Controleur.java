@@ -51,13 +51,13 @@ public class Controleur {
     private AppuiSimple[] noeudASB = new AppuiSimple[2];
     private interfaceDessin vue;
     private Color couleur;
-    
+
     private int etat;
-    
+
     public Controleur(interfaceDessin vue) {
         this.vue = vue;
     }
-    
+
     public void changeEtat(int etat) {
         if (etat == 20 || etat == 21 || etat == 22 || etat == 23) {
             this.vue.getRemove().setDisable(true);
@@ -85,7 +85,7 @@ public class Controleur {
         }
         this.etat = etat;
     }
-    
+
     void clicDansZoneDessin(MouseEvent t) {
         if (this.etat == 20) {
             double px = t.getX();
@@ -127,7 +127,7 @@ public class Controleur {
             TriangleTerrain tT = new TriangleTerrain(pointTT[0], pointTT[1], pointTT[2]);
             // this.vue.getModel().getBase().addTriangleTerrain(tT);
             this.vue.getModel().addTriangleTerrain(tT);
-            System.out.println("identifiant Triangle Terrain : "+tT.getId());
+            System.out.println("identifiant Triangle Terrain : " + tT.getId());
             this.vue.redrawAll();
             this.changeEtat(39);
         } else if (this.etat == 40) {
@@ -166,7 +166,7 @@ public class Controleur {
         } else if (this.etat == 60) {
             Point clic = new Point(t.getX(), t.getY());
             creationAD(clic);
-            
+
             this.vue.redrawAll();
             this.changeEtat(60);
         } else if (this.etat == 70) {
@@ -202,13 +202,13 @@ public class Controleur {
             dialogC1.setHeaderText(null);
             dialogC1.setContentText("Le type de barre 1 est :" + this.type1.toString());
             Optional<ButtonType> answer1 = dialogC1.showAndWait();
-            
+
             Alert dialogC2 = new Alert(AlertType.CONFIRMATION);
             dialogC2.setTitle("A confirmation choix type barre");
             dialogC2.setHeaderText(null);
             dialogC2.setContentText("Le type de barre 2 est :" + this.type2.toString());
             Optional<ButtonType> answer2 = dialogC2.showAndWait();
-            
+
             Alert dialogC3 = new Alert(AlertType.CONFIRMATION);
             dialogC3.setTitle("A confirmation choix type barre");
             dialogC3.setHeaderText(null);
@@ -245,88 +245,89 @@ public class Controleur {
 
         } else if (this.etat == 130) {
             Treillis model = this.vue.getModel();
-      
+
             String S = Calcul.regroup(model);
             Alert dialogW = new Alert(AlertType.INFORMATION);
-            
+
             dialogW.setTitle("Isostatisme du Treillis");
             if (S == "Les types de barres sont bons!") {
                 dialogW.setHeaderText(null);
                 dialogW.setContentText("Le Treillis est isostatique et les types des barres sont les bons.");
-               dialogW.showAndWait();
-            } else {
-               dialogW.setHeaderText(null);
-                dialogW.setContentText("Le Treillis n'est pas isostatique car" + S);
+                dialogW.showAndWait();
+            }
+            if (S != "Les types de barres sont bons!") {
+                dialogW.setHeaderText(null);
+                dialogW.setContentText("Le Treillis est isostatique. Cependant, il n'est pas fonctionnel car :" + S);
                 dialogW.showAndWait();
             }
 
             //plus qu'a faire ta méthode je m'occuperé d'afficher dans une fenètre pop ou sinon tien le lien pour en faire c'est pas compliqué ! http://remy-manu.no-ip.biz/Java/Tutoriels/JavaFX/PDF/ihm1_fx_10_man.pdf
             this.changeEtat(39);
-        } else if (this.etat ==135){
+        } else if (this.etat == 135) {
             Point clic = new Point(t.getX(), t.getY());
             this.changeCouleur(this.vue.getModel(), clic);
             this.vue.redrawAll();
         }
         System.out.println(this.vue.getModel().toString());
     }
-    
+
     void boutonSelect(ActionEvent t
     ) {
         this.changeEtat(100);
     }
-    
+
     void boutonZoneConstructible(ActionEvent t
     ) {
         this.changeEtat(20);
     }
-    
+
     void boutontriangle_Terrain(ActionEvent t
     ) {
         this.changeEtat(30);
     }
-    
+
     void splitMenuButtonNS(ActionEvent t
     ) {
         this.changeEtat(40);
     }
-    
+
     void splitMenuButtonAS(ActionEvent t
     ) {
         this.changeEtat(50);
     }
-    
+
     void splitMenuButtonAD(ActionEvent t
     ) {
         this.changeEtat(60);
     }
-    
+
     void buttonBarre1() {
         this.changeEtat(70);
     }
-    
+
     void buttonBarre2(ActionEvent t
     ) {
         this.changeEtat(80);
     }
-    
+
     void buttonBarre3(ActionEvent t
     ) {
         this.changeEtat(90);
     }
-    
+
     void buttonBarre4(ActionEvent t) {
         this.changeEtat(95);
     }
-    
+
     void bouttonSuprimer(ActionEvent t
     ) {
         this.changeEtat(110);
     }
-    
+
     void bouttonRemoveAll(ActionEvent t) {
         this.changeEtat(120);
     }
-    
+
     void bouttonCalcul(ActionEvent t) {
         this.changeEtat(130);
     }
@@ -335,7 +336,7 @@ public class Controleur {
         this.changeEtat(135);
         this.couleur = couleur;
     }
-    
+
     public void selction(Treillis model, Point clic) {
         SegmentTerrain segt = model.plusProcheST(clic);
         Noeud noeud = model.plusProcheN(clic);
@@ -351,7 +352,7 @@ public class Controleur {
         }
         if (res.equals("S")) {
             segt.setColor(Color.VIOLET);
-            
+
             System.out.println("seg " + segt.getColor());
         }
         if (res.equals("NS")) {
@@ -411,8 +412,9 @@ public class Controleur {
                 noeud.setColorSelect(Color.VIOLET);
             }
         }
-        
+
     }
+
     public void changeCouleur(Treillis model, Point clic) {
         SegmentTerrain segt = model.plusProcheST(clic);
         Noeud noeud = model.plusProcheN(clic);
@@ -429,7 +431,7 @@ public class Controleur {
         }
         if (res.equals("S")) {
             segt.setColor(couleur);
-            
+
             System.out.println("seg " + segt.getColor());
         }
         if (res.equals("NS")) {
@@ -491,9 +493,9 @@ public class Controleur {
                 noeud.setColor(couleur);
             }
         }
-        
+
     }
-    
+
     public void supression(Treillis model, Point clic) {
         SegmentTerrain segt = model.plusProcheST(clic);
         Noeud noeud = model.plusProcheN(clic);
@@ -593,11 +595,11 @@ public class Controleur {
             }
         }
     }
-    
+
     public AppuiDouble creationAD(Point clic) {
-        
+
         SegmentTerrain segt = this.vue.getModel().plusProcheST(clic);
-        
+
         TextInputDialog inDialog = new TextInputDialog("Guest");
         inDialog.setTitle("A Text-Input Dialog");
         inDialog.setHeaderText("Le segment sélectioné mesure :"
@@ -632,7 +634,7 @@ public class Controleur {
             return null;
         }
     }
-    
+
     public AppuiSimple creationAS(Point clic) {
         SegmentTerrain segt = this.vue.getModel().plusProcheST(clic);
         TextInputDialog inDialog = new TextInputDialog("Guest");
@@ -667,7 +669,7 @@ public class Controleur {
             return null;
         }
     }
-    
+
     public boolean bonneLongeurB(Point clic, TypeBarre type) {
         double longeure = Barre.longueur(this.noeudB[0].getPosition(), clic);
         if (longeure < type.getlMin()
@@ -690,7 +692,7 @@ public class Controleur {
             return true;
         }
     }
-    
+
     public void typeBarre1(Point clic, int etat) {
         Alert dBox = new Alert(AlertType.CONFIRMATION);
         dBox.setTitle("choix du type de noeud");
@@ -714,18 +716,18 @@ public class Controleur {
                 this.noeudB[0] = ns;
                 this.vue.getModel().addNoeudSimple(ns);
                 this.changeEtat(etat + 1);
-                TextInputDialog inDialog = new TextInputDialog("100");
-                
-                inDialog.setTitle("Poids du Noeud Simple");
-                inDialog.setHeaderText("Veuillez entrer un poids pour le Noeud Simple ");
-                inDialog.setContentText("Poids : ");
-                
-                Optional<String> textIn = inDialog.showAndWait();
-                
-                if (textIn.isPresent()){
-                    ns.setForceY(Double.parseDouble(textIn.get()));
-                }
-                
+//                TextInputDialog inDialog = new TextInputDialog("100");
+//
+//                inDialog.setTitle("Poids du Noeud Simple");
+//                inDialog.setHeaderText("Veuillez entrer un poids pour le Noeud Simple ");
+//                inDialog.setContentText("Poids : ");
+//
+//                Optional<String> textIn = inDialog.showAndWait();
+//
+//                if (textIn.isPresent()) {
+//                    ns.setForceY(Double.parseDouble(textIn.get()));
+//                }
+
             } else {
                 Alert dialogW = new Alert(AlertType.WARNING);
                 dialogW.setTitle("A warning dialog-box");
@@ -769,7 +771,7 @@ public class Controleur {
             this.changeEtat(etat);
         }
     }
-    
+
     public void typeBarre2(Point clic, TypeBarre type, Color color, int etat) {
         Treillis model = this.vue.getModel();
         Alert dBox = new Alert(AlertType.CONFIRMATION);
@@ -785,7 +787,7 @@ public class Controleur {
         ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
         dBox.getButtonTypes().setAll(btnNS, btnAS, btnAD, btoldn, btnCancel);
         Optional<ButtonType> choice = dBox.showAndWait();
-        
+
         if (choice.get() == btnNS) {
             if (bonneLongeurB(clic, type) == false) {
                 if (this.noeudB[0].getLiee() == null) {
@@ -808,22 +810,22 @@ public class Controleur {
                     dialogW.showAndWait();
                     this.changeEtat(etat);
                 }
-                
-                TextInputDialog inDialog = new TextInputDialog("100");
-                
-                inDialog.setTitle("Poids du Noeud Simple");
-                inDialog.setHeaderText("Veuillez entrer un poids pour le Noeud Simple ");
-                inDialog.setContentText("Poids : ");
-                
-                Optional<String> textIn = inDialog.showAndWait();
-                
-                if (textIn.isPresent()){
-                    this.noeudB[1].setForceY(Double.parseDouble(textIn.get()));
-                }
+
             }
+//            TextInputDialog inDialog = new TextInputDialog("100");
+//
+//            inDialog.setTitle("Poids du Noeud Simple");
+//            inDialog.setHeaderText("Veuillez entrer un poids pour le Noeud Simple ");
+//            inDialog.setContentText("Poids : ");
+//
+//            Optional<String> textIn = inDialog.showAndWait();
+//            if (textIn.isPresent()) {
+//                this.noeudB[1].setForceY(Double.parseDouble(textIn.get()));
+//            }
+
         } else if (choice.get() == btnAS) {
             AppuiSimple as = creationAS(clic);
-            
+
             if (bonneLongeurB(as.getPosition(), type) == false) {
                 this.vue.getModel().removeNoeud(as);
                 if (this.noeudB[0].getLiee() == null) {
@@ -877,7 +879,7 @@ public class Controleur {
             this.changeEtat(etat - 1);
         }
     }
-    
+
     private void realSave(File f) {
         try {
             this.vue.getModel().sauvegarde(f);
@@ -888,13 +890,13 @@ public class Controleur {
             alert.setTitle("Erreur");
             alert.setHeaderText("Problème durant la sauvegarde");
             alert.setContentText(ex.getLocalizedMessage());
-            
+
             alert.showAndWait();
         } finally {
             this.changeEtat(39);
         }
     }
-    
+
     public void menuSave(ActionEvent t) {
         if (this.vue.getCurFile() == null) {
             this.menuSaveAs(t);
@@ -902,7 +904,7 @@ public class Controleur {
             this.realSave(this.vue.getCurFile());
         }
     }
-    
+
     public void menuSaveAs(ActionEvent t) {
         FileChooser chooser = new FileChooser();
         File f = chooser.showSaveDialog(this.vue.getInStage());
@@ -910,7 +912,7 @@ public class Controleur {
             this.realSave(f);
         }
     }
-    
+
     public void menuOpen(ActionEvent t) {
         FileChooser chooser = new FileChooser();
         File f = chooser.showOpenDialog(this.vue.getInStage());
@@ -919,23 +921,23 @@ public class Controleur {
                 Treillis lue = Treillis.lecture(f);
                 Stage nouveau = new Stage();
                 nouveau.setTitle(f.getName());
-                Scene sc = new Scene(new interfaceDessin(lue,39), 800, 600);
+                Scene sc = new Scene(new interfaceDessin(lue, 39), 800, 600);
                 nouveau.setScene(sc);
                 nouveau.show();
-                
+
             } catch (Exception ex) {
                 Alert alert = new Alert(AlertType.ERROR);
                 alert.setTitle("Erreur");
                 alert.setHeaderText("Problème durant la sauvegarde");
                 alert.setContentText(ex.getLocalizedMessage());
-                
+
                 alert.showAndWait();
             } finally {
                 this.changeEtat(39);
             }
         }
     }
-    
+
     public void menuNouveau(ActionEvent t) {
         Stage nouveau = new Stage();
         nouveau.setTitle("Nouveau");
@@ -943,7 +945,7 @@ public class Controleur {
         nouveau.setScene(sc);
         nouveau.show();
     }
-    
+
     public void menuApropos(ActionEvent t) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("A propos");
@@ -952,8 +954,8 @@ public class Controleur {
                 + "réalisé par François de Bertrand de Beuvron\n"
                 + "comme tutoriel pour un cours de POO\n"
                 + "à l'INSA de Strasbourg");
-        
+
         alert.showAndWait();
     }
-    
+
 }

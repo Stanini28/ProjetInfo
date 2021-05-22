@@ -197,11 +197,11 @@ public class Calcul {
                             || T.getCompose().get(k).getType().getrTraction() < K.coeffs[i][0]) {
                         if (K.coeffs[i][0] <= 0) {
                             if (T.getCompose().get(k).getType().getrComp() < Math.abs(K.coeffs[i][0])) {
-                                s = s + "La barre n°" + T.getCompose().get(k).getId() + " a une trop faible compression.\n";
+                                s = s + "\n - la barre n°" + T.getCompose().get(k).getId() + " a une trop forte compression.\n";
                             }
                         } else {
                             if (T.getCompose().get(k).getType().getrComp() > K.coeffs[i][0]) {
-                                s = s + "La barre n°" + T.getCompose().get(k).getId() + " a une trop forte traction.\n";
+                                s = s + "\n - la barre n°" + T.getCompose().get(k).getId() + " a une trop forte traction.\n";
                             }
                         }
                     }
