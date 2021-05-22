@@ -292,61 +292,61 @@ public class interfaceDessin extends BorderPane {
 
         
         
-            this.Select.setOnMouseMoved(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent t) {
-                    
-                    interfaceDessin.this.Select.setStyle("-fx-background-color: #E3F5F0;");
-                    
-                    }
-            });
-           
-            
-        
-            
-            this.catalogueBarre.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent t) {
-                    interfaceDessin.this.catalogueBarre.setStyle("-fx-background-color: #E3F5F0;");
-                }
-            });
-            this.supprimer.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent t) {
-                    interfaceDessin.this.supprimer.setStyle("-fx-background-color: #E3F5F0;");
-                }
-            });
-            this.zoneconstructible.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent t) {
-                    interfaceDessin.this.zoneconstructible.setStyle("-fx-background-color: #E3F5F0;");
-                }
-            });
-            this.triangle_Terrain.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent t) {
-                    interfaceDessin.this.triangle_Terrain.setStyle("-fx-background-color: #E3F5F0;");
-                }
-            });
-            this.choiceBoxN.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent t) {
-                    interfaceDessin.this.choiceBoxN.setStyle("-fx-background-color: #E3F5F0;");
-                }
-            });
-            this.cpCouleur.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent t) {
-                    interfaceDessin.this.cpCouleur.setStyle("-fx-background-color: #E3F5F0;");
-                }
-            });
-            this.calcul.setOnMousePressed(new EventHandler<MouseEvent>() {
-                @Override
-                public void handle(MouseEvent t) {
-                    interfaceDessin.this.calcul.setStyle("-fx-background-color: #E3F5F0;");
-                }
-            });
-            
+//            this.Select.setOnMouseMoved(new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent t) {
+//                    
+//                    interfaceDessin.this.Select.setStyle("-fx-background-color: #E3F5F0;");
+//                    
+//                    }
+//            });
+//           
+//            
+//        
+//            
+//            this.catalogueBarre.setOnMousePressed(new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent t) {
+//                    interfaceDessin.this.catalogueBarre.setStyle("-fx-background-color: #E3F5F0;");
+//                }
+//            });
+//            this.supprimer.setOnMousePressed(new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent t) {
+//                    interfaceDessin.this.supprimer.setStyle("-fx-background-color: #E3F5F0;");
+//                }
+//            });
+//            this.zoneconstructible.setOnMousePressed(new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent t) {
+//                    interfaceDessin.this.zoneconstructible.setStyle("-fx-background-color: #E3F5F0;");
+//                }
+//            });
+//            this.triangle_Terrain.setOnMousePressed(new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent t) {
+//                    interfaceDessin.this.triangle_Terrain.setStyle("-fx-background-color: #E3F5F0;");
+//                }
+//            });
+//            this.choiceBoxN.setOnMousePressed(new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent t) {
+//                    interfaceDessin.this.choiceBoxN.setStyle("-fx-background-color: #E3F5F0;");
+//                }
+//            });
+//            this.cpCouleur.setOnMousePressed(new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent t) {
+//                    interfaceDessin.this.cpCouleur.setStyle("-fx-background-color: #E3F5F0;");
+//                }
+//            });
+//            this.calcul.setOnMousePressed(new EventHandler<MouseEvent>() {
+//                @Override
+//                public void handle(MouseEvent t) {
+//                    interfaceDessin.this.calcul.setStyle("-fx-background-color: #E3F5F0;");
+//                }
+//            });
+//            
             
             
             this.zoneDessin = new DessinCanvas(this);
