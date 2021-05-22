@@ -16,7 +16,9 @@ import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.paint.Color;
 
 public class Treillis {
@@ -225,6 +227,17 @@ public class Treillis {
             noeud.setId(this.identite.getOrCreateId(contient));
             this.Simp.add(noeud);
         }
+        TextInputDialog inDialog = new TextInputDialog("100");
+                
+                inDialog.setTitle("Poids du Noeud Simple");
+                inDialog.setHeaderText("Veuillez entrer un poids pour le Noeud Simple ");
+                inDialog.setContentText("Poids : ");
+                
+                Optional<String> textIn = inDialog.showAndWait();
+                
+                if (textIn.isPresent()){
+                    noeud.setForceY(Double.parseDouble(textIn.get()));
+                }
     }
 
     public void addAppuiSimpleIdExtist(AppuiSimple noeud) {
