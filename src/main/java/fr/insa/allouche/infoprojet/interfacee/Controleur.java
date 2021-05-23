@@ -57,7 +57,8 @@ public class Controleur {
     public Controleur(interfaceDessin vue) {
         this.vue = vue;
     }
-
+    // Méthode permettant de définir l'état des bouttons selon les posiblité 
+    //offerte à l'utilisateur pour créer le treillis
     public void changeEtat(int etat) {
         if (etat == 20 || etat == 21 || etat == 22 || etat == 23) {
             this.vue.getRemove().setDisable(true);
@@ -85,7 +86,7 @@ public class Controleur {
         }
         this.etat = etat;
     }
-
+    
     void clicDansZoneDessin(MouseEvent t) {
         if (this.etat == 20) {
             double px = t.getX();
@@ -336,7 +337,12 @@ public class Controleur {
         this.changeEtat(135);
         this.couleur = couleur;
     }
-
+    // méthode perméttant de séléctioner un objet selon la proximité de l'objet 
+    //le plus proche
+    //Les méthode "setCouleurSelect" permettent de modifier la couleur de l'objet
+    //de manière éphémère de telle sorte que losrque l'on appui sur un autre boutton 
+    //la couleur de base de l'objet revienne
+    //La méthode redrawAllSelect à était créé à cet effet
     public void selction(Treillis model, Point clic) {
         SegmentTerrain segt = model.plusProcheST(clic);
         Noeud noeud = model.plusProcheN(clic);
@@ -414,7 +420,7 @@ public class Controleur {
         }
 
     }
-
+    
     public void changeCouleur(Treillis model, Point clic) {
         SegmentTerrain segt = model.plusProcheST(clic);
         Noeud noeud = model.plusProcheN(clic);
@@ -495,7 +501,9 @@ public class Controleur {
         }
 
     }
-
+    //Méthode permétttant de supprimer un objet du treillis
+    //Nous avons fait le choix de le pas donner la possiblité à l'utilisateur
+    //de supprimer la zone constructible ou encore les triangles terrains
     public void supression(Treillis model, Point clic) {
         SegmentTerrain segt = model.plusProcheST(clic);
         Noeud noeud = model.plusProcheN(clic);
@@ -595,7 +603,8 @@ public class Controleur {
             }
         }
     }
-
+    //Les deux prochaine méthode permmettent de créer des noeud appuis
+    // Elles comportent des fenêtre pop permettant une interaction avec l'utilisateur
     public AppuiDouble creationAD(Point clic) {
 
         SegmentTerrain segt = this.vue.getModel().plusProcheST(clic);
@@ -669,7 +678,9 @@ public class Controleur {
             return null;
         }
     }
-
+    
+    //methodde permettant de calculer la longeur d'une barre et de vérifier que
+    //la barre que veux crée l'utilisateur n'est pas trop grande ou trop petite
     public boolean bonneLongeurB(Point clic, TypeBarre type) {
         double longeure = Barre.longueur(this.noeudB[0].getPosition(), clic);
         if (longeure < type.getlMin()
@@ -692,7 +703,13 @@ public class Controleur {
             return true;
         }
     }
-
+    
+    //Les deux prochaines méthodes on pour objectifs de créer un barre 
+    //la première va garder en mémoire le premier noeud grâce à un attribut
+    //la seconde va créer la barre à partir des deux noued
+    //L'utilisateur à l'opportunité de créer sa barre à partir 
+    //"d'un noued déjà existant", "d'un noued simple" "d'un noeud appui double"
+    //"noeud appui simple"
     public void typeBarre1(Point clic, int etat) {
         Alert dBox = new Alert(AlertType.CONFIRMATION);
         dBox.setTitle("choix du type de noeud");
@@ -879,7 +896,7 @@ public class Controleur {
             this.changeEtat(etat - 1);
         }
     }
-
+    //La fin du codde concerne la barre menu situé en haut de l'interface
     private void realSave(File f) {
         try {
             this.vue.getModel().sauvegarde(f);

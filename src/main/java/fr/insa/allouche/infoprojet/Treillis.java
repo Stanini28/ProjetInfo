@@ -50,7 +50,10 @@ public class Treillis {
         this.rx = new ArrayList();
         this.ry = new ArrayList();
     }
-
+    //La première partie de cette classe Treillis comporte toutes le méthodes 
+    //permétant d'ajouter ou supprimer  un objet (noeud, barre etc..) au treillis.
+    //Les methode bis (addNoeud)"Idexist" sont utilisé dans la relecture de la
+    //sauvegarde afin d'ajouter un treillis sans lui prédéfinir un identfiant.
     void setBase(Terrain base) {
         this.base = base;
     }
@@ -58,7 +61,8 @@ public class Treillis {
     public Identificateur getIdentite() {
         return identite;
     }
-
+    
+    
     public void idTT(TriangleTerrain tt) {
         tt.setId(this.identite.getOrCreateId(tt));
     }
@@ -394,7 +398,7 @@ public class Treillis {
         }
         this.base.removeTriangleTerrain(tT);
     }
-
+    //Méthode to string permétant d'afficher textuellemnt le treillis correctement
     public String toString() {
         String res = "Treillis {\n";
         for (int i = 0; i < this.compose.size(); i++) {
@@ -417,7 +421,8 @@ public class Treillis {
         }
         return res + "}";
     }
-
+    // Cette partie du code concerne le menu texte
+    //Il nous a permis de tester nos méthodes de création et d'ajout d'objet 
     public static Treillis TTest() {
         Point p1 = new Point(500, 700);
         Point p2 = new Point(100, 600);
@@ -696,10 +701,9 @@ public class Treillis {
         Treillis t = treillisTest();
         t.menuTexte();
     }
-
-    //public static void main(String[] args) {
-    //    testMenu();
-    //}
+    
+    //Methode permettant de dessiner le treillis dans son intégralité
+    //Elle utilise les méthodes "dessine" noeud, barre etc...
     public void dessine(GraphicsContext context) {
         for (int i = 0; i < this.compose.size(); i++) {
             this.compose.get(i).dessine(context);
@@ -727,7 +731,12 @@ public class Treillis {
     public List<TypeBarre> getCatalogueBarre() {
         return catalogueBarre;
     }
-
+    
+    //Partie du code se focalisant sur les différentes méthode afin de calculer
+    //la distance entre deux objets afin de puvoir retrouvé quel objet est le 
+    //plus proche du clic de la souris dans la zonne de dessin.
+    //C'est méthode servent par exemple pour faire fonctionnner le boutton selection
+    //ou encore pour changer la couleur d'un objet
     public double distancePoint(Point p) {
         if (this.contient.isEmpty()) {
             return new Point(0, 0).distancePoint(p);
@@ -762,7 +771,8 @@ public class Treillis {
             return dist;
         }
     }
-
+    // chacune des trois prochaine méthode garde en mémoire l'objet le pus proche 
+    //dans un attribut du treillis
     public Noeud plusProcheN(Point p) {
         if (this.contient.isEmpty()) {
             this.noeudPlusProche = 999;
@@ -842,7 +852,9 @@ public class Treillis {
         }
 
     }
-
+    //Cette méthode regroupe les trois dernières et renvoi un string au constructeur
+    //Si "NB" est renvoyé cela signifie que le noeud et la barre sont trèe proche
+    //du "clic" il faut donc demander confirmatioon à l'utilisateur
     public String lePlusProche() {
         String res = "";
         if (Math.abs(this.noeudPlusProche - this.segPlusProche) < 1 && this.noeudPlusProche != 999 && this.segPlusProche != 999) {
@@ -907,7 +919,8 @@ public class Treillis {
     public List<Reaction_Ry> getRy() {
         return ry;
     }
-
+    // Méthode permettant de savoir le noeud que veux créé l'utisateur se situe
+    //dans la zone constructible
     public boolean nZoneConstructible(Point pt) {
         boolean res = true;
         if (pt.getPX() < this.getBase().getXmin()
@@ -918,7 +931,8 @@ public class Treillis {
         }
         return res;
     }
-
+    // La suite du code concerne la sauvegarde et la relecture du treillis
+    //(une sauvegarde test y est aussi)
     public void sauvegarde(File F) throws IOException {
         Identificateur Num = this.identite;
 
@@ -1167,7 +1181,8 @@ public class Treillis {
             throw new Error(ex);
         }
     }
-
+    // méthode utilisé dans la lecture de la suavegarde afin de traduire l'expression
+    //littérale d'un point en absisse et ordonnée
     public static Point adapterP(String bouts) {
 
         String pt = bouts.substring(1, bouts.length() - 1);
