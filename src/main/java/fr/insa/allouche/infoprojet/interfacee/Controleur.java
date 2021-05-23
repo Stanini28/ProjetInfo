@@ -57,7 +57,7 @@ public class Controleur {
     public Controleur(interfaceDessin vue) {
         this.vue = vue;
     }
-    // Méthode permettant de définir l'état des bouttons selon les posiblité 
+    // Méthode permettant de définir l'état des boutons selon les posiblité 
     //offerte à l'utilisateur pour créer le treillis
     public void changeEtat(int etat) {
         if (etat == 20 || etat == 21 || etat == 22 || etat == 23) {
@@ -219,7 +219,7 @@ public class Controleur {
         } else if (this.etat == 100) {
             Treillis model = this.vue.getModel();
             Point clic = new Point(t.getX(), t.getY());
-            this.selction(model, clic);
+            this.selection(model, clic);
             this.vue.redrawAllSelect();
             this.changeEtat(100);
         } else if (this.etat == 110) {
@@ -343,7 +343,7 @@ public class Controleur {
     //de manière éphémère de telle sorte que losrque l'on appui sur un autre boutton 
     //la couleur de base de l'objet revienne
     //La méthode redrawAllSelect à était créé à cet effet
-    public void selction(Treillis model, Point clic) {
+    public void selection(Treillis model, Point clic) {
         SegmentTerrain segt = model.plusProcheST(clic);
         Noeud noeud = model.plusProcheN(clic);
         Barre barre = model.plusProcheB(clic);
