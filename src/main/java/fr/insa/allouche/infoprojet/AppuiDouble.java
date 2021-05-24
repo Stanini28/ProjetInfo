@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
  *
  * @author stanislasallouche
  */
+
 public class AppuiDouble extends NoeudAppui {
 
     public static double RAYON_NOEUD = 5;
