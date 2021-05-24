@@ -420,6 +420,9 @@ public class interfaceDessin extends BorderPane {
     public void redrawAllSelect() {
         this.zoneDessin.redrawAllSelect();
     }
+    public void redrawAllPbBarre() {
+        this.zoneDessin.redrawAllPbBarre();
+    }
 
     public Controleur getControleur() {
         return controleur;

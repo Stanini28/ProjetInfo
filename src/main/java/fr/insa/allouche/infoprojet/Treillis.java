@@ -38,6 +38,9 @@ public class Treillis {
     private List<Reaction_Rx> rx;
     private List<Reaction_Ry> ry;
 
+    private List barrePbT;
+    private List barrePbC;
+
     public Treillis() {
 
         this.compose = new ArrayList();
@@ -50,6 +53,7 @@ public class Treillis {
         this.rx = new ArrayList();
         this.ry = new ArrayList();
     }
+
     //La première partie de cette classe Treillis comporte toutes le méthodes 
     //permétant d'ajouter ou supprimer  un objet (noeud, barre etc..) au treillis.
     //Les methode bis (addNoeud)"Idexist" sont utilisé dans la relecture de la
@@ -61,8 +65,7 @@ public class Treillis {
     public Identificateur getIdentite() {
         return identite;
     }
-    
-    
+
     public void idTT(TriangleTerrain tt) {
         tt.setId(this.identite.getOrCreateId(tt));
     }
@@ -232,16 +235,16 @@ public class Treillis {
             this.Simp.add(noeud);
         }
         TextInputDialog inDialog = new TextInputDialog("100");
-                
-                inDialog.setTitle("Poids du Noeud Simple");
-                inDialog.setHeaderText("Veuillez entrer un poids pour le Noeud Simple ");
-                inDialog.setContentText("Poids : ");
-                
-                Optional<String> textIn = inDialog.showAndWait();
-                
-                if (textIn.isPresent()){
-                    noeud.setForceY(Double.parseDouble(textIn.get()));
-                }
+
+        inDialog.setTitle("Poids du Noeud Simple");
+        inDialog.setHeaderText("Veuillez entrer un poids pour le Noeud Simple ");
+        inDialog.setContentText("Poids : ");
+
+        Optional<String> textIn = inDialog.showAndWait();
+
+        if (textIn.isPresent()) {
+            noeud.setForceY(Double.parseDouble(textIn.get()));
+        }
     }
 
     public void addAppuiSimpleIdExtist(AppuiSimple noeud) {
@@ -398,6 +401,7 @@ public class Treillis {
         }
         this.base.removeTriangleTerrain(tT);
     }
+
     //Méthode to string permétant d'afficher textuellemnt le treillis correctement
     public String toString() {
         String res = "Treillis {\n";
@@ -421,6 +425,7 @@ public class Treillis {
         }
         return res + "}";
     }
+
     // Cette partie du code concerne le menu texte
     //Il nous a permis de tester nos méthodes de création et d'ajout d'objet 
     public static Treillis TTest() {
@@ -701,7 +706,7 @@ public class Treillis {
         Treillis t = treillisTest();
         t.menuTexte();
     }
-    
+
     //Methode permettant de dessiner le treillis dans son intégralité
     //Elle utilise les méthodes "dessine" noeud, barre etc...
     public void dessine(GraphicsContext context) {
@@ -715,9 +720,35 @@ public class Treillis {
             this.base.dessine(context);
         }
     }
+
     public void dessinePbBarre(GraphicsContext context) {
+        boolean estDessine = false;
         for (int i = 0; i < this.compose.size(); i++) {
-            this.compose.get(i).dessinePbBarre(context);
+            if (this.barrePbC != null) {
+                for (int j = 0; j < this.barrePbC.size(); j++) {
+                    if (this.compose.get(i) == this.barrePbC.get(j)) {
+                        this.compose.get(i).setCouleurBarre(Color.FUCHSIA);
+                        this.compose.get(i).dessinePbBarre(context);
+                        estDessine = true;
+                        System.out.println("pb barre check");
+                    }
+                }
+            }
+            if (this.barrePbT != null) {
+                for (int j = 0; j < this.barrePbT.size(); j++) {
+                    if (this.compose.get(i) == this.barrePbT.get(j)) {
+                        this.compose.get(i).setCouleurBarre(Color.CYAN);
+                        this.compose.get(i).dessinePbBarre(context);
+                        estDessine = true;
+                        System.out.println("pb barre check");
+                    }
+                }
+            }
+            if (estDessine == false) {
+                this.compose.get(i).dessine(context);
+                System.out.println("pas de pb barre");
+            }
+            estDessine = false;
         }
         for (int i = 0; i < this.contient.size(); i++) {
             this.contient.get(i).dessine(context);
@@ -742,7 +773,23 @@ public class Treillis {
     public List<TypeBarre> getCatalogueBarre() {
         return catalogueBarre;
     }
-    
+
+    public void setBarrePbT(List barrePbT) {
+        this.barrePbT = barrePbT;
+    }
+
+    public void setBarrePbC(List barrePbC) {
+        this.barrePbC = barrePbC;
+    }
+
+    public List getBarrePbT() {
+        return barrePbT;
+    }
+
+    public List getBarrePbC() {
+        return barrePbC;
+    }
+
     //Partie du code se focalisant sur les différentes méthode afin de calculer
     //la distance entre deux objets afin de puvoir retrouvé quel objet est le 
     //plus proche du clic de la souris dans la zonne de dessin.
@@ -782,6 +829,7 @@ public class Treillis {
             return dist;
         }
     }
+
     // chacune des trois prochaine méthode garde en mémoire l'objet le pus proche 
     //dans un attribut du treillis
     public Noeud plusProcheN(Point p) {
@@ -863,6 +911,7 @@ public class Treillis {
         }
 
     }
+
     //Cette méthode regroupe les trois dernières et renvoi un string au constructeur
     //Si "NB" est renvoyé cela signifie que le noeud et la barre sont trèe proche
     //du "clic" il faut donc demander confirmatioon à l'utilisateur
@@ -930,6 +979,7 @@ public class Treillis {
     public List<Reaction_Ry> getRy() {
         return ry;
     }
+
     // Méthode permettant de savoir le noeud que veux créé l'utisateur se situe
     //dans la zone constructible
     public boolean nZoneConstructible(Point pt) {
@@ -942,6 +992,7 @@ public class Treillis {
         }
         return res;
     }
+
     // La suite du code concerne la sauvegarde et la relecture du treillis
     //(une sauvegarde test y est aussi)
     public void sauvegarde(File F) throws IOException {
@@ -1094,11 +1145,11 @@ public class Treillis {
                     TypeBarre tb = new TypeBarre(Double.parseDouble(bouts[2]),
                             Double.parseDouble(bouts[3]), Double.parseDouble(bouts[4]),
                             Double.parseDouble(bouts[5]), Double.parseDouble(bouts[6]));
-                    
+
                     treillis.addTypeBarreIdExist(tb);
                     tb.setId(Integer.parseInt(bouts[1]));
                     treillis.identite.associe(Integer.parseInt(bouts[1]), tb);
-                    System.out.println("id type de barre : "+treillis.getCatalogueBarre().get(0).getId());
+                    System.out.println("id type de barre : " + treillis.getCatalogueBarre().get(0).getId());
                     System.out.println(treillis);
                 } //                } else if (finTriangle == true && finCatalogue == true && finNoeuds == false) {
                 else if (bouts[0].equals("AppuiDouble")) {
@@ -1192,6 +1243,7 @@ public class Treillis {
             throw new Error(ex);
         }
     }
+
     // méthode utilisé dans la lecture de la suavegarde afin de traduire l'expression
     //littérale d'un point en absisse et ordonnée
     public static Point adapterP(String bouts) {

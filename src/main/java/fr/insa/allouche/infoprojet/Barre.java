@@ -138,6 +138,11 @@ public class Barre {
         this.color = color;
     }
 
+    public void setCouleurBarre(Color couleurBarre) {
+        this.couleurBarre = couleurBarre;
+    }
+    
+
     public String toString() {
         String res = "Barre " + this.id + "{ ";
         res = res + "[" + this.getDebut().getPosition().getPX()

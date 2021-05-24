@@ -262,7 +262,7 @@ public class Controleur {
                 dialogW.showAndWait();
             }
 
-           
+            this.vue.redrawAllPbBarre();
             this.changeEtat(39);
         } else if (this.etat == 135) {
             Point clic = new Point(t.getX(), t.getY());

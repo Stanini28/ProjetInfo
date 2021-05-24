@@ -11,6 +11,9 @@ import fr.insa.allouche.infoprojet.Noeud;
 import fr.insa.allouche.infoprojet.NoeudAppui;
 import fr.insa.allouche.infoprojet.NoeudSimple;
 import fr.insa.allouche.infoprojet.Treillis;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -22,7 +25,6 @@ public class Calcul {
         return S.getappartient().getId();
     }
 
-    
     public static double PangleTerrain(NoeudAppui A) {
         double An = (Math.atan2(A.getappartient().getDebut().getPY() - A.getappartient().getFin().getPY(), A.getappartient().getDebut().getPX() - A.getappartient().getFin().getPX()) - Math.atan2(0, -1));
         return An;
@@ -37,7 +39,7 @@ public class Calcul {
 
     public static Matrice Calcul(Treillis T) {
 
-        Matrice Total = new Matrice(2 * T.getContient().size(), T.getIdentite().getObjetVersId().size()+1);
+        Matrice Total = new Matrice(2 * T.getContient().size(), T.getIdentite().getObjetVersId().size() + 1);
         double epsilon_pivot = 0.00000001;
 
         //Ajout de tous les Appuis Doubles qu'il y a sur le Treillis
@@ -58,7 +60,7 @@ public class Calcul {
                 Total.coeffs[i + 1][T.getRy().get(k).getIdRy()] = 1;
             }
         }
-        
+
         //Ajout de tous les Appuis simples qu'il y a sur le Treillis
         for (int i = T.getAdoub().size() * 2; i < (T.getAdoub().size() + T.getAsimp().size()) * 2; i = i + 2) {
             for (int k = 0; k < T.getAsimp().size(); k++) {
@@ -78,7 +80,7 @@ public class Calcul {
                 //AJOUTER FORCE REACTION X ET Y
             }
         }
-        
+
         //Ajout de tous les noeuds simples qu'il y a sur la Treillis
         for (int i = (T.getAdoub().size() + T.getAsimp().size()) * 2; i < (T.getContient().size()) * 2; i = i + 2) {
             for (int k = 0; k < T.getSimp().size(); k++) {
@@ -95,10 +97,10 @@ public class Calcul {
                 }
             }
         }
-        
+
         //Cela permet de remplacer les erreurs d'arrondis (4E-18) par 0
         for (int i = 0; i < 2 * T.getContient().size(); i++) {
-            for (int j = 0; j < T.getIdentite().getObjetVersId().size()+1; j++) {
+            for (int j = 0; j < T.getIdentite().getObjetVersId().size() + 1; j++) {
                 if (Total.coeffs[i][j] < epsilon_pivot && Total.coeffs[i][j] > 0) {
                     Total.coeffs[i][j] = 0;
                 }
@@ -150,7 +152,6 @@ public class Calcul {
     }
 
     //Permet de faire le lien entre les différents résultats et les barres 
-    
     public static Matrice Lien(Matrice M) {
         Matrice K = new Matrice(M.getNbrLig(), 1);
         int H = 0;
@@ -189,7 +190,8 @@ public class Calcul {
         if (Z.verifSolUnique() == false) {
             s = "Le treillis n'est pas isostatique";
         }
-
+        List BarreAPbC = new ArrayList ();
+        List BarreAPbT = new ArrayList ();
         for (int i = 0; i < K.getNbrLig(); i++) {
             double m = K.coeffs[i][1];
             for (int k = 0; k < T.getCompose().size(); k++) {
@@ -199,10 +201,15 @@ public class Calcul {
                         if (K.coeffs[i][0] <= 0) {
                             if (Math.abs(T.getCompose().get(k).getType().getrComp()) < Math.abs(K.coeffs[i][0])) {
                                 s = s + "\n - la barre n°" + T.getCompose().get(k).getId() + " a une trop forte compression.\n";
+                                BarreAPbC.add(T.getCompose().get(k));
+                                T.setBarrePbC(BarreAPbC);
                             }
                         } else {
                             if (T.getCompose().get(k).getType().getrComp() > K.coeffs[i][0]) {
                                 s = s + "\n - la barre n°" + T.getCompose().get(k).getId() + " a une trop forte traction.\n";
+
+                                BarreAPbT.add(T.getCompose().get(k));
+                                T.setBarrePbT(BarreAPbT);
                             }
                         }
                     }
