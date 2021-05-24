@@ -7,19 +7,10 @@ package fr.insa.allouche.infoprojet.calculMatrice;
 
 import fr.insa.allouche.infoprojet.AppuiDouble;
 import fr.insa.allouche.infoprojet.AppuiSimple;
-import fr.insa.allouche.infoprojet.Barre;
-import fr.insa.allouche.infoprojet.Identificateur;
 import fr.insa.allouche.infoprojet.Noeud;
 import fr.insa.allouche.infoprojet.NoeudAppui;
 import fr.insa.allouche.infoprojet.NoeudSimple;
-import fr.insa.allouche.infoprojet.Point;
-import fr.insa.allouche.infoprojet.Reaction_Rx;
-import fr.insa.allouche.infoprojet.Reaction_Ry;
-import fr.insa.allouche.infoprojet.SegmentTerrain;
-import fr.insa.allouche.infoprojet.Terrain;
 import fr.insa.allouche.infoprojet.Treillis;
-import fr.insa.allouche.infoprojet.TriangleTerrain;
-import fr.insa.allouche.infoprojet.TypeBarre;
 
 /**
  *
@@ -47,10 +38,9 @@ public class Calcul {
     public static Matrice Calcul(Treillis T) {
 
         Matrice Total = new Matrice(2 * T.getContient().size(), T.getIdentite().getObjetVersId().size()+1);
-        Matrice Membre2 = new Matrice(2 * T.getContient().size(), 1);
         double epsilon_pivot = 0.00000001;
 
-        //Ligne de la matrice
+        //Ajout de tous les Appuis Doubles qu'il y a sur le Treillis
         for (int i = 0; i < T.getAdoub().size() * 2; i = i + 2) {
             for (int k = 0; k < T.getAdoub().size(); k++) {
                 AppuiDouble AD = T.getAdoub().get(k);
@@ -65,10 +55,11 @@ public class Calcul {
                 }
 
                 Total.coeffs[i][T.getRx().get(k).getIdRx()] = 1;
-                Total.coeffs[i + 1][T.getRy().get(k).getIdRy()] = 1;//Problème Classe
-                //AJOUTER FORCE REACTION EN X ET EN Y
+                Total.coeffs[i + 1][T.getRy().get(k).getIdRy()] = 1;
             }
         }
+        
+        //Ajout de tous les Appuis simples qu'il y a sur le Treillis
         for (int i = T.getAdoub().size() * 2; i < (T.getAdoub().size() + T.getAsimp().size()) * 2; i = i + 2) {
             for (int k = 0; k < T.getAsimp().size(); k++) {
                 AppuiSimple AS = T.getAsimp().get(k);
@@ -87,10 +78,12 @@ public class Calcul {
                 //AJOUTER FORCE REACTION X ET Y
             }
         }
+        
+        //Ajout de tous les noeuds simples qu'il y a sur la Treillis
         for (int i = (T.getAdoub().size() + T.getAsimp().size()) * 2; i < (T.getContient().size()) * 2; i = i + 2) {
-            for (int k = 0; k < T.getSimp().size(); k++) { //Ajoute tous les noeuds simples
+            for (int k = 0; k < T.getSimp().size(); k++) {
                 NoeudSimple ns = T.getSimp().get(k);
-                for (int j = 0; j < ns.getLiee().size(); j++) {// Affiche les barres liées au Noeud Simple au dessus
+                for (int j = 0; j < ns.getLiee().size(); j++) {
                     if (ns == ns.getLiee().get(j).getDebut()) {
                         Total.coeffs[i][ns.getLiee().get(j).getId()] = Math.cos(pAngle(ns, ns.getLiee().get(j).getFin()));
                         Total.coeffs[i + 1][ns.getLiee().get(j).getId()] = -Math.sin(pAngle(ns, ns.getLiee().get(j).getFin()));
@@ -102,7 +95,8 @@ public class Calcul {
                 }
             }
         }
-
+        
+        //Cela permet de remplacer les erreurs d'arrondis (4E-18) par 0
         for (int i = 0; i < 2 * T.getContient().size(); i++) {
             for (int j = 0; j < T.getIdentite().getObjetVersId().size()+1; j++) {
                 if (Total.coeffs[i][j] < epsilon_pivot && Total.coeffs[i][j] > 0) {
@@ -114,6 +108,7 @@ public class Calcul {
         return Total;
     }
 
+    //Permet la création du Membre2 avec le poids des différents Noeuds
     public static Matrice Membre2(Treillis T) {
         Matrice Membre2 = new Matrice(2 * T.getContient().size(), 1);
 
@@ -137,6 +132,8 @@ public class Calcul {
         return Membre2;
     }
 
+    //Permet la Création d'une matrice carrée à partir de la matrice du Treillis
+    // qui était rectangulaire
     public static Matrice Création(Matrice M) {
         Matrice N = new Matrice(M.getNbrLig(), M.getNbrLig());
         int H = 0;
@@ -152,6 +149,8 @@ public class Calcul {
         return N;
     }
 
+    //Permet de faire le lien entre les différents résultats et les barres 
+    
     public static Matrice Lien(Matrice M) {
         Matrice K = new Matrice(M.getNbrLig(), 1);
         int H = 0;
@@ -165,6 +164,8 @@ public class Calcul {
         return K;
     }
 
+    //Permet de regrouper les différentes méthodes dans une seule ce qui nous facilitera
+    //la tâche dans le controleur
     public static String regroup(Treillis T) {
         for (int i = 0; i < T.getRx().size(); i++) {
             T.getRx().get(i).setIdRx(T.getIdentite().getOrCreateId(T.getRx().get(i)));
@@ -216,80 +217,4 @@ public class Calcul {
         return s;
     }
 
-    public static void main(String[] args) {
-        Point pos1 = new Point(0, 5);
-        Point pos2 = new Point(4, 0);
-        Point pos3 = new Point(-5, 0);
-        Point pos4 = new Point(1, 0);
-        Point pos5 = new Point(0, 0);
-        Point pos6 = new Point(0, -6);
-        Point pos7 = new Point(2, 0);
-        Point pos8 = new Point(-3, 0);
-        Point pos9 = new Point(1, 1);
-        Point pos10 = new Point(0, 0);
-        Point pos11 = new Point(0, 2);
-        NoeudSimple nS1 = new NoeudSimple(pos9);
-        Treillis res = new Treillis();
-        Terrain t1 = new Terrain(pos1, pos2, pos3, pos4);
-        SegmentTerrain seg1 = new SegmentTerrain(pos5, pos6);
-        SegmentTerrain seg2 = new SegmentTerrain(pos5, pos7);
-        SegmentTerrain seg3 = new SegmentTerrain(pos8, pos7);
-        TriangleTerrain tT1 = new TriangleTerrain(seg1, seg2, seg3);
-        AppuiDouble AD1 = new AppuiDouble(pos10, seg1);
-        AppuiSimple AS1 = new AppuiSimple(pos11, seg1);
-        Barre b1 = new Barre(nS1, AD1, 20, 20, 70, 900, 900);
-        Barre b2 = new Barre(nS1, AS1, 20, 20, 70, 900, 900);
-        Barre b3 = new Barre(AD1, AS1, 20, 20, 70, 900, 900);
-//        Reaction_Rx ADX = new Reaction_Rx(AD1);
-//        Reaction_Ry ADY = new Reaction_Ry(AD1);
-//        Reaction_Rx ASX = new Reaction_Rx(AS1);
-
-        res.addTerrain(t1);
-        t1.addTriangleTerrain(tT1);
-        res.addAppuiDouble(AD1);
-        res.addAppuiSimple(AS1);
-        res.addNoeudSimple(nS1);
-        res.addBarre(b1);
-        res.addBarre(b2);
-        res.addBarre(b3);
-//        res.getRx().add(ASX);
-//        res.getRx().add(ADX);
-//        res.getRy().add(ADY);
-
-//        tT1.setId(0);
-//        seg1.setId(1);
-//        seg2.setId(2);
-//        seg3.setId(3);
-//        AD1.setId(4);
-//        AS1.setId(5);
-//        nS1.setId(6);
-//        b1.setId(7);
-//        b2.setId(8);
-//        b3.setId(9);
-//        ADX.setIdRx(10);
-//        ADY.setIdRy(11);
-//        ASX.setIdRx(12);
-        AD1.forceY = 0;
-        AS1.forceY = 0;
-        nS1.forceY = 1000;
-
-        for (int i = 0; i < res.getRx().size(); i++) {
-            res.getRx().get(i).setIdRx(res.getIdentite().getOrCreateId(res.getRx().get(i)));
-        }
-
-        for (int i = 0; i < res.getRy().size(); i++) {
-            res.getRy().get(i).setIdRy(res.getIdentite().getOrCreateId(res.getRy().get(i)));
-        }
-
-        Matrice M = Calcul(res);
-        Matrice N = Création(M);
-        Matrice A = Lien(M);
-        Matrice Membre2 = Membre2(res);
-        Matrice H = N.concatCol(Membre2);
-        ResSup Z = H.resolution(Membre2);
-        Matrice K = Z.getSet().concatCol(A);
-
-        System.out.println(regroup(res));
-
-    }
 }

@@ -261,7 +261,7 @@ public class Controleur {
                 dialogW.showAndWait();
             }
 
-            //plus qu'a faire ta méthode je m'occuperé d'afficher dans une fenètre pop ou sinon tien le lien pour en faire c'est pas compliqué ! http://remy-manu.no-ip.biz/Java/Tutoriels/JavaFX/PDF/ihm1_fx_10_man.pdf
+           
             this.changeEtat(39);
         } else if (this.etat == 135) {
             Point clic = new Point(t.getX(), t.getY());
