@@ -83,4 +83,16 @@ public class DessinCanvas extends Pane {
             model.getBase().dessineSelect(context);
         }
     }
+    public void redrawAllPbBarre() {
+        GraphicsContext context = this.realCanvas.getGraphicsContext2D();
+        Treillis model = this.interfaceD.getModel();
+        context.clearRect(0, 0, realCanvas.getWidth(), realCanvas.getHeight());
+        model.dessine(context);
+//        List<Figure> select = this.interfaceD.getControleur().getSelection();
+//        if (! select.isEmpty()) {
+//            for (Figure f : select) {
+//                f.dessineSelection(context);
+//            }
+//        }
+    }
 }

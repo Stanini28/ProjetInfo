@@ -27,6 +27,7 @@ public class Barre {
     public double Fx;
     public double Fy;
     public Color color;
+    private Color couleurBarre;
 
     public Barre(Noeud debut, Noeud fin, Color color) {
         this.debut = debut;
@@ -75,13 +76,15 @@ public class Barre {
             double lMax, double rTraction, double rComp) {
         this(debut, fin, coutAuMetre, lMin, lMax, rTraction, rComp, Color.BLUE);
     }
+
     public Barre(Noeud debut, Noeud fin, TypeBarre tb) {
         this(debut, fin, tb.getCoutAuMetre(), tb.getlMin(), tb.getlMax(), tb.getrTraction(), tb.getrComp(), Color.BLUE);
     }
+
     public Barre(Noeud debut, Noeud fin, TypeBarre tb, Color couleur) {
         this(debut, fin, tb.getCoutAuMetre(), tb.getlMin(), tb.getlMax(), tb.getrTraction(), tb.getrComp(), couleur);
     }
-    
+
     public Barre() {
         this.debut = new NoeudSimple();
         this.fin = new NoeudSimple();
@@ -173,9 +176,17 @@ public class Barre {
         context.strokeLine(this.debut.position.getPX(), this.debut.position.getPY(),
                 this.fin.position.getPX(), this.fin.position.getPY());
     }
+
     public void dessineSelect(GraphicsContext context) {
         context.setLineWidth(4);
         context.setStroke(this.color);
+        context.strokeLine(this.debut.position.getPX(), this.debut.position.getPY(),
+                this.fin.position.getPX(), this.fin.position.getPY());
+    }
+
+    public void dessinePbBarre(GraphicsContext context) {
+        context.setLineWidth(4);
+        context.setStroke(this.couleurBarre);
         context.strokeLine(this.debut.position.getPX(), this.debut.position.getPY(),
                 this.fin.position.getPX(), this.fin.position.getPY());
     }
@@ -212,10 +223,10 @@ public class Barre {
 
     public void save(Writer w, Identificateur num) throws IOException {
 //        if (num.objExist(this)) {
-            //this.type.save(w, num);
-            System.out.println("id noeud début :"+this.debut.getId());
-            System.out.println("id noeud fin :"+this.fin.getId());
-            w.append("Barre;" + this.id + ";" + this.type.getId() + ";" + this.debut.getId() + ";" +this.fin.getId()  + ";" + this.saveColor(this.getColor()) + "\n");
+        //this.type.save(w, num);
+        System.out.println("id noeud début :" + this.debut.getId());
+        System.out.println("id noeud fin :" + this.fin.getId());
+        w.append("Barre;" + this.id + ";" + this.type.getId() + ";" + this.debut.getId() + ";" + this.fin.getId() + ";" + this.saveColor(this.getColor()) + "\n");
 //        }
 
     }

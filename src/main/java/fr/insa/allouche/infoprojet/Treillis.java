@@ -715,6 +715,17 @@ public class Treillis {
             this.base.dessine(context);
         }
     }
+    public void dessinePbBarre(GraphicsContext context) {
+        for (int i = 0; i < this.compose.size(); i++) {
+            this.compose.get(i).dessinePbBarre(context);
+        }
+        for (int i = 0; i < this.contient.size(); i++) {
+            this.contient.get(i).dessine(context);
+        }
+        if (this.base != null) {
+            this.base.dessine(context);
+        }
+    }
 
     public Terrain getBase() {
         return base;
