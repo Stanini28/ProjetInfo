@@ -281,7 +281,6 @@ public class Controleur {
             dialogW.setHeaderText(null);
             dialogW.setContentText("Le prix du Treillis est de " + a + "€");
             dialogW.showAndWait();
-            this.vue.redrawAllSelect();
             this.changeEtat(39);
         }
 
