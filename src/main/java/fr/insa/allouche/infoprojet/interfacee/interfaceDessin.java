@@ -88,6 +88,7 @@ public class interfaceDessin extends BorderPane {
     private MenuItem choiceN1;
     private MenuItem choiceN2;
     private MenuItem choiceN3;
+    private ToggleButton Prix;
 
     private Button removeAll;
 
@@ -135,6 +136,10 @@ public class interfaceDessin extends BorderPane {
         this.calcul = new Button("Calcul",imagecal);
         this.calcul.setOnAction((t) -> {
             this.controleur.bouttonCalcul(t);
+        });
+        this.Prix = new ToggleButton("Prix");
+        this.Prix.setOnAction((t) -> {
+            this.controleur.bouttonPrix(t);
         });
 
         this.removeAll = new Button("Remove All");
@@ -207,7 +212,7 @@ public class interfaceDessin extends BorderPane {
         this.englobe=new VBox(this.menu,this.entete);
         this.setTop(this.englobe);
         
-        this.AG= new VBox(this.Select,this.removeAll, this.cpCouleur,this.calcul, this.supprimer);
+        this.AG= new VBox(this.Select,this.removeAll, this.cpCouleur,this.calcul, this.Prix,  this.supprimer);
         this.setLeft(this.AG);
 
         this.AG.setStyle(" -fx-padding: 1;");
@@ -228,6 +233,7 @@ public class interfaceDessin extends BorderPane {
         this.choiceB4.setStyle("-fx-background-color: #e7e7f8; -fx-padding: 8;");
         this.catalogueBarre.setStyle("-fx-background-color: #0080FF; -fx-padding: 8;");
         this.calcul.setStyle("-fx-background-color: #295C92; -fx-padding: 8;");
+        this.Prix.setStyle("-fx-background-color: #295C92; -fx-padding: 8;");
 
         this.Select.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         this.catalogueBarre.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
@@ -238,6 +244,7 @@ public class interfaceDessin extends BorderPane {
         this.zoneconstructible.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         this.choiceBoxN.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         this.calcul.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
+        this.Prix.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
         this.controleur.changeEtat(etat);
         
         
@@ -285,6 +292,8 @@ public class interfaceDessin extends BorderPane {
         this.menu.setBorder(border11);
         Border border12=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
         this.calcul.setBorder(border12);
+        Border border13=new Border(new BorderStroke(Color.BLACK,BorderStrokeStyle.SOLID,CornerRadii.EMPTY,new BorderWidths(5)));
+        this.Prix.setBorder(border13);
         
         this.entete.setStyle("-fx-background-color: #CEE3F6;");
         this.AG.setStyle("-fx-background-color: #CEE3F6;");
@@ -404,7 +413,19 @@ public class interfaceDessin extends BorderPane {
                 }
             });
             
+            this.Prix.setOnMouseEntered(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent t){
+                    interfaceDessin.this.Prix.setStyle("-fx-background-color: #5DADE2;");
+                }
+            });
             
+            this.Prix.setOnMouseExited(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent t){
+                    interfaceDessin.this.Prix.setStyle("-fx-background-color: #295C92; -fx-padding: 8;");
+                }
+            });
             
             this.zoneDessin = new DessinCanvas(this);
             this.setCenter(this.zoneDessin);
@@ -531,6 +552,12 @@ public class interfaceDessin extends BorderPane {
     public void setCurFile(File curFile) {
         this.curFile = curFile;
     }
+
+    public ToggleButton getPrix() {
+        return Prix;
+    }
+    
+    
     
     
     private ImageView imageselect = new ImageView(new Image("https://image.flaticon.com/icons/png/512/99/99162.png"));

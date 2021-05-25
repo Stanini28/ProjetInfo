@@ -7,6 +7,7 @@ package fr.insa.allouche.infoprojet.calculMatrice;
 
 import fr.insa.allouche.infoprojet.AppuiDouble;
 import fr.insa.allouche.infoprojet.AppuiSimple;
+import fr.insa.allouche.infoprojet.Barre;
 import fr.insa.allouche.infoprojet.Noeud;
 import fr.insa.allouche.infoprojet.NoeudAppui;
 import fr.insa.allouche.infoprojet.NoeudSimple;
@@ -223,5 +224,14 @@ public class Calcul {
 
         return s;
     }
-
+    
+    public static int Prix(Treillis T){
+        double a=0;
+        for (int i=0; i<T.getCompose().size();i++){
+            Barre B = T.getCompose().get(i); 
+            a = a + Barre.longueur(B.getDebut().getPosition(), B.getFin().getPosition()) * 
+                    B.getType().getCoutAuMetre();
+        }
+        return (int) a;
+}
 }

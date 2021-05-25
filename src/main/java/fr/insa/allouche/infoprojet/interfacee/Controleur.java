@@ -17,6 +17,7 @@ import fr.insa.allouche.infoprojet.Treillis;
 import fr.insa.allouche.infoprojet.TriangleTerrain;
 import fr.insa.allouche.infoprojet.TypeBarre;
 import fr.insa.allouche.infoprojet.calculMatrice.Calcul;
+import static fr.insa.allouche.infoprojet.calculMatrice.Calcul.Prix;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -69,6 +70,7 @@ public class Controleur {
             this.vue.getTriangle_Terrain().setDisable(true);
             this.vue.getChoiceBoxN().setDisable(true);
             this.vue.getCatalogueBarre().setDisable(true);
+            this.vue.getPrix().setDisable(true);
         }
         if (etat == 29 || etat == 30 || etat == 31 || etat == 32 || etat == 33) {
             this.vue.getTriangle_Terrain().setDisable(false);
@@ -83,6 +85,7 @@ public class Controleur {
             this.vue.getZoneconstructible().setDisable(false);
             this.vue.getChoiceBoxN().setDisable(false);
             this.vue.getCatalogueBarre().setDisable(false);
+            this.vue.getPrix().setDisable(false);
         }
         this.etat = etat;
     }
@@ -268,7 +271,19 @@ public class Controleur {
             Point clic = new Point(t.getX(), t.getY());
             this.changeCouleur(this.vue.getModel(), clic);
             this.vue.redrawAll();
+        }else if(this.etat == 140){
+            Treillis model = this.vue.getModel();
+            double a = Prix(model);
+            
+            Alert dialogW = new Alert(AlertType.INFORMATION);
+            dialogW.setTitle("Prix du Treillis");
+            dialogW.setHeaderText(null);
+            dialogW.setContentText("Le prix du Treillis est de " + a + "€");
+            dialogW.showAndWait();
+            this.vue.redrawAllSelect();
+            this.changeEtat(39);
         }
+        
         System.out.println(this.vue.getModel().toString());
     }
 
@@ -336,6 +351,10 @@ public class Controleur {
     void bouttonCouleur(Color couleur) {
         this.changeEtat(135);
         this.couleur = couleur;
+    }
+    
+    void bouttonPrix(ActionEvent t){
+        this.changeEtat(140);
     }
     // méthode perméttant de séléctioner un objet selon la proximité de l'objet 
     //le plus proche
