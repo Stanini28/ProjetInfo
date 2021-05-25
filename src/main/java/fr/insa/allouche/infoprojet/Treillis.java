@@ -179,7 +179,11 @@ public class Treillis {
         if (barre.getCompose() != this) {
             throw new Error("La barre n'appartient pas au treillis");
         }
+        this.identite.getObjetVersId().remove(barre);
+        this.identite.getIdVersObjet().remove(barre.getId());
         this.compose.remove(barre);
+        barre.getDebut().getLiee().remove(barre);
+        barre.getFin().getLiee().remove(barre);
         barre.setCompose(null);
     }
 
@@ -187,6 +191,10 @@ public class Treillis {
 
         for (int i = 0; i < this.compose.size(); i++) {
             this.compose.get(i).setCompose(null);
+            this.compose.get(i).getDebut().getLiee().remove(this.compose.get(i));
+            this.compose.get(i).getFin().getLiee().remove(this.compose.get(i));
+            this.identite.getObjetVersId().remove(this.compose.get(i));
+            this.identite.getIdVersObjet().remove(this.compose.get(i));
         }
         this.compose.clear();
     }
@@ -289,11 +297,35 @@ public class Treillis {
         }
     }
 
-    public void removeNoeud(Noeud noeud) {
+    public void removeNoeudSimple(NoeudSimple noeud) {
         if (noeud.getContient() != this) {
             throw new Error("Le Noeud n'appartient pas au treillis");
         }
+        this.identite.getObjetVersId().remove(noeud);
+        this.identite.getIdVersObjet().remove(noeud.getId());
         this.contient.remove(noeud);
+        noeud.setContient(null);
+    }
+
+    public void removeAppuiDouble(AppuiDouble noeud) {
+        if (noeud.getContient() != this) {
+            throw new Error("Le Noeud n'appartient pas au treillis");
+        }
+        this.identite.getObjetVersId().remove(noeud);
+        this.identite.getIdVersObjet().remove(noeud.getId());
+        this.contient.remove(noeud);
+        this.Adoub.remove(noeud);
+        noeud.setContient(null);
+    }
+
+    public void removeAppuiSimple(AppuiSimple noeud) {
+        if (noeud.getContient() != this) {
+            throw new Error("Le Noeud n'appartient pas au treillis");
+        }
+        this.identite.getObjetVersId().remove(noeud);
+        this.identite.getIdVersObjet().remove(noeud.getId());
+        this.contient.remove(noeud);
+        this.Adoub.remove(noeud);
         noeud.setContient(null);
     }
 
@@ -301,7 +333,12 @@ public class Treillis {
 
         for (int i = 0; i < this.contient.size(); i++) {
             this.contient.get(i).setContient(null);
+
+            this.identite.getObjetVersId().remove(this.contient.get(i));
+            this.identite.getIdVersObjet().remove(this.contient.get(i).getId());
         }
+        this.Adoub.clear();
+        this.Asimp.clear();
         this.contient.clear();
     }
 
@@ -332,6 +369,8 @@ public class Treillis {
             throw new Error("Le type de barre n'appartient pas au treillis");
         }
         this.catalogueBarre.remove(Tbarre);
+        this.identite.getObjetVersId().remove(Tbarre);
+        this.identite.getIdVersObjet().remove(Tbarre.getId());
         Tbarre.setCatalogueDeBarre(this);
     }
 
@@ -339,6 +378,8 @@ public class Treillis {
 
         for (int i = 0; i < this.catalogueBarre.size(); i++) {
             this.catalogueBarre.get(i).setCatalogueDeBarre(null);
+            this.identite.getObjetVersId().remove(this.catalogueBarre.get(i));
+            this.identite.getIdVersObjet().remove(this.catalogueBarre.get(i).getId());
         }
         this.catalogueBarre.clear();
     }
@@ -586,7 +627,16 @@ public class Treillis {
                     int id = Lire.i();
                     for (int i = 0; i < this.contient.size(); i++) {
                         if (this.contient.get(i).getId() == id) {
-                            removeNoeud(this.contient.get(i));
+                            //removeNoeud(this.contient.get(i));
+                            if (this.contient.get(i) instanceof NoeudSimple) {
+                                this.removeNoeudSimple((NoeudSimple) this.contient.get(i));
+                            } else if (this.contient.get(i) instanceof AppuiSimple) {
+                                this.removeAppuiSimple((AppuiSimple) this.contient.get(i));
+                            } else if (this.contient.get(i) instanceof AppuiDouble) {
+                                this.removeAppuiDouble((AppuiDouble) this.contient.get(i));
+                            } else {
+                                System.out.println("instance of rien... pb");
+                            }
                         }
                     }
                 }

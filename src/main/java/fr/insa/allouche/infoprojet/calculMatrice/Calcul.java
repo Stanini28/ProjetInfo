@@ -39,7 +39,8 @@ public class Calcul {
     }
 
     public static Matrice Calcul(Treillis T) {
-
+        System.out.println("taille identificateur"+T.getIdentite().getObjetVersId().size());
+        System.out.println("taille matrice noeud"+T.getContient().size());
         Matrice Total = new Matrice(2 * T.getContient().size(), T.getIdentite().getObjetVersId().size() + 1);
         double epsilon_pivot = 0.00000001;
 

@@ -42,8 +42,8 @@ public class Controleur {
 
     //private double[] type1 = {20, 40, 200, 700, 800};
     private TypeBarre type1 = new TypeBarre(20, 10, 200, 900, -700, Color.LIMEGREEN);
-    private TypeBarre type2 = new TypeBarre(20, 10, 300, 500, -500, Color.GREEN);
-    private TypeBarre type3 = new TypeBarre(20, 10, 400, 10000, -10000, Color.GREY);
+    private TypeBarre type2 = new TypeBarre(30, 10, 300, 500, -500, Color.GREEN);
+    private TypeBarre type3 = new TypeBarre(40, 10, 400, 10000, -10000, Color.GREY);
     private Point[] pointzc = new Point[4];
     private Point[] pointTT = new Point[3];
     private Point[] pointB = new Point[2];
@@ -58,6 +58,7 @@ public class Controleur {
     public Controleur(interfaceDessin vue) {
         this.vue = vue;
     }
+
     // Méthode permettant de définir l'état des boutons selon les posiblité 
     //offerte à l'utilisateur pour créer le treillis
     public void changeEtat(int etat) {
@@ -89,7 +90,7 @@ public class Controleur {
         }
         this.etat = etat;
     }
-    
+
     void clicDansZoneDessin(MouseEvent t) {
         if (this.etat == 20) {
             double px = t.getX();
@@ -271,10 +272,10 @@ public class Controleur {
             Point clic = new Point(t.getX(), t.getY());
             this.changeCouleur(this.vue.getModel(), clic);
             this.vue.redrawAll();
-        }else if(this.etat == 140){
+        } else if (this.etat == 140) {
             Treillis model = this.vue.getModel();
             double a = Prix(model);
-            
+
             Alert dialogW = new Alert(AlertType.INFORMATION);
             dialogW.setTitle("Prix du Treillis");
             dialogW.setHeaderText(null);
@@ -283,7 +284,7 @@ public class Controleur {
             this.vue.redrawAllSelect();
             this.changeEtat(39);
         }
-        
+
         System.out.println(this.vue.getModel().toString());
     }
 
@@ -352,10 +353,11 @@ public class Controleur {
         this.changeEtat(135);
         this.couleur = couleur;
     }
-    
-    void bouttonPrix(ActionEvent t){
+
+    void bouttonPrix(ActionEvent t) {
         this.changeEtat(140);
     }
+
     // méthode perméttant de séléctioner un objet selon la proximité de l'objet 
     //le plus proche
     //Les méthode "setCouleurSelect" permettent de modifier la couleur de l'objet
@@ -439,7 +441,7 @@ public class Controleur {
         }
 
     }
-    
+
     public void changeCouleur(Treillis model, Point clic) {
         SegmentTerrain segt = model.plusProcheST(clic);
         Noeud noeud = model.plusProcheN(clic);
@@ -520,6 +522,7 @@ public class Controleur {
         }
 
     }
+
     //Méthode permétttant de supprimer un objet du treillis
     //Nous avons fait le choix de le pas donner la possiblité à l'utilisateur
     //de supprimer la zone constructible ou encore les triangles terrains
@@ -529,7 +532,16 @@ public class Controleur {
         Barre barre = model.plusProcheB(clic);
         String res = model.lePlusProche();
         if (res.equals("N") && noeud != null) {
-            model.removeNoeud(noeud);
+            if (noeud instanceof NoeudSimple) {
+                model.removeNoeudSimple((NoeudSimple) noeud);
+            } else if (noeud instanceof AppuiSimple) {
+                model.removeAppuiSimple((AppuiSimple) noeud);
+            } else if (noeud instanceof AppuiDouble) {
+                model.removeAppuiDouble((AppuiDouble) noeud);
+            } else {
+                System.out.println("instance of rien... pb");
+            }
+            //model.removeNoeud(noeud);
             System.out.println("noeud");
         }
         if (res.equals("B") && barre != null) {
@@ -577,7 +589,16 @@ public class Controleur {
 //                model.removeTriangleTerrain(tt);
 //                System.out.println("seg ");
 //            }
-            model.removeNoeud(noeud);
+            if (noeud instanceof NoeudSimple) {
+                model.removeNoeudSimple((NoeudSimple) noeud);
+            } else if (noeud instanceof AppuiSimple) {
+                model.removeAppuiSimple((AppuiSimple) noeud);
+            } else if (noeud instanceof AppuiDouble) {
+                model.removeAppuiDouble((AppuiDouble) noeud);
+            } else {
+                System.out.println("instance of rien... pb");
+            }
+            //model.removeNoeud(noeud);
             System.out.println("noeud");
         }
         if (res.equals("BS") && barre != null) {
@@ -617,11 +638,21 @@ public class Controleur {
                 System.out.println("barre ");
             }
             if (choice.get() == btnN) {
-                model.removeNoeud(noeud);
+                if (noeud instanceof NoeudSimple) {
+                    model.removeNoeudSimple((NoeudSimple) noeud);
+                } else if (noeud instanceof AppuiSimple) {
+                    model.removeAppuiSimple((AppuiSimple) noeud);
+                } else if (noeud instanceof AppuiDouble) {
+                    model.removeAppuiDouble((AppuiDouble) noeud);
+                } else {
+                    System.out.println("instance of rien... pb");
+                }
+                //model.removeNoeud(noeud);
                 System.out.println("noeud");
             }
         }
     }
+
     //Les deux prochaine méthode permmettent de créer des noeud appuis
     // Elles comportent des fenêtre pop permettant une interaction avec l'utilisateur
     public AppuiDouble creationAD(Point clic) {
@@ -697,7 +728,7 @@ public class Controleur {
             return null;
         }
     }
-    
+
     //methodde permettant de calculer la longeur d'une barre et de vérifier que
     //la barre que veux crée l'utilisateur n'est pas trop grande ou trop petite
     public boolean bonneLongeurB(Point clic, TypeBarre type) {
@@ -722,7 +753,7 @@ public class Controleur {
             return true;
         }
     }
-    
+
     //Les deux prochaines méthodes on pour objectifs de créer un barre 
     //la première va garder en mémoire le premier noeud grâce à un attribut
     //la seconde va créer la barre à partir des deux noued
@@ -827,7 +858,16 @@ public class Controleur {
         if (choice.get() == btnNS) {
             if (bonneLongeurB(clic, type) == false) {
                 if (this.noeudB[0].getLiee() == null) {
-                    this.vue.getModel().removeNoeud(this.noeudB[0]);
+                    if (this.noeudB[0] instanceof NoeudSimple) {
+                        model.removeNoeudSimple((NoeudSimple) this.noeudB[0]);
+                    } else if (this.noeudB[0] instanceof AppuiSimple) {
+                        model.removeAppuiSimple((AppuiSimple) this.noeudB[0]);
+                    } else if (this.noeudB[0] instanceof AppuiDouble) {
+                        model.removeAppuiDouble((AppuiDouble) this.noeudB[0]);
+                    } else {
+                        System.out.println("instance of rien... pb");
+                    }
+                    //this.vue.getModel().removeNoeud(this.noeudB[0]);
                 }
                 this.changeEtat(etat);
             } else {
@@ -863,9 +903,18 @@ public class Controleur {
             AppuiSimple as = creationAS(clic);
 
             if (bonneLongeurB(as.getPosition(), type) == false) {
-                this.vue.getModel().removeNoeud(as);
+                this.vue.getModel().removeAppuiSimple(as);
                 if (this.noeudB[0].getLiee() == null) {
-                    this.vue.getModel().removeNoeud(this.noeudB[0]);
+                    //this.vue.getModel().removeNoeud(this.noeudB[0]);
+                    if (this.noeudB[0] instanceof NoeudSimple) {
+                        model.removeNoeudSimple((NoeudSimple) this.noeudB[0]);
+                    } else if (this.noeudB[0] instanceof AppuiSimple) {
+                        model.removeAppuiSimple((AppuiSimple) this.noeudB[0]);
+                    } else if (this.noeudB[0] instanceof AppuiDouble) {
+                        model.removeAppuiDouble((AppuiDouble) this.noeudB[0]);
+                    } else {
+                        System.out.println("instance of rien... pb");
+                    }
                 }
                 this.changeEtat(etat);
             } else {
@@ -886,9 +935,18 @@ public class Controleur {
             AppuiDouble ad = creationAD(clic);
             System.out.println(ad.getappartient().getFaitPartieDe());
             if (bonneLongeurB(ad.getPosition(), type) == false) {
-                this.vue.getModel().removeNoeud(ad);
+                this.vue.getModel().removeAppuiDouble(ad);
                 if (this.noeudB[0].getLiee() == null) {
-                    this.vue.getModel().removeNoeud(this.noeudB[0]);
+                    //this.vue.getModel().removeNoeud(this.noeudB[0]);
+                    if (this.noeudB[0] instanceof NoeudSimple) {
+                        model.removeNoeudSimple((NoeudSimple) this.noeudB[0]);
+                    } else if (this.noeudB[0] instanceof AppuiSimple) {
+                        model.removeAppuiSimple((AppuiSimple) this.noeudB[0]);
+                    } else if (this.noeudB[0] instanceof AppuiDouble) {
+                        model.removeAppuiDouble((AppuiDouble) this.noeudB[0]);
+                    } else {
+                        System.out.println("instance of rien... pb");
+                    }
                 }
                 this.changeEtat(etat);
             } else {
@@ -915,6 +973,7 @@ public class Controleur {
             this.changeEtat(etat - 1);
         }
     }
+
     //La fin du codde concerne la barre menu situé en haut de l'interface
     private void realSave(File f) {
         try {
