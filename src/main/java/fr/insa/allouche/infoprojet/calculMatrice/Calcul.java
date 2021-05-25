@@ -41,7 +41,9 @@ public class Calcul {
     public static Matrice Calcul(Treillis T) {
         System.out.println("taille identificateur"+T.getIdentite().getObjetVersId().size());
         System.out.println("taille matrice noeud"+T.getContient().size());
-        Matrice Total = new Matrice(2 * T.getContient().size(), T.getIdentite().getObjetVersId().size() + 1);
+        System.out.println("Taille Rx" + T.getRx().size() );
+        System.out.println("Taille Ry" + T.getRy().size() );
+        Matrice Total = new Matrice(2 * T.getContient().size(), T.getIdentite().getObjetVersId().size() + T.getRx().size() + T.getRy().size() +2 );
         double epsilon_pivot = 0.00000001;
 
         //Ajout de tous les Appuis Doubles qu'il y a sur le Treillis
@@ -102,7 +104,7 @@ public class Calcul {
 
         //Cela permet de remplacer les erreurs d'arrondis (4E-18) par 0
         for (int i = 0; i < 2 * T.getContient().size(); i++) {
-            for (int j = 0; j < T.getIdentite().getObjetVersId().size() + 1; j++) {
+            for (int j = 0; j < 2 +  T.getIdentite().getObjetVersId().size() + T.getRx().size() + T.getRy().size(); j++) {
                 if (Total.coeffs[i][j] < epsilon_pivot && Total.coeffs[i][j] > 0) {
                     Total.coeffs[i][j] = 0;
                 }
@@ -177,18 +179,18 @@ public class Calcul {
         for (int i = 0; i < T.getRy().size(); i++) {
             T.getRy().get(i).setIdRy(T.getIdentite().getOrCreateId(T.getRy().get(i)));
         }
-
+String s = "";
         Matrice M = Calcul(T);
         Matrice N = Création(M);
-        System.out.println(" Création : \n" + N.toString());
         Matrice A = Lien(M);
         Matrice Membre2 = Membre2(T);
         Matrice H = N.concatCol(Membre2);
-        System.out.println("Concat H : \n" + H.toString());
         ResSup Z = H.resolution(Membre2);
+        if (Z.getSet() == null){
+            s = "Le treillis n'est pas isostatique";
+        }else{
         System.out.println("Z: \n" + Z.toString());
         Matrice K = Z.getSet().concatCol(A);
-        String s = "";
         if (Z.verifSolUnique() == false) {
             s = "Le treillis n'est pas isostatique";
         }
@@ -218,9 +220,6 @@ public class Calcul {
                 }
             }
         }
-
-        if (s == "") {
-            s = s + "Les types de barres sont bons!";
         }
 
         return s;

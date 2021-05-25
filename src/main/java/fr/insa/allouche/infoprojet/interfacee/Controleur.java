@@ -255,12 +255,12 @@ public class Controleur {
             Alert dialogW = new Alert(AlertType.INFORMATION);
 
             dialogW.setTitle("Isostatisme du Treillis");
-            if (S == "Les types de barres sont bons!") {
+            if (S == "") {
                 dialogW.setHeaderText(null);
                 dialogW.setContentText("Le Treillis est isostatique et les types des barres sont les bons.");
                 dialogW.showAndWait();
             }
-            if (S != "Les types de barres sont bons!") {
+            if (S != ""|| S!="Le treillis n'est pas isostatique") {
                 dialogW.setHeaderText(null);
                 dialogW.setContentText("Le Treillis est isostatique. Cependant, il n'est pas fonctionnel car :" + S);
                 dialogW.showAndWait();
