@@ -447,7 +447,7 @@ public class Matrice {
 
     public double Max(int e){
         double res=-1;
-        double epsilon_pivot = 0.00000001;
+        double epsilon_pivot = 0.0000000000000001;
         for (int i=0; i<this.nbrLig;i++){ 
             if (epsilon_pivot<Math.abs(this.coeffs[i][e])){
                 res = Math.abs(this.coeffs[i][e]);
