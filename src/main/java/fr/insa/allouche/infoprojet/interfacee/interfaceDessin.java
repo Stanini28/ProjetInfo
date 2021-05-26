@@ -426,6 +426,32 @@ public class interfaceDessin extends BorderPane {
                     interfaceDessin.this.Prix.setStyle("-fx-background-color: #295C92; -fx-padding: 8;");
                 }
             });
+            this.removeAll.setOnMouseEntered(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent t){
+                    interfaceDessin.this.removeAll.setStyle("-fx-background-color: #5DADE2;");
+                }
+            });
+            
+            this.removeAll.setOnMouseExited(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent t){
+                    interfaceDessin.this.removeAll.setStyle("-fx-background-color: #295C92; -fx-padding: 8;");
+                }
+            });
+            this.calcul.setOnMouseEntered(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent t){
+                    interfaceDessin.this.calcul.setStyle("-fx-background-color: #5DADE2;");
+                }
+            });
+            
+            this.calcul.setOnMouseExited(new EventHandler<MouseEvent>(){
+                @Override
+                public void handle(MouseEvent t){
+                    interfaceDessin.this.calcul.setStyle("-fx-background-color: #295C92; -fx-padding: 8;");
+                }
+            });
             
             this.zoneDessin = new DessinCanvas(this);
             this.setCenter(this.zoneDessin);

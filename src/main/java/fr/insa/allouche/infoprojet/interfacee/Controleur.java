@@ -243,10 +243,11 @@ public class Controleur {
 //            this.vue.getModel().removeAllTypeBarre();
 //            this.vue.getModel().removeTerrain();
 //            this.vue.setModel(null);
-//            this.vue.redrawAll();
-//            this.changeEtat(20);
-//
-//            System.out.println(this.vue.getModel().toString());
+            this.vue.setModel(new Treillis());
+            this.vue.redrawAll();
+            this.changeEtat(20);
+
+            System.out.println(this.vue.getModel().toString());
 
         } else if (this.etat == 130) {
             Treillis model = this.vue.getModel();
