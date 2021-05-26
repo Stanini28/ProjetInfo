@@ -18,6 +18,7 @@ import fr.insa.allouche.infoprojet.TriangleTerrain;
 import fr.insa.allouche.infoprojet.TypeBarre;
 import fr.insa.allouche.infoprojet.calculMatrice.Calcul;
 import static fr.insa.allouche.infoprojet.calculMatrice.Calcul.Prix;
+import fr.insa.allouche.infoprojet.calculMatrice.Matrice;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -250,28 +251,41 @@ public class Controleur {
 
         } else if (this.etat == 130) {
             Treillis model = this.vue.getModel();
-
-            String S = Calcul.regroup(model);
-            Alert dialogW = new Alert(AlertType.INFORMATION);
-
-            dialogW.setTitle("Isostatisme du Treillis");
-            if (S == "") {
+int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub().size();
+            if (2*model.getContient().size() != u) {
+                Alert dialogW = new Alert(AlertType.ERROR);
+                dialogW.setTitle("Impossibilité!");
                 dialogW.setHeaderText(null);
-                dialogW.setContentText("Le Treillis est isostatique et les types des barres sont bons.");
-                dialogW.showAndWait();
-            }
-            if (S != "") {
-                if (S =="Le treillis n'est pas isostatique!"){
-                dialogW.setHeaderText(null);
-                dialogW.setContentText(S);
-                dialogW.showAndWait();
-            }else{
-                dialogW.setHeaderText(null);
-                dialogW.setContentText("Le Treillis est isostatique. Cependant, il n'est pas fonctionnel car : " + S);
-                dialogW.showAndWait();
-            }
-            }
+                if (model.getCompose().size() > u) {
+                    dialogW.setContentText("Merci d'enlever les barres superflues. Il y en a"
+                            + (u - model.getContient().size()*2) + ".");
+                } else {
+                    dialogW.setContentText("Merci de rajouter des barres. Il en manque"
+                            + (model.getContient().size()*2 - u) + ".");
+                    dialogW.showAndWait();
+                }
+            } else {
+                String S = Calcul.regroup(model);
+                Alert dialogW = new Alert(AlertType.INFORMATION);
 
+                dialogW.setTitle("Isostatisme du Treillis");
+                if (S == "") {
+                    dialogW.setHeaderText(null);
+                    dialogW.setContentText("Le Treillis est isostatique et les types des barres sont bons.");
+                    dialogW.showAndWait();
+                }
+                if (S != "") {
+                    if (S == "Le treillis n'est pas isostatique!") {
+                        dialogW.setHeaderText(null);
+                        dialogW.setContentText(S);
+                        dialogW.showAndWait();
+                    } else {
+                        dialogW.setHeaderText(null);
+                        dialogW.setContentText("Le Treillis est isostatique. Cependant, il n'est pas fonctionnel car : " + S);
+                        dialogW.showAndWait();
+                    }
+                }
+            }
             this.vue.redrawAllPbBarre();
             this.changeEtat(39);
         } else if (this.etat == 135) {

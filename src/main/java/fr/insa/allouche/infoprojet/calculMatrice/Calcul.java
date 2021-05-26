@@ -112,6 +112,10 @@ public class Calcul {
                 }
             }
         }
+        for (int i=0;i<Total.getNbrLig();i++){
+            Total.coeffs[i][0]=0;
+        }
+        
         System.out.println(h);
         return Total;
     }
