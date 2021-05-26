@@ -257,13 +257,19 @@ public class Controleur {
             dialogW.setTitle("Isostatisme du Treillis");
             if (S == "") {
                 dialogW.setHeaderText(null);
-                dialogW.setContentText("Le Treillis est isostatique et les types des barres sont les bons.");
+                dialogW.setContentText("Le Treillis est isostatique et les types des barres sont bons.");
                 dialogW.showAndWait();
             }
-            if (S != ""|| S!="Le treillis n'est pas isostatique") {
+            if (S != "") {
+                if (S =="Le treillis n'est pas isostatique!"){
                 dialogW.setHeaderText(null);
-                dialogW.setContentText("Le Treillis est isostatique. Cependant, il n'est pas fonctionnel car :" + S);
+                dialogW.setContentText(S);
                 dialogW.showAndWait();
+            }else{
+                dialogW.setHeaderText(null);
+                dialogW.setContentText("Le Treillis est isostatique. Cependant, il n'est pas fonctionnel car : " + S);
+                dialogW.showAndWait();
+            }
             }
 
             this.vue.redrawAllPbBarre();

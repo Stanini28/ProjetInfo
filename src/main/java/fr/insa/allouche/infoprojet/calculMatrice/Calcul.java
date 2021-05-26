@@ -190,12 +190,12 @@ String s = "";
         Matrice H = N.concatCol(Membre2);
         ResSup Z = H.resolution(Membre2);
         if (Z.getSet() == null){
-            s = "Le treillis n'est pas isostatique";
+            s = "Le treillis n'est pas isostatique!";
         }else{
         System.out.println("Z: \n" + Z.toString());
         Matrice K = Z.getSet().concatCol(A);
         if (Z.verifSolUnique() == false) {
-            s = "Le treillis n'est pas isostatique";
+            s = "Le treillis n'est pas isostatique!";
         }
         List BarreAPbC = new ArrayList ();
         List BarreAPbT = new ArrayList ();
