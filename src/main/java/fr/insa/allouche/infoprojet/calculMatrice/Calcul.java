@@ -39,11 +39,10 @@ public class Calcul {
     }
 
     public static Matrice Calcul(Treillis T) {
-        System.out.println("taille identificateur"+T.getIdentite().getObjetVersId().size());
-        System.out.println("taille matrice noeud"+T.getContient().size());
-        System.out.println("Taille Rx" + T.getRx().size() );
-        System.out.println("Taille Ry" + T.getRy().size() );
-        Matrice Total = new Matrice(2 * T.getContient().size(), T.getIdentite().getObjetVersId().size() + T.getRx().size() + T.getRy().size() +2 );
+            System.out.println("TAILLE DU IDVERSOBJET" + T.getIdentite().getIdVersObjet().size());
+            System.out.println("TAILLE DU OBJETVERSID" + T.getIdentite().getObjetVersId().size());
+        
+        Matrice Total = new Matrice(2 * T.getContient().size(), T.getIdentite().getObjetVersId().size());
         double epsilon_pivot = 0.00000001;
 
         //Ajout de tous les Appuis Doubles qu'il y a sur le Treillis
@@ -103,14 +102,17 @@ public class Calcul {
         }
 
         //Cela permet de remplacer les erreurs d'arrondis (4E-18) par 0
+        int h=0;
         for (int i = 0; i < 2 * T.getContient().size(); i++) {
-            for (int j = 0; j < 2 +  T.getIdentite().getObjetVersId().size() + T.getRx().size() + T.getRy().size(); j++) {
+            for (int j = 0; j <T.getIdentite().getObjetVersId().size(); j++) {
                 if (Total.coeffs[i][j] < epsilon_pivot && Total.coeffs[i][j] > 0) {
                     Total.coeffs[i][j] = 0;
+                    h=h+1;
+                    
                 }
             }
         }
-
+        System.out.println(h);
         return Total;
     }
 
@@ -181,6 +183,7 @@ public class Calcul {
         }
 String s = "";
         Matrice M = Calcul(T);
+        System.out.println("M \n"+ M.toString());
         Matrice N = Création(M);
         Matrice A = Lien(M);
         Matrice Membre2 = Membre2(T);
