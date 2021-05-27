@@ -137,7 +137,7 @@ public class interfaceDessin extends BorderPane {
         this.calcul.setOnAction((t) -> {
             this.controleur.bouttonCalcul(t);
         });
-        this.Prix = new ToggleButton("Prix");
+        this.Prix = new ToggleButton("Prix", imageprix);
         this.Prix.setOnAction((t) -> {
             this.controleur.bouttonPrix(t);
         });
@@ -258,6 +258,8 @@ public class interfaceDessin extends BorderPane {
         this.imagezc.setFitWidth(50);
         this.imagecal.setFitHeight(50);
         this.imagecal.setFitWidth(50);
+        this.imageprix.setFitHeight(50);
+        this.imageprix.setFitWidth(50);
         
         
         this.AG.setAlignment(Pos.TOP_LEFT);
@@ -337,13 +339,13 @@ public class interfaceDessin extends BorderPane {
             this.supprimer.setOnMouseEntered(new EventHandler<MouseEvent>() {
                 @Override
                 public void handle(MouseEvent t) {
-                    interfaceDessin.this.supprimer.setStyle("-fx-background-color: #5DADE2;");
+                    interfaceDessin.this.supprimer.setStyle("-fx-background-color: #F54848;");
                 }
             });
             this.supprimer.setOnMouseExited(new EventHandler<MouseEvent>(){
                 @Override
                 public void handle(MouseEvent t){
-                    interfaceDessin.this.supprimer.setStyle("-fx-background-color: #295C92; -fx-padding: 8;");
+                    interfaceDessin.this.supprimer.setStyle("-fx-background-color: #ED1515; -fx-padding: 8;");
                 }
             });
             
@@ -591,6 +593,7 @@ public class interfaceDessin extends BorderPane {
     private ImageView imagesupprimer = new ImageView(new Image("https://img.icons8.com/plasticine/2x/filled-trash.png"));
     private ImageView imagezc = new ImageView(new Image("https://www.eurographics.ca/uploads/postercartel_product_option.imageEnlarge/1400-2004.jpg"));
     private ImageView imagecal = new ImageView(new Image("https://static4.depositphotos.com/1000423/472/i/950/depositphotos_4723550-stock-photo-3d-man-with-calculator.jpg"));
+    private ImageView imageprix = new ImageView( new Image ("https://img2.freepng.fr/20180705/ubs/kisspng-euro-sign-finance-dollar-sign-currency-euro-5b3e7bc6e323e5.8283559115308215749304.jpg"));
 
 }
 

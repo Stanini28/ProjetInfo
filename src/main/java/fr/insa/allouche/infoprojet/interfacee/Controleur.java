@@ -147,7 +147,7 @@ public class Controleur {
                 dialogW.setTitle("A warning dialog-box");
                 dialogW.setHeaderText(null);  // No header
                 dialogW.setContentText("Caution : Vous ne pouvez pas dessinez votre"
-                        + " treillis en dehors de la zone constructible "
+                        + " treillis en dehors de la zone constructible. "
                         + "\nSelectionez une nouvelle position !");
                 dialogW.showAndWait();
             }
@@ -204,19 +204,19 @@ public class Controleur {
             this.vue.redrawAll();
         } else if (this.etat == 95) {
             Alert dialogC1 = new Alert(AlertType.CONFIRMATION);
-            dialogC1.setTitle("A confirmation choix type barre");
+            dialogC1.setTitle("Confirmation du choix du type de barre");
             dialogC1.setHeaderText(null);
             dialogC1.setContentText("Le type de barre 1 est :" + this.type1.toString());
             Optional<ButtonType> answer1 = dialogC1.showAndWait();
 
             Alert dialogC2 = new Alert(AlertType.CONFIRMATION);
-            dialogC2.setTitle("A confirmation choix type barre");
+            dialogC2.setTitle("Confirmation du choix du type de barre");
             dialogC2.setHeaderText(null);
             dialogC2.setContentText("Le type de barre 2 est :" + this.type2.toString());
             Optional<ButtonType> answer2 = dialogC2.showAndWait();
 
             Alert dialogC3 = new Alert(AlertType.CONFIRMATION);
-            dialogC3.setTitle("A confirmation choix type barre");
+            dialogC3.setTitle("Confirmation du choix du type de barre");
             dialogC3.setHeaderText(null);
             dialogC3.setContentText("Le type de barre 3 est :" + this.type3.toString());
             Optional<ButtonType> answer3 = dialogC3.showAndWait();
@@ -250,6 +250,12 @@ public class Controleur {
 
             System.out.println(this.vue.getModel().toString());
 
+            
+            
+            //Méthode permettant de voir si le treillis est isostatique.
+            //Il existe une condition. Il faut qu'il y est autant de forces inconnues
+            // (Traction, Compression, Réaction) que 2 fois le nombre de noeuds.
+            //Comme cela, la matrice pourra fonctionner sans problèmes.
         } else if (this.etat == 130) {
             Treillis model = this.vue.getModel();
 int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub().size();
@@ -258,10 +264,10 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
                 dialogW.setTitle("Impossibilité!");
                 dialogW.setHeaderText(null);
                 if (model.getCompose().size() > u) {
-                    dialogW.setContentText("Merci d'enlever les barres superflues. Il y en a"
+                    dialogW.setContentText("Merci d'enlever les barres superflues. Il y en a "
                             + (u - model.getContient().size()*2) + ".");
                 } else {
-                    dialogW.setContentText("Merci de rajouter des barres. Il en manque"
+                    dialogW.setContentText("Merci de rajouter des barres. Il en manque "
                             + (model.getContient().size()*2 - u) + ".");
                     dialogW.showAndWait();
                 }
@@ -405,29 +411,29 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
         if (res.equals("NS")) {
             Alert dBox = new Alert(AlertType.CONFIRMATION);
             dBox.setTitle("choix du type de la selection");
-            dBox.setHeaderText("Noeud ou Segment Terrain ???");
-            dBox.setContentText("Voulez vous séléctinez le noeud ou le segment terrain");
+            dBox.setHeaderText("Noeud ou Segment Terrain ?");
+            dBox.setContentText("Voulez-vous sélectionner le noeud ou le segment terrain?");
             ButtonType btnN = new ButtonType("Noeud");
-            ButtonType btnS = new ButtonType("Sgment Terrain");
+            ButtonType btnS = new ButtonType("Segment Terrain");
             ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
             dBox.getButtonTypes().setAll(btnN, btnS, btnCancel);
             Optional<ButtonType> choice = dBox.showAndWait();
             if (choice.get() == btnN) {
-                System.out.println("noued " + noeud.getColor());
+                System.out.println("Noeud " + noeud.getColor());
                 noeud.setColorSelect(Color.VIOLET);
             }
             if (choice.get() == btnS) {
-                System.out.println("segt " + segt.getColor());
+                System.out.println("Segment " + segt.getColor());
                 segt.setColor(Color.VIOLET);
             }
         }
         if (res.equals("BS")) {
             Alert dBox = new Alert(AlertType.CONFIRMATION);
             dBox.setTitle("choix du type de la selection");
-            dBox.setHeaderText("Barre ou Segment Terrain ???");
-            dBox.setContentText("Voulez vous séléctinez la barre ou le segment terrain");
+            dBox.setHeaderText("Barre ou Segment Terrain ?");
+            dBox.setContentText("Voulez-vous sélectionner la barre ou le segment terrain?");
             ButtonType btnB = new ButtonType("Barre");
-            ButtonType btnS = new ButtonType("Sgment Terrain");
+            ButtonType btnS = new ButtonType("Segment Terrain");
             ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
             dBox.getButtonTypes().setAll(btnB, btnS, btnCancel);
             Optional<ButtonType> choice = dBox.showAndWait();
@@ -436,15 +442,15 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
                 barre.setColor(Color.VIOLET);
             }
             if (choice.get() == btnS) {
-                System.out.println("segt " + segt.getColor());
+                System.out.println("Segment " + segt.getColor());
                 segt.setColor(Color.VIOLET);
             }
         }
         if (res.equals("BN")) {
             Alert dBox = new Alert(AlertType.CONFIRMATION);
             dBox.setTitle("choix du type de la selection");
-            dBox.setHeaderText("Barre ou Noeud ???");
-            dBox.setContentText("Voulez vous séléctinez la barre ou le noeud");
+            dBox.setHeaderText("Barre ou Noeud ?");
+            dBox.setContentText("Voulez-vous sélectionner la barre ou le noeud?");
             ButtonType btnB = new ButtonType("Barre");
             ButtonType btnN = new ButtonType("Noeud");
             ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
@@ -455,7 +461,7 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
                 barre.setColor(Color.VIOLET);
             }
             if (choice.get() == btnN) {
-                System.out.println("noued " + segt.getColor());
+                System.out.println("Noeud " + segt.getColor());
                 noeud.setColorSelect(Color.VIOLET);
             }
         }
@@ -484,10 +490,10 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
         if (res.equals("NS")) {
             Alert dBox = new Alert(AlertType.CONFIRMATION);
             dBox.setTitle("choix du type de la selection");
-            dBox.setHeaderText("Noeud ou Segment Terrain ???");
-            dBox.setContentText("Voulez vous séléctinez le noeud ou le segment terrain");
+            dBox.setHeaderText("Noeud ou Segment Terrain ?");
+            dBox.setContentText("Voulez-vous sélectionnez le noeud ou le segment terrain?");
             ButtonType btnN = new ButtonType("Noeud");
-            ButtonType btnS = new ButtonType("Sgment Terrain");
+            ButtonType btnS = new ButtonType("Segment Terrain");
             ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
             dBox.getButtonTypes().setAll(btnN, btnS, btnCancel);
             Optional<ButtonType> choice = dBox.showAndWait();
@@ -502,11 +508,11 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
         }
         if (res.equals("BS")) {
             Alert dBox = new Alert(AlertType.CONFIRMATION);
-            dBox.setTitle("choix du type de la selection");
-            dBox.setHeaderText("Barre ou Segment Terrain ???");
-            dBox.setContentText("Voulez vous séléctinez la barre ou le segment terrain");
+            dBox.setTitle("choix du type de la sélection");
+            dBox.setHeaderText("Barre ou Segment Terrain ?");
+            dBox.setContentText("Voulez-vous sélectionner la barre ou le segment terrain?");
             ButtonType btnB = new ButtonType("Barre");
-            ButtonType btnS = new ButtonType("Sgment Terrain");
+            ButtonType btnS = new ButtonType("Segment Terrain");
             ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
             dBox.getButtonTypes().setAll(btnB, btnS, btnCancel);
             Optional<ButtonType> choice = dBox.showAndWait();
@@ -523,8 +529,8 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
         if (res.equals("BN")) {
             Alert dBox = new Alert(AlertType.CONFIRMATION);
             dBox.setTitle("choix du type de la selection");
-            dBox.setHeaderText("Barre ou Noeud ???");
-            dBox.setContentText("Voulez vous séléctinez la barre ou le noeud");
+            dBox.setHeaderText("Barre ou Noeud ?");
+            dBox.setContentText("Voulez-vous sélectionner la barre ou le noeud");
             ButtonType btnB = new ButtonType("Barre");
             ButtonType btnN = new ButtonType("Noeud");
             ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
@@ -536,7 +542,7 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
                 barre.getType().setCouleur(couleur);
             }
             if (choice.get() == btnN) {
-                System.out.println("noued " + segt.getColor());
+                System.out.println("Noeud " + segt.getColor());
                 noeud.setColor(couleur);
             }
         }
@@ -646,8 +652,8 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
         if (res.equals("BN")) {
             Alert dBox = new Alert(AlertType.CONFIRMATION);
             dBox.setTitle("choix du type de la selection");
-            dBox.setHeaderText("Barre ou Noeud ???");
-            dBox.setContentText("Voulez vous séléctinez la barre ou le noeud");
+            dBox.setHeaderText("Barre ou Noeud ?");
+            dBox.setContentText("Voulez-vous sélectionner la barre ou le noeud?");
             ButtonType btnB = new ButtonType("Barre");
             ButtonType btnN = new ButtonType("Noeud");
             ButtonType btnCancel = new ButtonType("Cancel", ButtonData.CANCEL_CLOSE);
@@ -681,11 +687,11 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
 
         TextInputDialog inDialog = new TextInputDialog("Guest");
         inDialog.setTitle("A Text-Input Dialog");
-        inDialog.setHeaderText("Le segment sélectioné mesure :"
+        inDialog.setHeaderText("Le segment sélectionné mesure :"
                 + segt.getDebut().distancePoint(segt.getFin())
-                + "donner le raport de proximité entre le debut du segment "
+                + ". Donner le raport de proximité entre le debut du segment "
                 + "(" + segt.getDebut().toString() + ") et le noeud appui "
-                + "(le nombre doit être compris entre 0 et 1 (attentionmettre un '.'");
+                + ". Le nombre doit être compris entre 0 et 1. Veuillez mettre un '.' !");
         inDialog.setContentText("distance:");
         Optional<String> textIn = inDialog.showAndWait();
         //---Getresponsevalue (traditionalway)
@@ -718,11 +724,11 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
         SegmentTerrain segt = this.vue.getModel().plusProcheST(clic);
         TextInputDialog inDialog = new TextInputDialog("Guest");
         inDialog.setTitle("A Text-Input Dialog");
-        inDialog.setHeaderText("Le segment sélectioné mesure :"
+        inDialog.setHeaderText("Le segment sélectionné mesure :"
                 + segt.getDebut().distancePoint(segt.getFin())
-                + "donner le raport de proximité entre le debut du segment "
+                + ". Donner le raport de proximité entre le debut du segment "
                 + "(" + segt.getDebut().toString() + ") et le noeud appui "
-                + "(le nombre doit être compris entre 0 et 1 (attentionmettre un '.'");
+                + ". Le nombre doit être compris entre 0 et 1. Veuillez mettre un '.' !");
         inDialog.setContentText("distance:");
         Optional<String> textIn = inDialog.showAndWait();
         //---Getresponsevalue (traditionalway)
@@ -760,11 +766,11 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
             dialogW.setHeaderText(null);  // No header
             if (longeure < type.getlMin()) {
                 dialogW.setContentText("Caution : La barre est trop petite, elle mesure " + longeure
-                        + "\n Alors que la longeure min pour votre type de barre est " + type.getlMin() + " !\n"
+                        + "\n Alors que la longueur min pour votre type de barre est " + type.getlMin() + " !\n"
                         + "Veuillez cliquer à nouveau sur la zone dessin pour definir un nouveau noeud de fin de barre");
             } else {
                 dialogW.setContentText("Caution : La barre est trop grande, elle mesure " + longeure
-                        + "\n Alors que la longeure max pour votre type de barre est " + type.getlMax() + " !\n"
+                        + ".\n Alors que la longeur max pour votre type de barre est " + type.getlMax() + " !\n"
                         + "Veuillez cliquer à nouveau sur la zone dessin pour definir un nouveau noeud de fin de barre");
             }
             dialogW.showAndWait();
@@ -785,7 +791,7 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
         dBox.setTitle("choix du type de noeud");
         dBox.setHeaderText("Ma barre !");
         dBox.setContentText("Choisissez le type de noeud débutant votre "
-                + "barre ou si vouvoulez creer votre barre à partir de "
+                + "barre ou si vous voulez créer votre barre à partir d'un "
                 + "noeud déjà existant");
         ButtonType btnNS = new ButtonType("Noeud Simple");
         ButtonType btnAS = new ButtonType("Appui Simple");
@@ -821,7 +827,7 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
                 dialogW.setHeaderText(null);  // No header
                 dialogW.setContentText("Caution : Vous ne pouvez pas dessinez votre"
                         + " treillis en dehors de la zone constructible "
-                        + "\nSelectionez une nouvelle position !");
+                        + ".\n Selectionez une nouvelle position !");
                 dialogW.showAndWait();
                 this.changeEtat(etat);
             }
@@ -865,7 +871,7 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
         dBox.setTitle("choix du type de noeud");
         dBox.setHeaderText("Ma barre !");
         dBox.setContentText("Choisissez le type de noeud débutant votre "
-                + "barre ou si vouvoulez creer votre barre à partir de "
+                + "barre ou si vous voulez créer votre barre à partir de "
                 + "noeud déjà existant");
         ButtonType btnNS = new ButtonType("Noeud Simple");
         ButtonType btnAS = new ButtonType("Appui Simple");
@@ -902,7 +908,7 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
                     dialogW.setHeaderText(null);  // No header
                     dialogW.setContentText("Caution : Vous ne pouvez pas dessinez votre"
                             + " treillis en dehors de la zone constructible "
-                            + "\nSelectionez une nouvelle position !");
+                            + ". \nSelectionez une nouvelle position !");
                     dialogW.showAndWait();
                     this.changeEtat(etat);
                 }
@@ -1065,10 +1071,10 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("A propos");
         alert.setHeaderText(null);
-        alert.setContentText("Trop super ce micro-logiciel de dessin vectoriel 2D\n"
-                + "réalisé par François de Bertrand de Beuvron\n"
-                + "comme tutoriel pour un cours de POO\n"
-                + "à l'INSA de Strasbourg");
+        alert.setContentText("Ce logiciel a été créé par 3 élèves de l'INSA\n"
+                + "qui ont passé BEAUCOUP DE TEMPS sur ce magnifique\n"
+                + "logiciel que vous allez adorer, on en est sûr!\n"
+                );
 
         alert.showAndWait();
     }
