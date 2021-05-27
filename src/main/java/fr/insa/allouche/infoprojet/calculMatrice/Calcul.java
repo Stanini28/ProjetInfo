@@ -216,7 +216,7 @@ String s = "";
                                 T.setBarrePbC(BarreAPbC);
                             }
                         } else {
-                            if (T.getCompose().get(k).getType().getrComp() > K.coeffs[i][0]) {
+                            if (T.getCompose().get(k).getType().getrTraction() < K.coeffs[i][0]) {
                                 s = s + "\n - la barre n°" + T.getCompose().get(k).getId() + " a une trop forte traction.\n";
 
                                 BarreAPbT.add(T.getCompose().get(k));
