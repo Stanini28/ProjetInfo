@@ -60,13 +60,13 @@ public class NoeudSimple extends Noeud {
         if (num.objExist(this)) {
             System.out.println("id noeud simple cas obj exist : "+this.getId());
             //int id = num.getOrCreateId(this);
-            w.append("NoeudSimple;" + this.getId()+";" + this.position+ ";"+ this.saveColor(this.getColor()) + ";" + this.forceY 
+            w.append("NoeudSimple;" + this.getId()+";" + this.position+ ";" + this.forceY 
                     +"\n");
             System.out.println("obj existe");
         } else {
             System.out.println("id noeud simple cas obj exist pas : "+this.getId());
            //int id = num.getOrCreateId(this);
-            w.append("NoeudSimple;" + this.getId()+";" + this.position+ ";"+ this.saveColor(this.getColor()) + ";" + this.forceY 
+            w.append("NoeudSimple;" + this.getId()+";" + this.position+ ";" + this.forceY 
                     +"\n");
             System.out.println("obj existe"); 
         }

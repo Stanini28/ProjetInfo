@@ -231,7 +231,7 @@ public class Barre {
         //this.type.save(w, num);
         System.out.println("id noeud début :" + this.debut.getId());
         System.out.println("id noeud fin :" + this.fin.getId());
-        w.append("Barre;" + this.id + ";" + this.type.getId() + ";" + this.debut.getId() + ";" + this.fin.getId() + ";" + this.saveColor(this.getColor()) + "\n");
+        w.append("Barre;" + this.id + ";" + this.type.getId() + ";" + this.debut.getId() + ";" + this.fin.getId() + "\n");
 //        }
 
     }

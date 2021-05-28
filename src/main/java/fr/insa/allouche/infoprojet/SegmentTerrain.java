@@ -169,7 +169,7 @@ public class SegmentTerrain {
         if (!num.objExist(this)) {
             w.append("SegmentTerrain;" + this.id + ";"
                     + this.debut.getPX() + ";" + this.debut.getPY() + ";" + this.fin.getPX()
-                    + ";" + this.fin.getPY() + ";" + this.faitPartieDe.getId() + ";" + this.saveColor(this.getColor()) + "\n");
+                    + ";" + this.fin.getPY() + ";" + this.faitPartieDe.getId() +"\n");
         }
     }
 
