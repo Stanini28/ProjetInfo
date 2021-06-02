@@ -304,6 +304,7 @@ public class Treillis {
         }
         this.identite.getObjetVersId().remove(noeud);
         this.identite.getIdVersObjet().remove(noeud.getId());
+        this.Simp.remove(noeud);
         this.contient.remove(noeud);
         noeud.setContient(null);
     }
@@ -781,7 +782,7 @@ public class Treillis {
                         this.compose.get(i).setCouleurBarre(Color.FUCHSIA);
                         this.compose.get(i).dessinePbBarre(context);
                         estDessine = true;
-                        System.out.println("pb barre check");
+                        System.out.println("pb barre check: COMPRESSION");
                     }
                 }
             }
@@ -791,7 +792,7 @@ public class Treillis {
                         this.compose.get(i).setCouleurBarre(Color.CYAN);
                         this.compose.get(i).dessinePbBarre(context);
                         estDessine = true;
-                        System.out.println("pb barre check");
+                        System.out.println("pb barre check / TRACTION");
                     }
                 }
             }
