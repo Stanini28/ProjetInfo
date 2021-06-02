@@ -21,6 +21,11 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.paint.Color;
 
+/**
+ * documentation de la classe.
+ *
+ * @author Portable
+ */
 public class Treillis {
 
     private Terrain base;
@@ -38,6 +43,7 @@ public class Treillis {
     private List<Reaction_Rx> rx;
     private List<Reaction_Ry> ry;
 
+    private List objSelect;
     private List barrePbT;
     private List barrePbC;
 
@@ -52,6 +58,7 @@ public class Treillis {
         this.Simp = new ArrayList();
         this.rx = new ArrayList();
         this.ry = new ArrayList();
+        this.objSelect = new ArrayList();
     }
 
     //La première partie de cette classe Treillis comporte toutes le méthodes 
@@ -772,6 +779,33 @@ public class Treillis {
             this.base.dessine(context);
         }
     }
+    public void dessineSelect(GraphicsContext context) {
+        Object objSelect;
+        if (this.objSelect != null) {
+            for (int i = 0; i < this.objSelect.size(); i++) {
+                for (int j = 0; j < this.objSelect.size(); j++) {
+
+                    objSelect = this.objSelect.get(i);
+                    if (objSelect instanceof Barre) {
+                        Barre bS = (Barre)objSelect;
+                        bS.setColor(Color.AQUA);
+                        bS.dessineSelect(context);
+                    }
+                    if (this.objSelect.get(i) instanceof Noeud) {
+                        Noeud nS = (Noeud) objSelect;
+                        nS.setColorSelect(Color.AQUA);
+                        nS.dessineSelect(context);
+                    }
+                    if (this.objSelect.get(i) instanceof SegmentTerrain) {
+                        SegmentTerrain segT = (SegmentTerrain) objSelect;
+                        segT.setColorSelect(Color.AQUA);
+                        segT.dessineSelect(context);
+                    }
+                }
+            }
+        }
+        this.objSelect.clear();
+    }
 
     public void dessinePbBarre(GraphicsContext context) {
         boolean estDessine = false;
@@ -841,6 +875,15 @@ public class Treillis {
     public List getBarrePbC() {
         return barrePbC;
     }
+
+    public List getObjSelect() {
+        return objSelect;
+    }
+
+    public void setObjSelect(List objSelect) {
+        this.objSelect = objSelect;
+    }
+    
 
     //Partie du code se focalisant sur les différentes méthode afin de calculer
     //la distance entre deux objets afin de puvoir retrouvé quel objet est le 
@@ -1298,6 +1341,13 @@ public class Treillis {
 
     // méthode utilisé dans la lecture de la suavegarde afin de traduire l'expression
     //littérale d'un point en absisse et ordonnée
+    /**
+     * méthode utilisé dans la lecture de la suavegarde afin de traduire
+     * l'expression littérale d'un point en absisse et ordonnée.
+     *
+     * @param bouts décomposition de la ligne
+     * @return le point correspondant
+     */
     public static Point adapterP(String bouts) {
 
         String pt = bouts.substring(1, bouts.length() - 1);

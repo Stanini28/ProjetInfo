@@ -28,6 +28,7 @@ public class Barre {
     public double Fy;
     public Color color;
     private Color couleurBarre;
+    public static Color couleurSelect;
 
     public Barre(Noeud debut, Noeud fin, Color color) {
         this.debut = debut;
@@ -141,6 +142,11 @@ public class Barre {
     public void setCouleurBarre(Color couleurBarre) {
         this.couleurBarre = couleurBarre;
     }
+
+    public void setCouleurSelect(Color couleurSelect) {
+        Barre.couleurSelect = couleurSelect;
+    }
+    
     
 
     public String toString() {

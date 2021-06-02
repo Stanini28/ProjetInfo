@@ -396,16 +396,15 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
         Barre barre = model.plusProcheB(clic);
         String res = model.lePlusProche();
         if (res.equals("N")) {
-            noeud.setColorSelect(Color.VIOLET);
+            this.vue.getModel().getObjSelect().add(noeud);
             System.out.println("noeud" + noeud.getColor());
         }
         if (res.equals("B")) {
-            barre.setColor(Color.VIOLET);
+            this.vue.getModel().getObjSelect().add(barre);
             System.out.println("barre " + barre.getColor());
         }
         if (res.equals("S")) {
-            segt.setColor(Color.VIOLET);
-
+            this.vue.getModel().getObjSelect().add(segt);
             System.out.println("seg " + segt.getColor());
         }
         if (res.equals("NS")) {
@@ -420,11 +419,11 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
             Optional<ButtonType> choice = dBox.showAndWait();
             if (choice.get() == btnN) {
                 System.out.println("Noeud " + noeud.getColor());
-                noeud.setColorSelect(Color.VIOLET);
+                this.vue.getModel().getObjSelect().add(noeud);
             }
             if (choice.get() == btnS) {
                 System.out.println("Segment " + segt.getColor());
-                segt.setColor(Color.VIOLET);
+                this.vue.getModel().getObjSelect().add(segt);
             }
         }
         if (res.equals("BS")) {
@@ -439,11 +438,11 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
             Optional<ButtonType> choice = dBox.showAndWait();
             if (choice.get() == btnB) {
                 System.out.println("Barre " + barre.getColor());
-                barre.setColor(Color.VIOLET);
+                this.vue.getModel().getObjSelect().add(barre);
             }
             if (choice.get() == btnS) {
                 System.out.println("Segment " + segt.getColor());
-                segt.setColor(Color.VIOLET);
+                this.vue.getModel().getObjSelect().add(segt);
             }
         }
         if (res.equals("BN")) {
@@ -458,11 +457,11 @@ int u= (model.getCompose().size()) + model.getAsimp().size()+ 2*model.getAdoub()
             Optional<ButtonType> choice = dBox.showAndWait();
             if (choice.get() == btnB) {
                 System.out.println("Barre " + barre.getColor());
-                barre.setColor(Color.VIOLET);
+                this.vue.getModel().getObjSelect().add(barre);
             }
             if (choice.get() == btnN) {
                 System.out.println("Noeud " + segt.getColor());
-                noeud.setColorSelect(Color.VIOLET);
+                this.vue.getModel().getObjSelect().add(noeud);
             }
         }
 

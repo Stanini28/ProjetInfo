@@ -79,6 +79,10 @@ public class SegmentTerrain {
         this.color = color;
     }
 
+    public void setColorSelect(Color colorSelect) {
+        this.colorSelect = colorSelect;
+    }
+
     public Color getColor() {
         return color;
     }
